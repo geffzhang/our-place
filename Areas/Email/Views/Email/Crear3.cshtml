@@ -1,0 +1,258 @@
+﻿@model ADESCOMBUSINESS.Areas.Email.Models.EMA_Emails
+@{
+    ViewBag.Title = "Crear Email";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "Email", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>@Html.HiddenFor(model => model.Email_ID)</fieldset>
+        <fieldset>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Destinatarios</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">@ViewBag.DescLlave1</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Llave1_ID", null, new { @class = "form-control ", @id = "Llave1_ID", @onChange = "GetLlave2()" })
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">@ViewBag.DescLlave2</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Llave2_ID", null, new { @class = "form-control ", id = "Llave2_ID", @onChange = "GetLlave3()" })
+                        </div>
+                    </div><br />
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">@ViewBag.DescLlave3</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Llave3_ID", null, new { @class = "form-control ", id = "Llave3_ID", @onChange = "GetResidentes()" })
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Residente</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Residente_ID", null, new { @class = "form-control ", @id = "Residente_ID" })
+                        </div>
+                    </div><br />
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Mensaje</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.EMA_Remitente, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EMA_Remitente, new { @class = "form-control ", @style = "max-width: 100%;", @id = "EMA_Remitente"})
+                            @Html.ValidationMessageFor(model => model.EMA_Remitente)
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.EMA_Asunto, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EMA_Asunto, new { @class = "form-control ", @style = "max-width: 100%;", @id = "EMA_Asunto" })
+                            @Html.ValidationMessageFor(model => model.EMA_Asunto)
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.EMA_AdjuntoName, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" value="@ViewBag.AdjuntoName" id="fileName" name="fileName" readonly />
+                            <input hidden type="text" value="@ViewBag.AdjuntoFile" id="SavedFile" name="SavedFile" />
+                            <input hidden type="text" value="@ViewBag.AdjuntoSize" id="fileSize" name="fileSize" />
+                            <input hidden type="text" value="@ViewBag.AdjuntoType" id="fileType" name="fileType" />
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-info" onclick="ImpoExpo()">Subir</button>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.EMA_Cuerpo, new { @class = "form-control EditorHtml", @style = "max-width: 100%;", @id = "EMA_Cuerpo" })
+                            @Html.ValidationMessageFor(model => model.EMA_Cuerpo)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+
+    $('.EditorHtml').jqte();
+
+    function setTexbox() {
+        $TxtFileName = "fileName";
+        $TxtFileID = "SavedFile";
+        $TxtFileSize = "fileSize";
+        $TxtFileType = "fileType";
+    }
+    
+    function GetLlave2() {
+        $("#Llave2_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave2Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val()
+            },
+            success: function (Numeros2) {
+                if (Numeros2.length == 0) {
+                    $("#Llave2_ID").append('<option value="0">(Todos)</option>');
+                }
+                else {
+                    $("#Llave2_ID").append('<option value="0">(Todos)</option>');
+                    $.each(Numeros2, function (i, Numero2) {
+                        $("#Llave2_ID").append('<option value="' + Numero2.Value + '">' +
+                            Numero2.Text + '</option>');
+                    });
+                }
+                GetLlave3();
+            }
+        });
+    }
+
+    function GetLlave3() {
+        $("#Llave3_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave3Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val(),
+                Llave2_ID: $("#Llave2_ID").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave3_ID").append('<option value="0">(Todos)</option>');
+                }
+                else {
+                    $("#Llave3_ID").append('<option value="0">(Todos)</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave3_ID").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+                GetResidentes();
+            }
+        });
+    }
+
+    function GetResidentes() {
+        $("#Residente_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetResidentes3Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val(),
+                Llave2_ID: $("#Llave2_ID").val(),
+                Llave3_ID: $("#Llave3_ID").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Residente_ID").append('<option value="0">(Todos)</option>');
+                }
+                else {
+                    $("#Residente_ID").append('<option value="0">(Todos)</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Residente_ID").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+            }
+        });
+
+    }
+
+    function ImpoExpo() {
+        MostarVistaParcial2('Subir archivo');
+        $.ajax({
+            url: '../ImpoExpo/Archivos/Import',
+            cache: false,
+            dataType: "html",
+            data: {
+                "Contenedor_Archivos": "archivosadjuntos",
+                "SoloImagenes": "false"
+            },
+            begin: function () {
+            },
+            success: function (response) {
+                document.getElementById("Modal2").innerHTML = response;
+            },
+            error: function (result) {
+                MostrarErrorModal2(result);
+            }
+        });
+    }
+
+    setTexbox();
+</script>
+
+<script>
+    function Procesar() {
+        var elmFileName = document.getElementById($TxtFileName);
+        var dataString;
+        var action = $("#frmArchivo").attr("action")
+        if ($("#frmArchivo").attr("enctype") == "multipart/form-data") {
+            dataString = new FormData($("#frmArchivo").get(0));
+        }
+
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: dataString,
+            dataType: "html",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#Mensaje").html(data);
+            }
+        });
+    }
+</script>

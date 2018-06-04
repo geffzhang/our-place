@@ -1,0 +1,188 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Ingresos.Models.VwING_PagosProgramados>
+@{
+    ViewBag.Title = "Estado de Cuenta Residentes";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<div class="text-right">
+    <h2>Registro de Cargos</h2>
+</div>
+
+<div class="panel panel-default" style="width: 100%">
+    <div class="panel-body">
+        @using (Ajax.BeginForm("RefreshDataSearchList", "RegistroCargos", new AjaxOptions { OnBegin = "AdicionarLoading('DataContent')", UpdateTargetId = "RefreshData" }))
+            {
+            <div class="row">
+                <input type="hidden" name="Llave3_ID" id="Lave3_ID" value="0" />
+                <div class="col-md-1">
+                    <label class="control-label">@ViewBag.DescLlave1</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("Llave1_ID", null, new { @class = "form-control ", @id = "Llave1_ID", @onChange = "GetLlave2()" })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">@ViewBag.DescLlave2</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("Llave2_ID", null, new { @class = "form-control ", id = "Llave2_ID" })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Tipo de Cargo</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("TipoCargo_IDFilter", null, new { @class = "form-control", @id = "FindEstatusMora_ID" })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Estatus</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("FindEstatus", null, new { @class = "form-control", @id = "FindEstatus" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="control-label">Fecha desde</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control date" name="FindFechaDesde" type="text" />
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Fecha hasta</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control date" name="FindFechaHasta" type="text" />
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Concepto</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" name="FindConcepto" type="text" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" /> Filtrar</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="panel panel-default">
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color:#2e2e37; color:white">
+            <th>Fecha de Pago</th>
+            <th>@ViewBag.DescLlave1</th>
+            <th>@ViewBag.DescLlave2</th>
+            <th>Tipo de Cargo</th>
+            <th>Concepto</th>
+            <th>Monto</th>
+            <th>Estatus</th>
+            </thead>
+            <tbody id="DataContent">
+                @foreach (ADESCOMBUSINESS.Areas.Ingresos.Models.VwING_PagosProgramados OBJING_PagosProgramados in Model)
+                {
+                    <tr onclick="SelectRow(@OBJING_PagosProgramados.PagoProgramado_ID, this)">
+                        <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_FechaPago)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosProgramados.LL1_Descripcion)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosProgramados.LL2_Descripcion)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosProgramados.TCA_Descripcion)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_Concepto)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_Monto)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_Estatus)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+            <div class="row">
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+                </div>
+                <div class="pull-right" style="padding:0px 10px 0px 0px;">
+                    @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function GetLlave2() {
+        $("#Llave2_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave2Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave2_ID").append('<option value="0">(Todos)</option>');
+                }
+                else {
+                    $("#Llave2_ID").append('<option value="0">(Todos)</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave2_ID").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+            }
+        });
+
+    }
+
+    GetLlave2();
+</script>
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model ADESCOMBUSINESS.Areas.Email.Models.VwEMA_Emails
+@{
+    ViewBag.Title = "Detalle Email";
+    Layout = null;
+}
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset disabled>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Destinatarios</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">@ViewBag.DescLlave1</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.LL1_Descripcion, new { @class = "form-control ", @style = "max-width: 100%;", @id = "LL1_Descripcion", @readOnly = "true" })
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">@ViewBag.DescLlave2</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.LL2_Descripcion, new { @class = "form-control ", @style = "max-width: 100%;", @id = "LL2_Descripcion", @readOnly = "true" })
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">Residente</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.RES_Nombre, new { @class = "form-control ", @style = "max-width: 100%;", @id = "RES_Nombre", @readOnly = "true" })
+                        </div>
+                    </div><br />
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Mensaje</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.EMA_Remitente, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EMA_Remitente, new { @class = "form-control ", @style = "max-width: 100%;", @id = "EMA_Remitente", @readOnly = "true" })
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.EMA_Asunto, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EMA_Asunto, new { @class = "form-control ", @style = "max-width: 100%;", @id = "EMA_Asunto", @readOnly = "true" })
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.EMA_AdjuntoName, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EMA_AdjuntoName, new { @class = "form-control ", @style = "max-width: 100%;", @id = "EMA_AdjuntoName", @readOnly = "true" })
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.EMA_Cuerpo, new { @class = "form-control EditorHtml", @style = "max-width: 100%;", @id = "EMA_Cuerpo", @readOnly = "true" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+        </div>
+    </div>
+<script>
+    $('.EditorHtml').jqte();
+</script>

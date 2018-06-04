@@ -1,0 +1,54 @@
+﻿@model ADESCOMBUSINESS.Areas.Ingresos.Models.ING_PagosRealizados
+@{
+    ViewBag.Title = "Rechazar";
+    Layout = null;
+}
+<div style="width: 100%;">
+   <!-- <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <button class="close" aria-label="Close" data-dismiss="alert" type="button"></button>
+        ¿Seguro que desea rechazar el pago?
+       </div>-->
+    @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+    {
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            @ViewBag.Error
+        </div>
+    }
+    else
+    {
+        if (ViewBag.Error == "OK")
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Operacion Completada Con exito!
+            </div>
+            <script>
+                OcultarModal();
+                MostarModalSuccess();
+            </script>
+        }
+    }
+    @using (Ajax.BeginForm("Rechazar", "AutPagosRealizados", new AjaxOptions { OnBegin = "AdicionarLoading('Modal')", UpdateTargetId = "Modal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.PagoRealizado_ID)
+        @Html.HiddenFor(model => model.Direccion_ID)
+        <div class="row">
+            <div class="col-md-10">
+                <label style="font-weight:normal">Ingrese el motivo de rechazo (visible para el residente)</label>    
+            </div>
+        </div> <br/>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.PRE_MotivoRechazo, new { @rows = "3", @class = "form-control ", @id = "PRE_MotivoRechazo", @style= "min-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.PRE_MotivoRechazo)
+            </div>
+        </div> <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Impotar";
+    Layout = null;
+}
+<div id="Mensaje"></div>
+<form action="/ImpoExpo/Archivos/ProcesarArchivo" enctype="multipart/form-data" id="frmArchivo" method="post">
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label">Seleccione Archivo</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="file" name="Archivo" />
+                </div>
+            </div> <br />
+            <input type="hidden" name="Contenedor_Archivos" value="@ViewBag.Contenedor_Archivos" />
+            <input type="hidden" name="SoloImagenes" value="@ViewBag.SoloImagenes" />
+        </fieldset>
+        <br />
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="button" class="btn btn-success glyphicon glyphicon-ok" onclick="Procesar()"></button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,74 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Ingresos.Models.VwING_PagosProgramados>
+@{
+    ViewBag.Title = "Estado de Cuenta Residentes";
+    Layout = null;
+}
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>Fecha de Pago</th>
+    <th>@ViewBag.DescLlave1</th>
+    <th>@ViewBag.DescLlave2</th>
+    <th>@ViewBag.DescLlave3</th>
+    <th>Tipo de Cargo</th>
+    <th>Concepto</th>
+    <th>Monto</th>
+    <th>Estatus</th>
+    </thead>
+    <tbody id="DataContent">
+        @foreach (ADESCOMBUSINESS.Areas.Ingresos.Models.VwING_PagosProgramados OBJING_PagosProgramados in Model)
+        {
+            <tr onclick="SelectRow(@OBJING_PagosProgramados.PagoProgramado_ID, this)">
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_FechaPago)</td>
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.LL1_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.LL2_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.LL3_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.TCA_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_Concepto)</td>
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_Monto)</td>
+                <td>@Html.DisplayFor(m => OBJING_PagosProgramados.PPR_Estatus)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+    <div class="row">
+        <div class="pull-left" style="padding:0px 0px 0px 10px;">
+            @Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+        </div>
+        <div class="pull-right" style="padding:0px 10px 0px 0px;">
+            @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+        </div>
+    </div>
+</div>
+
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>

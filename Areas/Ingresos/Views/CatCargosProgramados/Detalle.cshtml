@@ -1,0 +1,83 @@
+﻿@model ADESCOMBUSINESS.Areas.Ingresos.Models.ING_CargosProgramados
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+    {
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            @ViewBag.Error
+        </div>
+    }
+    else
+    {
+        if (ViewBag.Error == "OK")
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Operacion Completada Con exito!
+            </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+        }
+    }
+    <fieldset disabled>
+        @Html.HiddenFor(model => model.CargoProgramado_ID, new { @id = "Instalacion_ID" })
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.TipoCargo_ID, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("TipoCargo_ID", null, new { @class = "form-control ", @id = "TipoCargo_ID" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CPR_Descripcion, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.CPR_Descripcion, new { @class = "form-control ", @id = "CPR_Descripcion" })
+            </div>
+        </div> <br />
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CPR_Monto, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.CPR_Monto, new { @class = "form-control ", @id = "CPR_Monto" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CPR_Recurrente, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.CheckBoxFor(model => model.CPR_Recurrente, new { @class = "form-control ", @id = "CPR_Recurrente" })
+            </div>
+        </div> <br />
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CPR_FechaAplicacion, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.CPR_FechaAplicacion, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "CPR_FechaAplicacion" })
+            </div>
+        </div> <br />
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.BS_Activo, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.CheckBoxFor(model => model.BS_Activo, new { @class = "form-control ", @id = "BS_Activo" })
+            </div>
+        </div> <br />
+    </fieldset>
+    <br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd", minDate: '1' }).val();
+
+</script>

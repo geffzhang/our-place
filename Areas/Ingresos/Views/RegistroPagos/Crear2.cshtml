@@ -1,0 +1,203 @@
+﻿@model ADESCOMBUSINESS.Areas.Ingresos.Models.ING_PagosRealizados
+@{
+    ViewBag.Title = "Registrar Pago";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "RegistroPagos", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <input hidden type="text" id="fileSize" name="fileSize" /> <!--No se usan, pero para que no falle JS-->
+            <input hidden type="text" id="fileType" name="fileType" />
+            <img hidden id="imgImage" name="imgImage" />
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label">@ViewBag.DescLlave1</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Llave1_ID", null, new { @class = "form-control ", @id = "Llave1_ID", @onChange = "GetLlave2()" })
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">@ViewBag.DescLlave2</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Llave2_ID", null, new { @class = "form-control ", id = "Llave2_ID", @onChange = "GetReferencia()" })
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PRE_Monto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PRE_Monto, new { @class = "form-control ", @id = "PRE_Monto" })
+                    @Html.ValidationMessageFor(model => model.PRE_Monto)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PRE_Referencia, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PRE_Referencia, new { @class = "form-control ", @id = "PRE_Referencia" })
+                    @Html.ValidationMessageFor(model => model.PRE_Referencia)
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Cuenta_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Cuenta_ID", null, new { @class = "form-control ", @id = "Cuenta_ID" })
+                    @Html.ValidationMessageFor(model => model.Cuenta_ID)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PRE_FechaPago, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PRE_FechaPago, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "PRE_FechaPago" })
+                    @Html.ValidationMessageFor(model => model.PRE_FechaPago)
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PRE_Comprobante, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" value="@ViewBag.ComprobanteName" id="fileName" name="fileName" readonly />
+                    <input hidden type="text" value="@ViewBag.ComprobanteFile" id="SavedFile" name="SavedFile"/>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-info" onclick="ImpoExpo()">Subir</button>
+                </div>
+            </div><br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    function setTexbox() {
+        $TxtFileName = "fileName";
+        $TxtFileID = "SavedFile";
+        $TxtFileSize = "fileSize";
+        $TxtFileType = "fileType";
+        $ImgImage = "imgImage"
+    }
+
+    function GetLlave2() {
+        $("#Llave2_ID").empty();
+        $("#PRE_Referencia").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave2Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave2_ID").append('<option value="0">Elija Una Opcion</option>');
+                }
+                else {
+                    $("#Llave2_ID").append('<option value="0">Elija Una Opcion</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave2_ID").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+            }
+        });
+
+    }
+
+    function GetReferencia() {
+        $("#PRE_Referencia").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetReferencia2")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val(),
+                Llave2_ID: $("#Llave2_ID").val()
+            },
+            success: function (Referencia) {
+                if (Referencia.length != 0) {
+                    $("#PRE_Referencia").val(Referencia);
+                };
+            }
+        });
+
+    }
+
+    function ImpoExpo() {
+        MostarVistaParcial2('Subir archivo');
+        $.ajax({
+            url: '../ImpoExpo/Archivos/Import',
+            cache: false,
+            dataType: "html",
+            data: {
+                "Contenedor_Archivos": "comprobantespago",
+                "SoloImagenes": "true"
+            },
+            begin: function () {
+            },
+            success: function (response) {
+                document.getElementById("Modal2").innerHTML = response;
+            },
+            error: function (result) {
+                MostrarErrorModal2(result);
+            }
+        });
+    }
+
+    GetLlave2();
+    setTexbox();
+</script>
+
+<script>
+    function Procesar() {
+        var elmFileName = document.getElementById($TxtFileName);
+        var dataString;
+        var action = $("#frmArchivo").attr("action")
+        if ($("#frmArchivo").attr("enctype") == "multipart/form-data") {
+            dataString = new FormData($("#frmArchivo").get(0));
+        }
+
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: dataString,
+            dataType: "html",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#Mensaje").html(data);
+            }
+        });
+    }
+</script>

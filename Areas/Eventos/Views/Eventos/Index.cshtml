@@ -1,0 +1,180 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Eventos.Models.VwEVE_Eventos>
+@{
+    ViewBag.Title = "Reservaciones";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<div class="text-right">
+    <h2>Calendario de Eventos</h2>
+</div>
+<div class="panel panel-default" style="width: 100%">
+    <div class="panel-body">
+        @using (Ajax.BeginForm("RefreshFecha", "Eventos", new AjaxOptions { OnBegin = "AdicionarLoading('DataContent')", UpdateTargetId = "RefreshData" }))
+            {
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="control-label">Mes </label>
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownList("Mes", null, new { @class = "form-control", @id = "Mes" })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Año </label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("Anio", null, new { @class = "form-control", @id = "Anio" })
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary" onclick="GetCalendario()" id="RefreshFechaBtn">Filtrar</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="panel panel-default" style="width: 100%">
+    <div class="panel-heading">Calendario</div>
+    <div class="panel-body">
+        <div id="MiCalendario"></div>
+    </div>
+</div>
+<div class="panel panel-default" style="width: 100%">
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color:#2e2e37; color:white">
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Instalación</th>
+            <th>Titulo</th>
+            <th>Acciones</th>
+            </thead>
+            <tbody id="DataContent">
+                @foreach (ADESCOMBUSINESS.Areas.Eventos.Models.VwEVE_Eventos OBJEVE_Eventos in Model)
+                {
+                    <tr onclick="SelectRow(@OBJEVE_Eventos.Evento_ID, this)">
+                        <td>@Html.DisplayFor(m => OBJEVE_Eventos.CiaEvento_ID)</td>
+                        <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Fecha)</td>
+                        <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Inicio)</td>
+                        <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Fin)</td>
+                        <td>@Html.DisplayFor(m => OBJEVE_Eventos.INS_Descripcion)</td>
+                        <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Titulo)</td>
+                        <td>
+                            @Ajax.ActionLink(" ", "Editar", new { Evento_ID = @OBJEVE_Eventos.Evento_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Editar')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Editar" })
+                            @Ajax.ActionLink(" ", "Eliminar", new { Evento_ID = @OBJEVE_Eventos.Evento_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Eliminar')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-remove", @title = "Eliminar" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+		<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+            <div class="row">
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+                </div>
+                <div class="pull-right" style="padding:0px 10px 0px 0px;">
+                    @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#SearchData').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+
+    function GetCalendario() {
+        var mmmm = document.getElementById("Mes").selectedIndex + 1;
+        var aaaa = document.getElementById("Anio").options[document.getElementById("Anio").selectedIndex].value;
+
+        $('#MiCalendario').html('');
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetEventosDelMes")',
+            dataType: 'json',
+            data: {
+                mes: mmmm,
+                anio: aaaa
+            },
+            success: function (ListaRet) {
+                var d = 1;
+                var m = mmmm;
+                var y = aaaa;
+
+
+                var calendar = $('#MiCalendario').fullCalendar(
+                {
+                    header:
+                    {
+                        left: '',
+                        center: '',
+                        right: ''
+                    },
+                    year: y,
+                    month: m - 1,
+                    day: 1,
+                    defaultView: 'month',
+                    selectable: false,
+                    selectHelper: true,
+                    editable: false,
+                    events: ListaRet
+                });
+            }
+        });
+    }
+
+    GetCalendario();
+</script>
+<style type="text/css">
+    #MiCalendario {
+        margin-top: 15px;
+        width: 100%;
+    }
+</style>
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshFechaBtn')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

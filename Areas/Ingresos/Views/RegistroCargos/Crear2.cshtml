@@ -1,0 +1,108 @@
+﻿@model ADESCOMBUSINESS.Areas.Ingresos.Models.ING_PagosProgramados
+@{
+    ViewBag.Title = "Registrar Pago";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "RegistroCargos", new AjaxOptions { OnBegin = "AdicionarLoading('Modal')", UpdateTargetId = "Modal" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label">@ViewBag.DescLlave1</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Llave1_ID", null, new { @class = "form-control ", @id = "Llave1_IDHere", @onChange = "GetLlave2Here()" })
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">@ViewBag.DescLlave2</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Llave2_ID", null, new { @class = "form-control ", id = "Llave2_IDHere" })
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TipoCargo_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("TipoCargo_ID", null, new { @class = "form-control ", @id = "TipoCargo_ID" })
+                    @Html.ValidationMessageFor(model => model.TipoCargo_ID)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PPR_Concepto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PPR_Concepto, new { @class = "form-control ", @id = "PPR_Concepto" })
+                    @Html.ValidationMessageFor(model => model.PPR_Concepto)
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PPR_Monto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PPR_Monto, new { @class = "form-control ", @id = "PPR_Monto" })
+                    @Html.ValidationMessageFor(model => model.PPR_Monto)
+                </div>
+            </div><br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    function GetLlave2Here() {
+        $("#Llave2_IDHere").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave2Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_IDHere").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave2_IDHere").append('<option value="0">Elija Una Opcion</option>');
+                }
+                else {
+                    $("#Llave2_IDHere").append('<option value="0">Elija Una Opcion</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave2_IDHere").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+            }
+        });
+
+    }
+
+    GetLlave2();
+</script>

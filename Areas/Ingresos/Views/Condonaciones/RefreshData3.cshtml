@@ -1,0 +1,70 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Configuracion.Models.VwTVI_Direcciones>
+@{
+    ViewBag.Title = "Estado de Cuenta Residentes";
+    Layout = null;
+}
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>@ViewBag.DescLlave1</th>
+    <th>@ViewBag.DescLlave2</th>
+    <th>@ViewBag.DescLlave3</th>
+    <th>Saldo Actual</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody id="DataContent">
+        @foreach (ADESCOMBUSINESS.Areas.Configuracion.Models.VwTVI_Direcciones OBJTIV_Direcciones in Model)
+        {
+            <tr onclick="SelectRow(@OBJTIV_Direcciones.Direccion_ID, this)">
+                <td>@Html.DisplayFor(m => OBJTIV_Direcciones.CiaDireccion_ID)</td>
+                <td>@Html.DisplayFor(m => OBJTIV_Direcciones.LL1_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJTIV_Direcciones.LL2_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJTIV_Direcciones.LL3_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJTIV_Direcciones.CTA_Saldo)</td>
+                <td>
+                    @*@Ajax.ActionLink(" ", "CondonarCargos", new { Direccion_ID = @OBJTIV_Direcciones.Direccion_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Condonación de Cargos')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-file", @title = "Condonación de Cargos" })*@
+                    @Ajax.ActionLink(" ", "Crear", null, , new { Direccion_ID = @OBJTIV_Direcciones.Direccion_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Condonación de Cargos')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-file", @title = "Condonación de Cargos" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+    <div class="row">
+        <div class="pull-right" style="padding:0px 10px 0px 0px;">
+            @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+        </div>
+    </div>
+</div>
+
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>

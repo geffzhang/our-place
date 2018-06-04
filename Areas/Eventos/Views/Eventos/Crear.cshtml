@@ -1,0 +1,99 @@
+﻿@model ADESCOMBUSINESS.Areas.Eventos.Models.EVE_Eventos
+@{
+    ViewBag.Title = "Crear";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "Eventos", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Instalacion_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Instalacion_ID", null, new { @class = "form-control ", @id = "Instalacion_ID" })
+                    @Html.ValidationMessageFor(model => model.Instalacion_ID)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Titulo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.EVE_Titulo, new { @class = "form-control ", @id = "DIR_Descripcion" })
+                    @Html.ValidationMessageFor(model => model.EVE_Titulo)
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Detalles, new { @class = "control-label" })
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.EVE_Detalles, new { @rows = "3", @class = "form-control ", @id = "EVE_Detalles", @style = "min-width: 100%;" })
+                    @Html.ValidationMessageFor(model => model.EVE_Detalles)
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Organizador, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => Model.EVE_Organizador, new { @class = "form-control ", @id = "EVE_Organizador" })
+                    @Html.ValidationMessageFor(model => model.EVE_Organizador)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Fecha, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => Model.EVE_Fecha, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "EVE_Fecha" })
+                    @Html.ValidationMessageFor(model => model.EVE_Fecha)
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Inicio, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Inicio", null, new { @class = "form-control ", @id = "Inicio" })
+                    @Html.ValidationMessageFor(model => model.EVE_Inicio)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Fin, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Fin", null, new { @class = "form-control ", @id = "Fin" })
+                    @Html.ValidationMessageFor(model => model.EVE_Fin)
+                </div>
+            </div> <br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>

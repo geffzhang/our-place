@@ -1,0 +1,85 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Email.Models.VwEMA_Emails>
+@{
+    ViewBag.Title = "Emails";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>Fecha</th>
+    <th>Usuario</th>
+    <th>Asunto</th>
+    <th>@ViewBag.DescLlave1</th>
+    <th>@ViewBag.DescLlave2</th>
+    <th>Residente</th>
+    <th>Adjunto</th>
+    <th>Estatus</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody id="DataContent">
+        @foreach (ADESCOMBUSINESS.Areas.Email.Models.VwEMA_Emails OBJEMA_Emails in Model)
+        {
+            <tr onclick="SelectRow(@OBJEMA_Emails.Email_ID, this)">
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.CiaEmail_ID)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.EMA_FechaCreacion)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.UsuarioCreo)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.EMA_Asunto)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.LL1_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.LL2_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.RES_Nombre)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.EMA_AdjuntoName)</td>
+                <td>@Html.DisplayFor(m => OBJEMA_Emails.EMA_Estatus)</td>
+                <td>
+                    @Ajax.ActionLink(" ", "Detalle", new { Email_ID = @OBJEMA_Emails.Email_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Detalle  Noticia')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-search", @title = "Detalle" })
+                    @Html.ActionLink(" ", "Descargar", new { Email_ID = @OBJEMA_Emails.Email_ID }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-download-alt", @title = "Descargar" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+    <div class="row">
+        <div class="pull-left" style="padding:0px 0px 0px 10px;">
+            @Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Enviar Email')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear Email" })
+            @Ajax.ActionLink(" ", "RefreshData", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable();var info = table.page.info();  localStorage['pageLength'] = info.length;  RefreshData();", OnFailure = "MostrarError", UpdateTargetId = "RefreshData" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-refresh", @id = "RefreshButon", @title = "Refrescar" })
+        </div>
+        <div class="pull-right" style="padding:0px 10px 0px 0px;">
+            @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "order": [[ 0, "desc" ]],
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+

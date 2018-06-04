@@ -1,0 +1,225 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Ingresos.Models.VwING_PagosRealizados>
+@{
+    ViewBag.Title = "Registro de Pagos";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<div class="text-right">
+    <h2>Registro de Pagos</h2>
+</div>
+<div class="panel panel-default" style="width: 100%">
+    <div class="panel-body">
+        @using (Ajax.BeginForm("RefreshDataSearchList", "RegistroPagos", new AjaxOptions { OnBegin = "AdicionarLoading('DataContent')", UpdateTargetId = "RefreshData" }))
+            {
+            <br />
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="control-label">@ViewBag.DescLlave1</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("Llave1_IDFilter", null, new { @class = "form-control ", @id = "Llave1_IDFilter", @name = "Llave1_IDFilter", @onChange = "GetLlave2Here()" })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">@ViewBag.DescLlave2</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("Llave2_IDFilter", null, new { @class = "form-control ", id = "Llave2_IDFilter", @name = "Llave2_IDFilter", @onChange = "GetLlave3Here()" })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">@ViewBag.DescLlave3</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("Llave3_IDFilter", null, new { @class = "form-control ", id = "Llave3_IDFilter", @name = "Llave3_IDFilter", })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Referencia</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" name="FindReferencia" type="text" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="control-label">Estatus</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("FindEstatus", null, new { @class = "form-control ", @id = "FindEstatus" })
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Fecha desde</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control date" name="FindFechaDesde" type="text" />
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Fecha hasta</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control date" name="FindFechaHasta" type="text" />
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Fecha</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("FindTipoFecha", null, new { @class = "form-control ", @id = "FindTipoFecha" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-10"></div> 
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" /> Filtrar</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="panel panel-default">
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color:#2e2e37; color:white">
+            <th>ID</th>
+            <th>Fecha Pago</th>
+            <th>Fecha Ingreso</th>
+            <th>Residencia</th>
+            <th>Monto</th>
+            <th>Referencia</th>
+            <th>Estatus</th>
+            <th>Acciones</th>
+            </thead>
+            <tbody id="DataContent">
+                @foreach (ADESCOMBUSINESS.Areas.Ingresos.Models.VwING_PagosRealizados OBJING_PagosRealizados in Model)
+                {
+                    <tr onclick="SelectRow(@OBJING_PagosRealizados.PagoRealizado_ID, this)">
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.CiaPagoRealizado_ID)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_FechaPago)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_FechaCreacion)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.DIR_Descripcion)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_Monto)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_Referencia)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_Estatus)</td>
+                        <td>
+                            @Ajax.ActionLink(" ", "Detalle", new { PagoRealizado_ID = @OBJING_PagosRealizados.PagoRealizado_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Detalle')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-search", @title = "Detalle" })
+                            @Ajax.ActionLink(" ", "CancelarPago", new { PagoRealizado_ID = @OBJING_PagosRealizados.PagoRealizado_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Cancelar Pago')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash", @title = "Cancelar Pago" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+            <div class="row">
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+                </div>
+                <div class="pull-right" style="padding:0px 10px 0px 0px;">
+                    @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function GetLlave2Here() {
+        $("#Llave2_IDFilter").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave2Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_IDFilter").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave2_IDFilter").append('<option value="0">(Todas)</option>');
+                }
+                else {
+                    $("#Llave2_IDFilter").append('<option value="0">(Todas)</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave2_IDFilter").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+                GetLlave3Here();
+            }
+        });
+    }
+
+    function GetLlave3Here() {
+        $("#Llave3_IDFilter").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave3Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_IDFilter").val(),
+                Llave2_ID: $("#Llave2_IDFilter").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave3_IDFilter").append('<option value="0">(Todas)</option>');
+                }
+                else {
+                    $("#Llave3_IDFilter").append('<option value="0">(Todas)</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave3_IDFilter").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+            }
+        });
+    }
+</script>

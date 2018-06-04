@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Ver Comprobante";
+    Layout = null;
+}
+<div class="modal-content">
+    <img src="@ViewBag.Comprobante" class="imagepreview" style="width: 100%;">
+</div>
+
+<script>
+    $(function () {
+        $('.pop').on('click', function () {
+            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            $('#imagemodal').modal('show');
+        });
+    });
+</script>
