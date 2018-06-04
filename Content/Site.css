@@ -1,0 +1,274 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-size: 13px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.nav navbar-nav navbar-right {
+    padding-right: 0px;
+}
+
+.navbar-right {
+    padding-right: 15px;
+}
+
+/*se quitó para presentación
+.bienvenido {
+    text-align: center;
+    margin: 50px 0 0 0;
+    font-size: 96px;
+    color: rgb(131, 131, 133);
+    font-family: verdana;
+}*/
+
+.breadcrumb > .active {
+    color: #777;
+}
+
+.breadcrumb {
+    background-color: #fff !important;
+    font-size: 9pt;
+}
+
+.label-important,
+.badge-important {
+    background-color: #d15b47 !important;
+}
+
+
+.cuerpo {
+    display: inline-block;
+    width: 100%;
+    font-size: 13px;
+}
+
+.lateral {
+    background: #2e2e37 none repeat scroll 0 0;
+    height: 200%;
+    width: 275px;
+    position: absolute;
+}
+
+.contenido-tabla-Expand {
+    margin-left: 290px !important;
+    width: 77% !important;
+}
+
+h2 {
+    font-size: 33px;
+    font-weight: 100;
+    border-bottom: 1px solid rgb(102, 102, 102);
+}
+
+#apphead h2 em {
+    color: #777;
+}
+/* Se quitó para presentación
+.ErrorCode {
+    font-size: 326px;
+    color: rgb(180, 180, 180);
+    font-family: impact;
+}
+
+.ErrorMessage {
+    margin-top: -271px;
+    font-size: 41px;
+    font-family: verdana;
+    color: rgb(46, 46, 55);
+}
+    */
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.Select {
+    background-color: #dfdfdf;
+}
+
+
+.modal-dialog.modal-mini {
+    width: 35%;
+}
+
+/*
+.modal-dialog.modal-medium {
+    margin-top: 6%;
+    width: 71%;
+}
+
+.modal-dialog.modal-medium1 {
+    margin-top: 4%;
+    width: 54%;
+}
+
+.modal-dialog.modal-large {
+   margin-top: 10%;
+    width: 69%;
+}
+
+.modal-dialog.modal-Report {
+   margin-top: 1%;
+    width: 97%;
+}
+
+.modal-dialog.modal-Full {
+   margin-top: 4%;
+    width: 97%;
+}
+    */
+
+
+input[type="checkbox"] {
+    box-shadow: inset 0 0px 0px rgba(0,0,0,.3);
+    width: 15px;
+}
+
+.btn-BMS:hover, .btn-BMS:focus, .btn-BMS:active, .btn-BMS.active, .open > .dropdown-toggle.btn-BMS {
+    background-color: #fff;
+    border-color: #337ab7;
+    color: #337ab7 !important;
+}
+
+
+.btn-BMS {
+    background-color: #337ab7;
+    border-color: #337ab7;
+    color: #fff;
+    border: medium none;
+}
+
+.btn-Fullwidth {
+    text-align: left !important;
+    width: 100%;
+}
+
+.Icon-BMS-Large {
+    font-size: 30px !important;
+}
+
+.btn-BMSPanelControl {
+    width: 120px;
+    height: 90px;
+    font-size: 13px !important;
+    text-align: center !important;
+    white-space: pre-wrap !important;
+}
+
+.BMS-DashboarSummary {
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+
+    position:relative !important;
+    z-index: -2;
+    height:300px;
+}
+
+.BMS-DashboarSummary-Graph {
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+
+    position:relative !important;
+    z-index: -2;
+    height:130px;
+}
+
+.BMS-DashboarSummary-Icon {
+    font-size: 80px !important;
+    padding: 20px 20px 20px 20px;
+    color: lightgrey;
+    
+    position: absolute !important;
+    z-index: -1;
+    right: 10px;
+}
+
+.BMS-DashboarSummary-Count {
+    padding: 10px 10px 10px 10px;
+    font-size: 40px !important;
+    color: #4c4f54;
+
+    position: absolute !important;
+    z-index: 5;
+}
+
+.BMS-DashboarSummary-Description {
+    padding: 10px 10px 10px 10px;
+    font-size: 23px !important;
+    color: dimgrey;
+    font-weight: lighter;
+
+    position: absolute !important;
+    z-index: 2;
+   bottom:0px;
+}
+
+.BMS-DashboarSummary-Titulo {
+    padding: 10px 10px 10px 10px;
+    font-size: 15px !important;
+    color: dimgrey;
+    font-weight: 300;
+}
+
+
+
+.breadcrumb {
+    margin-bottom: 0px !important;
+}
+
+h2, .h2 {
+    margin-top: 0px !important;
+}
+
+.NombreColonia {
+    padding: 0px 15px 5px 15px;
+    text-align:center;
+    color:#4c4f54;
+    font-size:16px;
+    font-weight: lighter;
+}

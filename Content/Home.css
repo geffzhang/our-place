@@ -1,0 +1,52 @@
+﻿body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-size: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-image:url("img/fondo_difuminado.png");
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    margin-left:0;
+}
+
+.left-logo-blanco {
+    width: 105px;
+    height: 45px;
+    display: block;
+    margin-right: 20px;
+    margin-left:5px;
+}
+
+.slogan {
+    font-size: 15px;
+}
+
+.menu-items a {
+    color: white !important;
+}
+
+    .menu-items a:hover {
+        color: white !important;
+        background-color: teal !important;
+    }
+
+.myNavbar {
+    /*background-color:#d9edf7!important;*/
+    background-color: teal !important;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    border: 1px solid #000000!important;
+    background: teal !important;
+}
+
+.myFooter {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color:#cccacf;
+  text-align: center;
+}
