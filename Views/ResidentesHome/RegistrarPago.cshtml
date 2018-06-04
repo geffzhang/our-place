@@ -1,0 +1,121 @@
+﻿@model ADESCOMBUSINESS.AccesoResidentes.RegistroPagos.Models.ING_PagosRealizados
+@{
+    ViewBag.Title = "Registrar Pago";
+    Layout = null;
+}
+@using (Ajax.BeginForm("RegistrarPago", "RegistroPagos", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PRE_Referencia, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PRE_Referencia, new { @class = "form-control ", @id = "PRE_Referencia", @readOnly = "true" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PRE_Monto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PRE_Monto, new { @class = "form-control ", @id = "PRE_Monto" })
+                    @Html.ValidationMessageFor(model => model.PRE_Monto)
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PRE_Comprobante, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" value="@ViewBag.ComprobanteName" id="fileName" name="fileName" readonly />
+                    <input hidden type="text" value="@ViewBag.ComprobanteFile" id="SavedFile" name="SavedFile" />
+                    @Html.ValidationMessageFor(model => model.PRE_Comprobante)
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-info" onclick="ImpoExpo()">Subir</button>
+                </div>
+            </div><br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    function setTexbox() {
+        $TxtFileName = "fileName";
+        $TxtFileID = "SavedFile";
+    }
+
+    function ImpoExpo() {
+        MostarVistaParcial2('Subir archivo');
+        $.ajax({
+            url: '../ImpoExpo/Archivos/Import',
+            cache: false,
+            dataType: "html",
+            data: {
+                "Contenedor_Archivos": "comprobantespago",
+                "SoloImagenes": "true"
+            },
+            begin: function () {
+            },
+            success: function (response) {
+                document.getElementById("Modal2").innerHTML = response;s
+            },
+            error: function (result) {
+                MostrarErrorModal2(result);
+            }
+        });
+    }
+
+    setTexbox();
+</script>
+
+<script>
+    function Procesar() {
+        var elmFileName = document.getElementById($TxtFileName);
+        var dataString;
+        var action = $("#frmArchivo").attr("action")
+        if ($("#frmArchivo").attr("enctype") == "multipart/form-data") {
+            dataString = new FormData($("#frmArchivo").get(0));
+        }
+
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: dataString,
+            dataType: "html",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#Mensaje").html(data);
+            }
+        });
+    }
+</script>

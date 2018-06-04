@@ -1,0 +1,74 @@
+﻿@model ADESCOMBUSINESS.Areas.Contacto.Models.SIS_Contacto
+@{
+    Layout = null;
+    ViewBag.Title = "Home";
+}
+<div id="ContactoPanel">
+    @using (Ajax.BeginForm("PartialContacto", "Home", new AjaxOptions { OnBegin = "AdicionarLoading('ContactoPanel')", UpdateTargetId = "ContactoPanel" }))
+    {
+        @Html.ValidationSummary(true)
+        <div style="width: 100%;">
+            @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+            {
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @ViewBag.Error
+                </div>
+            }
+            else
+            {
+                if (ViewBag.Error == "OK")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        Gracias. Hemos recibido tu mensaje. En breve te contactarémos
+                    </div>
+                    <script>
+                        //OcultarModal();
+                        //MostarModalSuccess();
+                    </script>
+                }
+            }
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.CON_Nombre, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.CON_Nombre, new { @class = "form-control ", @id = "CON_Nombre" })
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.CON_Email, new { @class = "control-label", @Type = "mail" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.CON_Email, new { @class = "form-control ", @id = "CON_Email" })
+                        @Html.ValidationMessageFor(model => model.CON_Email)
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.CON_Telefono, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.CON_Telefono, new { @class = "form-control ", @id = "CON_Telefono" })
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.CON_Mensaje, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.CON_Mensaje, new { @rows = "3", @class = "form-control ", @id = "CON_Mensaje", @style = "min-width: 100%;" })
+                        @Html.ValidationMessageFor(model => model.CON_Mensaje)
+                    </div>
+                </div> <br />
+            </fieldset>
+            <br />
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </div>
+    }
+</div>

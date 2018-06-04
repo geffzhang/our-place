@@ -1,0 +1,33 @@
+﻿@using (Html.BeginForm("Logout", "Login", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+{
+    @Html.AntiForgeryToken()
+
+    ADESCOMBUSINESS.DataAccess.Models.LoginRS InfoUser = (ADESCOMBUSINESS.DataAccess.Models.LoginRS)@Session["InfoUser"];
+    /*<ul class="nav navbar-nav navbar-right">
+        <li>
+            @InfoUser.USR_Nombre
+            <a href="javascript:document.getElementById('logoutForm').submit()"> Log off</a>
+        </li>
+    </ul>*/
+
+    /* <div id="navbar" class="navbar navbar-fixed-top">
+         <ul class="nav navbar-nav navbar-right">
+             <li>@InfoUser.USR_Nombre</li>
+         </ul>
+     </div>*/
+
+    <ul class="nav navbar-nav pull-right">
+        <li id="fat-menu" class="dropdown">
+            <a href="#" id="drop3" role="button" class="dropbtn dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-user"></span>@InfoUser.USR_Nombre<b class="caret"></b></a>
+            <ul class="dropdown-content dropdown-menu" role="menu" aria-labelledby="drop3">
+                <!--<li><a tabindex="-1" href="#"><span class="hidden-xs glyphicon glyphicon-ok"></span>  Edificio 1</a></li>
+                <li><a tabindex="-1" href="#"><span style="visibility: hidden" class="hidden-xs glyphicon glyphicon-ok"></span>  Edificio 2</a></li>
+                <li><a tabindex="-1" href="#"><span style="visibility: hidden" class="hidden-xs glyphicon glyphicon-ok"></span>  Edificio 3</a></li>
+                <li><a tabindex="-1" href="#"><span style="visibility: hidden" class="hidden-xs glyphicon glyphicon-ok"></span>  Edificio 4</a></li>
+                <li><a tabindex="-1" href="#"><span style="visibility: hidden" class="hidden-xs glyphicon glyphicon-ok"></span>  Edificio 5</a></li>
+                <li class="divider"></li>-->
+                <li><a tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Cerrar Sesión</a></li>
+            </ul>
+        </li>
+    </ul>
+}

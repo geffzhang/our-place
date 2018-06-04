@@ -1,0 +1,840 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>OurPlace&reg; :: @ViewBag.Title</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @*  <link href="~/Content/Resources/css/tigris.css" rel="stylesheet" />
+        <link href="~/Content/Resources/css/Menu.css" rel="stylesheet" />
+        <link href="~/Content/Resources/Images/IconsMenu/demo-files/style.css" rel="stylesheet" />
+        <link href="~/Content/Resources/assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/Resources/assets/css/style-responsive.css" rel="stylesheet" />
+        <link href="~/Content/Resources/css/jquery-te-1.4.0.css" rel="stylesheet" />
+        <link href="~/Content/Bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+    <link href="~/Content/Bootstrap/css/dataTables.bootstrap.css" rel="stylesheet" />
+    @*
+        @Styles.Render("~/bundles/themes/base/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <script>
+            var $TexboxReturnId = "";
+        </script>*@
+
+    <link href="~/Content/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Resources/css/Menu.css" rel="stylesheet" />
+    <link href="~/Content/Resources/css/UserMenu.css" rel="stylesheet" />
+    <link href="~/Content/Resources/css/jquery-te-1.4.0.css" rel="stylesheet" />
+
+    @Styles.Render("~/bundles/themes/base/css")
+    @Scripts.Render("~/bundles/modernizr")
+<!--    <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.button.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.slider.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
+    -->
+
+</head>
+
+
+<body>
+
+    @if (Session["InfoUser"] != null)
+    {
+
+        ADESCOMBUSINESS.DataAccess.Models.LoginRS InfoUser = (ADESCOMBUSINESS.DataAccess.Models.LoginRS)@Session["InfoUser"];
+        ADESCOMBUSINESS.DataAccess.Models.CompanyInfo CompanyInfo = (ADESCOMBUSINESS.DataAccess.Models.CompanyInfo)@Session["CompanyInfo"];
+
+        <div class="navbar navbar-default navbar-fixed-top">
+            <!--<div class="navbar-brand" style="text-align:center">Hello</div>-->
+            @Html.Partial("_UserAccountPartial")
+        </div>
+        <div class="cuerpo">
+            <div id="Lateral" class="lateral MenuExpand">
+                <nav class="navbar navbar-default sidebar" role="navigation">
+                    <div>
+                        <!--class="container-fluid">-->
+                        <!--<div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>-->
+                        <div>
+                            <!--class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">-->
+
+                            <ul class="menutree nav navbar-nav">
+                                <li>
+                                    <div>
+                                        <!--<img class="profile-img" src="http://www.gig.mx/img_grande/logo%20real%20del%20lago.png" alt="">-->
+                                        <img class="profile-img" src="/Content/Img/logo.png" alt="">
+                                    </div>
+                                    <div class="NombreColonia">
+                                        <label style="font-weight: lighter;">@InfoUser.CIA_Nombre</label>
+                                    </div>
+                                </li>
+                                <li><a href="../Dashboard/Dashboard" data-ajax-begin="AdicionarLoadingContentOnePage('')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon-home"></span>Inicio</a></li>
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon-user"></span>Residentes <span class="caret"></span><span class="badge badge-important pull-right" id="bdAutRes_Padre"></span></a>
+                                    <ul class="myDropDown forAnimate">
+                                        <li><a href="../Residentes/AutResidentes" data-ajax-begin="AdicionarLoadingContentOnePage('Residentes<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Aprobación de Residentes')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Aprobación de Residentes<span class="badge badge-important pull-right" id="bdAutRes_Hijo" hidden></span></a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Residentes/Residentes" data-ajax-begin="AdicionarLoadingContentOnePage('Residentes<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Residentes')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Residentes</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-piggy-bank"></span>Ingresos <span class="caret"></span><span class="badge badge-important pull-right" id="bdAutPag_Padre"></span></a>
+                                    <ul class="myDropDown forAnimate" role="menu">
+                                        <li><a href="../Ingresos/AutPagosRealizados" data-ajax-begin="AdicionarLoadingContentOnePage('Ingresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Aprobación de Pagos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Aprobación de Pagos<span class="badge badge-important pull-right" id="bdAutPag_Hijo"></span></a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Ingresos/RegistroPagos" data-ajax-begin="AdicionarLoadingContentOnePage('Ingresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Registro de Pagos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Registro de Pagos</a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Ingresos/RegistroCargos" data-ajax-begin="AdicionarLoadingContentOnePage('Ingresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Registro de Cargos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Registro de Cargos</a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Ingresos/Condonaciones" data-ajax-begin="AdicionarLoadingContentOnePage('Ingresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Condonación de Cargos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Condonación de Cargos</a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Ingresos/EdoCtaResidentes" data-ajax-begin="AdicionarLoadingContentOnePage('Ingresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Estado de Cuenta Residentes')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Estado de Cuenta Residentes</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon-usd"></span>Egresos <span class="caret"></span><span class="badge badge-important pull-right" id="bdAplGasto_Padre"></span></a>
+                                    <ul class="myDropDown forAnimate" role="menu">
+                                        <li><a href="../Egresos/GastosProgramados" data-ajax-begin="AdicionarLoadingContentOnePage('Egresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Gastos Programados')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Gastos Programados<span class="badge badge-important pull-right" id="bdAplGasto_Hijo"></span></a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Egresos/RegistroGastos" data-ajax-begin="AdicionarLoadingContentOnePage('Egresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Registro de Gastos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Registro de Gastos</a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Egresos/EdoCtaEmpresa" data-ajax-begin="AdicionarLoadingContentOnePage('Egresos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Estado de Cuenta Comunidad')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Estado de Cuenta Colonia</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-briefcase"></span>Contabilidad <span class="caret"></span><span class="badge badge-important pull-right" id="bdAutPag_Padre"></span></a>
+                                    <ul class="myDropDown forAnimate" role="menu">
+                                        <li><a href="../Contabilidad/Cuentas" data-ajax-begin="AdicionarLoadingContentOnePage('Contabilidad<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Cuentas')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Cuentas</a></li>
+                                        <!--<li class="myDivider"></li>
+                                        <li><a href="../Contabilidad/Cargos_Creditos" data-ajax-begin="AdicionarLoadingContentOnePage('Contabilidad<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Cargos y Créditos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Cargos y Créditos</a></li>-->
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Contabilidad/TransfCtas" data-ajax-begin="AdicionarLoadingContentOnePage('Contabilidad<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Transferencia entre cuentas')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Transferencias entre Cuentas</a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Ingresos/CatCargosProgramados" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Cargos Programados')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Programación de Cargos</a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Egresos/CatGastosProgramados" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Gastos Programados')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Programación de Gastos</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="../Noticias/Noticias" data-ajax-begin="AdicionarLoadingContentOnePage('Noticias<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Noticias')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-bullhorn"></span>Noticias</a></li>
+                                <li><a href="../Email/Email" data-ajax-begin="AdicionarLoadingContentOnePage('Email<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Email')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-envelope"></span>Email</a></li>
+                                <li><a href="../Eventos/Eventos" data-ajax-begin="AdicionarLoadingContentOnePage('Calendario<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Calendario de Eventos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon-calendar"></span>Calendario de Eventos</a></li>
+                                <li><a href="../Votaciones/Votaciones" data-ajax-begin="AdicionarLoadingContentOnePage('Votaciones<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Votaciones y Encuestas')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon-thumbs-up"></span>Votaciones y Encuestas</a></li>
+                                <!-- <li class="dropdown">
+                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon-phone-alt"></span>Directorio <span class="caret"></span></a>
+                                     <ul class="myDropDown forAnimate">-->
+                                <li><a href="../Directorio/Directorio" data-ajax-begin="AdicionarLoadingContentOnePage('Directorio<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Directorio')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon-phone-alt"></span>Directorio</a></li>
+                                <!-- <li class="myDivider"></li>
+                                 <li><a href="../Directorio/Documentos" data-ajax-begin="AdicionarLoadingContentOnePage('Directorio<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Documentos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Documentos</a></li>-->
+                                <!--</ul>
+                                </li>-->
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon-tree-conifer"></span>Áreas Comunes <span class="caret"></span><span class="badge badge-important pull-right" id="bdReservas_Padre"></span></a>
+                                    <ul class="myDropDown forAnimate">
+                                        <li><a href="../Reservaciones/Reservaciones" data-ajax-begin="AdicionarLoadingContentOnePage('Areas Comunes<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Aprobación de Reservaciones')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Aprobación de Reservaciones<span class="badge badge-important pull-right" id="bdReservas_Hijo"></span></a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Reservaciones/EventosResidentes" data-ajax-begin="AdicionarLoadingContentOnePage('Reservaciones<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Reservaciones Registradas')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Reservaciones Registradas</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon-tags"></span>Anuncios Clasificados <span class="caret"></span><span class="badge badge-important pull-right" id="bdAnuncios_Padre"></span></a>
+                                    <ul class="myDropDown forAnimate" role="menu">
+                                        <li><a href="../Anuncios/AutAnuncios" data-ajax-begin="AdicionarLoadingContentOnePage('Anuncios Clasificados<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Aprobación de Anuncios')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Aprobación de Anuncios<span class="badge badge-important pull-right" id="bdAnuncios_Hijo"></span></a></li>
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Anuncios/Anuncios" data-ajax-begin="AdicionarLoadingContentOnePage('Anuncios Clasificados<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Anuncios Registrados')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Anuncios Registrados</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon-cog"></span>Configuración <span class="caret"></span></a>
+                                    <ul class="myDropDown forAnimate" role="menu">
+                                        <li><a href="../Configuracion/Configuracion" data-ajax-begin="AdicionarLoadingContentOnePage('Configuracion<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Parámetros de Configuración')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Parámetros de Configuración</a></li>
+                                        <li class="myDivider"></li>
+
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Catálogos <span class="caret"></span></a>
+                                            <ul class="myDropDown">
+
+                                                <li><a href="../Configuracion/CatLlaves1" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>@CompanyInfo.DescLlave1')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">@CompanyInfo.DescLlave1</a></li>
+
+                                                @if (CompanyInfo.CantLlaves == 2)
+                                                {
+                                                    <li class="myDivider"></li>
+                                                    <li><a href="../Configuracion/CatLlaves2" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>@CompanyInfo.DescLlave2')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">@CompanyInfo.DescLlave2</a></li>
+                                                }
+
+                                                @if (CompanyInfo.CantLlaves == 3)
+                                                {
+                                                    <li class="myDivider"></li>
+                                                    <li><a href="../Configuracion/CatLlaves2" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>@CompanyInfo.DescLlave2')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">@CompanyInfo.DescLlave2</a></li>
+                                                    <li class="myDivider"></li>
+                                                    <li><a href="../Configuracion/CatLlaves3" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>@CompanyInfo.DescLlave3')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">@CompanyInfo.DescLlave3</a></li>
+                                                }
+
+                                                <li class="myDivider"></li>
+
+
+                                                <li><a href="../Configuracion/CatResidencias" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Residencias')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Residencias</a></li>
+                                                <li class="myDivider"></li>
+                                                <li><a href="../Configuracion/CatInstalaciones" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Instalaciones')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Instalaciones</a></li>
+                                                <li class="myDivider"></li>
+                                                <li><a href="../Configuracion/CatTipoCargos" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Tipo de Cargos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Tipo de Cargos</a></li>
+                                                <li class="myDivider"></li>
+                                                <li><a href="../Configuracion/CatTipoGastos" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Tipo de Gastos')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Tipo de Gastos</a></li>
+                                                <li class="myDivider"></li>
+                                                <li><a href="../Configuracion/CatTipoDirectorio" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Tipo de Directorio')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Tipo de Directorio</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="myDivider"></li>
+                                        <li><a href="../Configuracion/Usuarios" data-ajax-begin="AdicionarLoadingContentOnePage('Configuración<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Catálogos<span class=&quot;glyphicon glyphicon-chevron-right&quot;></span>Usuarios')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true">Control de Usuarios</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="ContenidoCuerpo" class="contenido-tabla contenido-tabla-Expand">
+                <br />
+                <div class="breadcrumb"></div>
+                <div class="titulo">
+                </div>
+                <div id="ContentOnePage">
+                    @RenderBody()
+                </div>
+
+            </div>
+        </div>
+
+            <!-- Modal -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div id="modal-header" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"></h4>
+                    </div>
+                    <div id="Modal" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal  Full-->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-containerFull" tabindex="-1" role="dialog" aria-labelledby="myModalLabelFull" aria-hidden="true">
+            <div class="modal-dialog modal-Full">
+                <div class="modal-content">
+                    <div id="modal-headerFull" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabelFull"></h4>
+                    </div>
+                    <div id="ModalFull" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog modal-large">
+                <div class="modal-content">
+                    <div id="modal-header1" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel1"></h4>
+                    </div>
+                    <div id="Modal1" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div id="modal-header2" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel2"></h4>
+                    </div>
+                    <div id="Modal2" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal -->
+            <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-large">
+                    <div class="modal-content">
+                        <div id="modal-header3" class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel3"></h4>
+                        </div>
+                        <div id="Modal3" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-containerReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabelReport" aria-hidden="true">
+                <div class="modal-dialog modal-Report">
+                    <div class="modal-content">
+                        <div id="modal-headerReport" class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabelReport"></h4>
+                        </div>
+                        <div id="ModalReport" class="modal-body" style="width: 100% !important;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    }
+    else
+    {
+        Response.Redirect("~/Login/Login");
+    }
+
+    <script src="~/Content/Datatable/js/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Content/Datatable/js/jquery.dataTables.min.js"></script>
+    
+    <!--Boton personalizado en la tabla-->
+    <script src="~/Content/Datatable/js/dataTables.buttons.min.js"></script>
+
+    <script src="~/Content/Resources/js/jquery-te-1.4.0.min.js"></script>
+    <script src="~/Content/Bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="~/Content/Bootstrap/js/bootstrap-modal.js"></script>
+    <script src="~/Content/Resources/js/accounting.js"></script>
+
+    <script src="~/Content/Bootstrap/js/bootstrap.js"></script>
+
+    <!--Exportación a excel y PDF-->
+    <script src="~/Content/Resources/js/dataTables.tableTools.js"></script>
+    <script src="~/Content/Resources/js/drag-drop.js"></script>
+    <script src="~/Content/Resources/js/html2canvas.js"></script>
+    <script src="~/Content/Resources/js/jquery-te-1.4.0.min.js"></script>
+    <script src="~/Content/Resources/js/jquery.base64.js"></script>
+    <script src="~/Content/Resources/js/tableExport.js"></script>
+    <script src="~/Content/Resources/js/jspdf/jspdf.js"></script>
+    <script src="~/Content/Resources/js/table2excel.js"></script>
+    <!------------------------------------>
+
+    <!--Circliful-->
+    <!--<script src="~/Content/Resources/js/jquery.circliful.js"></script>
+    <script src="~/Content/Resources/js/jquery.circliful.min.js"></script>-->
+    <!------------------------------------>
+
+    <link rel='stylesheet' href='~/Content/Resources/assets/js/fullcalendar/bootstrap-fullcalendar.css' />
+    @*<script src='lib/jquery.min.js'></script>
+        <script src='lib/moment.min.js'></script>*@
+    <script src='~/Content/Resources/assets/js/fullcalendar/fullcalendar.min.js'></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(function () {
+
+            var menu_ul = $('.menutree > li > ul'),
+                menu_a = $('.menutree > li > a'),
+                menu_img = $('.menutree > li > img'),
+
+                menu_ul_ul = $('.menutree > li > ul > li > ul'),
+                menu_a_a = $('.menutree > li > ul > li > a'),
+
+
+                menu_ul_ul_ul = $('.menutree > li > ul > li > ul > li > ul'),
+                menu_a_a_a = $('.menutree > li > ul > li > ul > li > a')
+
+
+
+
+
+            menu_ul.hide();
+            menu_ul_ul.hide();
+            menu_ul_ul_ul.hide();
+
+            menu_a.click(function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('active')) {
+                    menu_a.removeClass('active');
+                    menu_ul.filter(':visible').slideUp('normal');
+                    $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                } else {
+                    $(this).removeClass('active');
+                    $(this).next().stop(true, true).slideUp('normal');
+                }
+            });
+
+            menu_a_a.click(function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('active')) {
+                    menu_a_a.removeClass('active');
+                    menu_ul_ul.filter(':visible').slideUp('normal');
+                    $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                } else {
+                    $(this).removeClass('active');
+                    $(this).next().stop(true, true).slideUp('normal');
+                }
+            });
+
+
+            menu_a_a_a.click(function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('active')) {
+                    menu_a_a_a.removeClass('active');
+                    menu_ul_ul_ul.filter(':visible').slideUp('normal');
+                    $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                } else {
+                    $(this).removeClass('active');
+                    $(this).next().stop(true, true).slideUp('normal');
+                }
+            });
+
+        });</script>
+
+    <script>
+      /*  $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });*/
+    </script>
+
+    <script>
+        /*$('.dropdown').find("a").not('.dropdown-toggle').on("click", function (e) {
+            e.stopImmediatePropagation();
+        });*/
+    </script>
+
+    <script>
+        function AdicionarLoadingContentOnePage(Ruta) {
+            document.getElementById("ContentOnePage").innerHTML = '<div style="text-align:center;margin-top:20%"> <img src="/Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            $(".breadcrumb").html(Ruta);
+            window.scrollTo(0, 0);
+        }
+        function RefreshContentOnePage() {
+            document.getElementById("ContentOnePage").innerHTML = '<div style="text-align:center;margin-top:20%"> <img src="/Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            window.scrollTo(0, 0);
+        }
+
+    </script>
+    <script>
+        //$(".breadcrumb").html("Inicio");
+        function MostrarError(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("ContentOnePage").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+
+        function MostrarErrorModal(result) {
+            if (result.error) {
+                alert(result.status);
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModal1(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal1").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModal2(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal2").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModal3(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal3").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModalFull(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("ModalFull").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModalReport(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("ModalReport").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+    </script>
+    <script>
+        function MostarVistaParcial(TitleModal) {
+            AdicionarLoading("Modal");
+            $('#modal-container').modal('show');
+            document.getElementById("myModalLabel").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcial1(TitleModal) {
+            AdicionarLoading("Modal1");
+            $('#modal-container1').modal('show');
+            document.getElementById("myModalLabel1").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcial2(TitleModal) {
+            AdicionarLoading("Modal2");
+            $('#modal-container2').modal('show');
+            document.getElementById("myModalLabel2").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcial3(TitleModal) {
+            AdicionarLoading("Modal3");
+            $('#modal-container3').modal('show');
+            document.getElementById("myModalLabel3").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcialFull(TitleModal) {
+            AdicionarLoading("ModalFull");
+            $('#modal-containerFull').modal('show');
+            document.getElementById("myModalLabelFull").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcialReport(TitleModal) {
+            AdicionarLoading("ModalReport");
+            $('#modal-containerReport').modal('show');
+            document.getElementById("myModalLabelReport").innerHTML = TitleModal;
+
+        }
+
+        function Mostarlockup(TexboxReturnId) {
+            $TexboxReturnId = TexboxReturnId;
+            AdicionarLoading();
+            document.getElementById("myModalLabel").innerHTML = '';
+            $('#modal-container').modal('show');
+
+        }
+        function AdicionarLoading(ModalName) {
+            if (ModalName == null || ModalName == "") {
+                document.getElementById("Modal").innerHTML = '<div style="text-align:center;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            } else {
+                document.getElementById(ModalName).innerHTML = '<div style="text-align:center;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            }
+        }
+
+        function RefreshData() {
+            document.getElementById("DataContent").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshData1() {
+            document.getElementById("DataContent1").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshData2() {
+            document.getElementById("DataContent2").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshData3() {
+            document.getElementById("DataContent3").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshDataFull() {
+            document.getElementById("DataContentFull").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+
+        function RefreshDataReport() {
+            document.getElementById("DataContent").innerHTML = '<div style="text-align:center;  margin-left: 30% ; position: absolute; "  > <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+
+        function MostarModalSuccess() {
+            $('#modal-container-Success').modal('show');
+        }
+        function MostarModalSuccess1() {
+            $('#modal-container-Success1').modal('show');
+        }
+        function MostarModalSuccess2() {
+            $('#modal-container-Success2').modal('show');
+        }
+        function MostarModalSuccess3() {
+            $('#modal-container-Success3').modal('show');
+        }
+        function MostarModalSuccessFull() {
+            $('#modal-container-SuccessFull').modal('show');
+        }
+    </script>
+    <script>
+        $(".Fecha").datepicker({
+        });
+    </script>
+    <script>
+        function OcultarModal() {
+            $('#modal-container').modal('hide');
+        }
+        function OcultarModal1() {
+            $('#modal-container1').modal('hide');
+        }
+        function OcultarModal2() {
+            $('#modal-container2').modal('hide');
+        }
+        function OcultarModal3() {
+            $('#modal-container3').modal('hide');
+        }
+        function OcultarModalFull() {
+            $('#modal-containerFull').modal('hide');
+        }
+
+        function OcultarModalSuccess(ButonclicAfter) {
+            $('#modal-container-Success').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccess1(ButonclicAfter) {
+            $('#modal-container-Success1').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccess2(ButonclicAfter) {
+            $('#modal-container-Success2').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccess3(ButonclicAfter) {
+            $('#modal-container-Success3').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccessFull(ButonclicAfter) {
+            $('#modal-container-SuccessFull').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+
+        function FormatMoney(Element) {
+            Element.value = accounting.formatMoney(Element.value, "", 2, ",", ".");
+        }
+        function FormatMoneyAllClassmoney() {
+            var inputs = document.getElementsByClassName("money");
+            for (x = 0 ; x < inputs.length; x++) {
+                FormatMoney(inputs[x]);
+            }
+        }
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+
+        $(document).ready(function () {
+
+            var myVar = setInterval(ActualizarBadges, 30000);
+
+            function ActualizarBadges() {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetBadgesInfo")',
+                    dataType: 'json',
+                    data: {},
+                    success: function (BadgesInfo) {
+                        if (BadgesInfo.Residentes > 0) {
+                            $('#bdAutRes_Padre').html(BadgesInfo.Residentes);
+                            $('#bdAutRes_Hijo').html(BadgesInfo.Residentes);
+                        }
+                        else {
+                            $('#bdAutRes_Padre').html('');
+                            $('#bdAutRes_Hijo').html('');
+                        }
+
+                        if (BadgesInfo.PagosRealizados > 0) {
+                            $('#bdAutPag_Padre').html(BadgesInfo.PagosRealizados);
+                            $('#bdAutPag_Hijo').html(BadgesInfo.PagosRealizados);
+                        }
+                        else {
+                            $('#bdAutPag_Padre').html('');
+                            $('#bdAutPag_Hijo').html('');
+                        }
+
+                        if (BadgesInfo.GastosProgramados > 0) {
+                            $('#bdAplGasto_Padre').html(BadgesInfo.GastosProgramados);
+                            $('#bdAplGasto_Hijo').html(BadgesInfo.GastosProgramados);
+                        }
+                        else {
+                            $('#bdAplGasto_Padre').html('');
+                            $('#bdAplGasto_Hijo').html('');
+                        }
+
+                        if (BadgesInfo.Reservaciones > 0) {
+                            $('#bdReservas_Padre').html(BadgesInfo.Reservaciones);
+                            $('#bdReservas_Hijo').html(BadgesInfo.Reservaciones);
+                        }
+                        else {
+                            $('#bdReservas_Padre').html('');
+                            $('#bdReservas_Hijo').html('');
+                        }
+
+                        if (BadgesInfo.AnunciosClasificados > 0) {
+                            $('#bdAnuncios_Padre').html(BadgesInfo.AnunciosClasificados);
+                            $('#bdAnuncios_Hijo').html(BadgesInfo.AnunciosClasificados);
+                        }
+                        else {
+                            $('#bdAnuncios_Padre').html('');
+                            $('#bdAnuncios_Hijo').html('');
+                        }
+                    }
+               });
+            }
+
+            ActualizarBadges();
+        });
+
+    </script>
+
+    <script>
+        function ExportarExcel(table) {
+            $('<table>')
+                .append($(table.table().header()).clone())
+                .append(table.$('tr').clone())
+                .table2excel({
+                    exclude: ".excludeThisClass",
+                    name: "Worksheet Name",
+                    filename: "OurPlace"
+                });
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+﻿@model List<ADESCOMBUSINESS.AccesoResidentes.RegistroPagos.Models.VwING_PagosRealizados>
+@{
+    ViewBag.Title = "Registro de Pagos";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<br />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label class="control-label">Pagos Registrados</label>
+    </div>
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color:#2e2e37; color:white">
+            <th>ID</th>
+            <th>Fecha Pago</th>
+            <th>Residente</th>
+            <th>Monto</th>
+            <th>Estatus</th>
+            <th>Acciones</th>
+            </thead>
+            <tbody id="DataContent">
+                @foreach (ADESCOMBUSINESS.AccesoResidentes.RegistroPagos.Models.VwING_PagosRealizados OBJING_PagosRealizados in Model)
+                {
+                    <tr onclick="SelectRow(@OBJING_PagosRealizados.PagoRealizado_ID, this)">
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.CiaPagoRealizado_ID)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_FechaPago)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.RES_Nombre)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_Monto)</td>
+                        <td>@Html.DisplayFor(m => OBJING_PagosRealizados.PRE_Estatus)</td>
+                        <td>
+                            @Ajax.ActionLink(" ", "DetallePago", new { PagoRealizado_ID = @OBJING_PagosRealizados.PagoRealizado_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Detalle')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-search", @title = "Detalle" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+            <div class="row">
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink(" ", "RefreshPagos", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable();var info = table.page.info();  localStorage['pageLength'] = info.length;  RefreshData();", OnFailure = "MostrarError", UpdateTargetId = "RefreshData" }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-refresh", @id = "RefreshButon", @title = "Refrescar" })
+                </div>
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink("Registrar Pago", "RegistrarPago", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Registrar Pago')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-sm btn-success", @title = "Registrar Pago" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

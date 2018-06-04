@@ -1,0 +1,519 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>OurPlace&reg; :: @ViewBag.Title</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap/css/dataTables.bootstrap.css" rel="stylesheet" />
+
+    <link href="~/Content/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Resources/css/Menu.css" rel="stylesheet" />
+    <link href="~/Content/Resources/css/UserMenu.css" rel="stylesheet" />
+    <link href="~/Content/Resources/css/jquery-te-1.4.0.css" rel="stylesheet" />
+
+    @Styles.Render("~/bundles/themes/base/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script src="~/Content/Datatable/js/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Content/Datatable/js/jquery.dataTables.min.js"></script>
+
+    <!--Boton personalizado en la tabla-->
+    <script src="~/Content/Datatable/js/dataTables.buttons.min.js"></script>
+
+    <script src="~/Content/Resources/js/jquery-te-1.4.0.min.js"></script>
+    <script src="~/Content/Bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="~/Content/Bootstrap/js/bootstrap-modal.js"></script>
+    <script src="~/Content/Resources/js/accounting.js"></script>
+
+    <script src="~/Content/Bootstrap/js/bootstrap.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+
+    @if (Session["InfoUser"] != null)
+    {
+        ADESCOMBUSINESS.DataAccess.Models.ResidenteLoginRS InfoUser = (ADESCOMBUSINESS.DataAccess.Models.ResidenteLoginRS)@Session["InfoUser"];
+
+        <div class="navbar navbar-default navbar-fixed-top">
+            @Html.Partial("_ResidentesAccountPartial")
+        </div>
+
+        <div class="cuerpo">
+            <div id="Lateral" class="lateral MenuExpand">
+                <nav class="navbar navbar-default sidebar" role="navigation">
+                    <div>
+                        <div>
+                            <ul class="menutree nav navbar-nav">
+                                <li>
+                                    <div>
+                                        <img class="profile-img" src="/Content/Img/logo.png" alt="">
+                                    </div>
+                                    <div class="NombreColonia">
+                                        <label style="font-weight: lighter;">@InfoUser.CIA_Nombre</label>
+                                    </div>
+                                </li>
+                                <li><a href="../ResidentesHome/EdoCtaResidente" data-ajax-begin="AdicionarLoadingContentOnePage('')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon-list-alt"></span>Estado de Cuenta</a></li>
+                                <li><a href="../ResidentesHome/RegistroPagos" data-ajax-begin="AdicionarLoadingContentOnePage('')" data-ajax-failure="MostrarError" data-ajax-update="#ContentOnePage" data-ajax-mode="replace" data-ajax-method="get" data-ajax="true"><span style="font-size:16px; padding-right:10px" class="pull-left hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-usd"></span>Registro de Pagos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="ContenidoCuerpo" class="contenido-tabla contenido-tabla-Expand">
+                <div class="titulo">
+                </div>
+                <div id="ContentOnePage">
+                    @RenderBody()
+                </div>
+
+            </div>
+        </div>
+
+            <!-- Modal -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div id="modal-header" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"></h4>
+                    </div>
+                    <div id="Modal" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal  Full-->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-containerFull" tabindex="-1" role="dialog" aria-labelledby="myModalLabelFull" aria-hidden="true">
+            <div class="modal-dialog modal-Full">
+                <div class="modal-content">
+                    <div id="modal-headerFull" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabelFull"></h4>
+                    </div>
+                    <div id="ModalFull" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog modal-large">
+                <div class="modal-content">
+                    <div id="modal-header1" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel1"></h4>
+                    </div>
+                    <div id="Modal1" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div id="modal-header2" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel2"></h4>
+                    </div>
+                    <div id="Modal2" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal -->
+            <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-large">
+                    <div class="modal-content">
+                        <div id="modal-header3" class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel3"></h4>
+                        </div>
+                        <div id="Modal3" class="modal-body" style="width: 100% !important; max-height: 500px !important;  overflow-y: scroll;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-containerReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabelReport" aria-hidden="true">
+                <div class="modal-dialog modal-Report">
+                    <div class="modal-content">
+                        <div id="modal-headerReport" class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabelReport"></h4>
+                        </div>
+                        <div id="ModalReport" class="modal-body" style="width: 100% !important;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    }
+    else
+    {
+        Response.Redirect("~/Login/Login");
+    }
+
+    @*<script src="~/Content/Datatable/js/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Content/Datatable/js/jquery.dataTables.min.js"></script>*@
+    
+    <!--Boton personalizado en la tabla-->
+    @*<script src="~/Content/Datatable/js/dataTables.buttons.min.js"></script>
+
+    <script src="~/Content/Resources/js/jquery-te-1.4.0.min.js"></script>
+    <script src="~/Content/Bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="~/Content/Bootstrap/js/bootstrap-modal.js"></script>
+    <script src="~/Content/Resources/js/accounting.js"></script>
+
+    <script src="~/Content/Bootstrap/js/bootstrap.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)*@
+
+    <script>
+        function AdicionarLoadingContentOnePage(Ruta) {
+            document.getElementById("ContentOnePage").innerHTML = '<div style="text-align:center;margin-top:20%"> <img src="/Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            $(".breadcrumb").html(Ruta);
+            window.scrollTo(0, 0);
+        }
+        function RefreshContentOnePage() {
+            document.getElementById("ContentOnePage").innerHTML = '<div style="text-align:center;margin-top:20%"> <img src="/Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            window.scrollTo(0, 0);
+        }
+
+    </script>
+    <script>
+        function MostrarError(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("ContentOnePage").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+
+        function MostrarErrorModal(result) {
+            if (result.error) {
+                alert(result.status);
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModal1(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal1").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModal2(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal2").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModal3(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("Modal3").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModalFull(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("ModalFull").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+        function MostrarErrorModalReport(result) {
+            if (result.error) {
+                if (result.status == "400"
+                    || result.status == "401"
+                    || result.status == "403"
+                    || result.status == "404"
+                    || result.status == "500"
+                    || result.status == "403") {
+                    $.ajax({
+                        url: '/Inicio/Error' + result.status,
+                        cache: false,
+                        dataType: "html",
+                        success: function (data) {
+                            document.getElementById("ModalReport").innerHTML = data;
+                        }
+                    });
+                }
+                else {
+
+                    document.getElementById("ContentOnePage").innerHTML = result.responseText;
+                }
+
+            }
+        }
+    </script>
+    <script>
+        function MostarVistaParcial(TitleModal) {
+            AdicionarLoading("Modal");
+            $('#modal-container').modal('show');
+            document.getElementById("myModalLabel").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcial1(TitleModal) {
+            AdicionarLoading("Modal1");
+            $('#modal-container1').modal('show');
+            document.getElementById("myModalLabel1").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcial2(TitleModal) {
+            AdicionarLoading("Modal2");
+            $('#modal-container2').modal('show');
+            document.getElementById("myModalLabel2").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcial3(TitleModal) {
+            AdicionarLoading("Modal3");
+            $('#modal-container3').modal('show');
+            document.getElementById("myModalLabel3").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcialFull(TitleModal) {
+            AdicionarLoading("ModalFull");
+            $('#modal-containerFull').modal('show');
+            document.getElementById("myModalLabelFull").innerHTML = TitleModal;
+
+        }
+        function MostarVistaParcialReport(TitleModal) {
+            AdicionarLoading("ModalReport");
+            $('#modal-containerReport').modal('show');
+            document.getElementById("myModalLabelReport").innerHTML = TitleModal;
+
+        }
+
+        function Mostarlockup(TexboxReturnId) {
+            $TexboxReturnId = TexboxReturnId;
+            AdicionarLoading();
+            document.getElementById("myModalLabel").innerHTML = '';
+            $('#modal-container').modal('show');
+
+        }
+        function AdicionarLoading(ModalName) {
+            if (ModalName == null || ModalName == "") {
+                document.getElementById("Modal").innerHTML = '<div style="text-align:center;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            } else {
+                document.getElementById(ModalName).innerHTML = '<div style="text-align:center;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+            }
+        }
+
+        function RefreshData() {
+            document.getElementById("DataContent").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshData1() {
+            document.getElementById("DataContent1").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshData2() {
+            document.getElementById("DataContent2").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshData3() {
+            document.getElementById("DataContent3").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+        function RefreshDataFull() {
+            document.getElementById("DataContentFull").innerHTML = '<div style="text-align:center;  margin-left: 30%;"> <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+
+        function RefreshDataReport() {
+            document.getElementById("DataContent").innerHTML = '<div style="text-align:center;  margin-left: 30% ; position: absolute; "  > <img src="../Content/img/loading2.gif" style="width:30px; height:31px;"/> </div>';
+        }
+
+        function MostarModalSuccess() {
+            $('#modal-container-Success').modal('show');
+        }
+        function MostarModalSuccess1() {
+            $('#modal-container-Success1').modal('show');
+        }
+        function MostarModalSuccess2() {
+            $('#modal-container-Success2').modal('show');
+        }
+        function MostarModalSuccess3() {
+            $('#modal-container-Success3').modal('show');
+        }
+        function MostarModalSuccessFull() {
+            $('#modal-container-SuccessFull').modal('show');
+        }
+    </script>
+    <script>
+        $(".Fecha").datepicker({
+        });
+    </script>
+    <script>
+        function OcultarModal() {
+            $('#modal-container').modal('hide');
+        }
+        function OcultarModal1() {
+            $('#modal-container1').modal('hide');
+        }
+        function OcultarModal2() {
+            $('#modal-container2').modal('hide');
+        }
+        function OcultarModal3() {
+            $('#modal-container3').modal('hide');
+        }
+        function OcultarModalFull() {
+            $('#modal-containerFull').modal('hide');
+        }
+
+        function OcultarModalSuccess(ButonclicAfter) {
+            $('#modal-container-Success').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccess1(ButonclicAfter) {
+            $('#modal-container-Success1').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccess2(ButonclicAfter) {
+            $('#modal-container-Success2').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccess3(ButonclicAfter) {
+            $('#modal-container-Success3').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+        function OcultarModalSuccessFull(ButonclicAfter) {
+            $('#modal-container-SuccessFull').modal('hide');
+            $('#' + ButonclicAfter).click();
+        }
+
+        function FormatMoney(Element) {
+            Element.value = accounting.formatMoney(Element.value, "", 2, ",", ".");
+        }
+        function FormatMoneyAllClassmoney() {
+            var inputs = document.getElementsByClassName("money");
+            for (x = 0 ; x < inputs.length; x++) {
+                FormatMoney(inputs[x]);
+            }
+        }
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+
+    </script>
+</body>
+</html>

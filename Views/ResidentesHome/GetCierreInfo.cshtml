@@ -1,0 +1,45 @@
+﻿@model ADESCOMBUSINESS.AccesoResidentes.EstadoCuenta.Models.CierreCompuesto
+@{
+    ViewBag.Title = "Movimientos Contables";
+    Layout = null;
+}
+<div class="panel panel-default">
+    <br />
+    <table id="Lista" class="table table-advance table-hover table-bordered">
+        <thead style="background-color: #2e2e37; color: white">
+        <th>Fecha</th>
+        <th>Concepto</th>
+        <th>Monto</th>
+        <th>Total</th>
+        </thead>
+        <tbody class="row form-panel">
+            <tr>
+                <td></td>
+                <td><b>Saldo Inicial</b></td>
+                <td></td>
+                <td class="money"><b>@Html.DisplayFor(model => model.Cierre.CIC_SaldoIni)</b></td>
+            </tr>
+            @foreach (ADESCOMBUSINESS.AccesoResidentes.EstadoCuenta.Models.VwCON_MovContables OBJMovContables in Model.MovContables)
+            {
+                <tr onclick="SelectRow(@OBJMovContables.MovContable_ID, this)">
+                    <td>@Html.DisplayFor(m => OBJMovContables.MCO_Fecha)</td>
+                    <td>@Html.DisplayFor(m => OBJMovContables.MCO_Mensaje)</td>
+                    <td class="money">@Html.DisplayFor(m => OBJMovContables.MCO_Monto)</td>
+                    <td class="money">@Html.DisplayFor(m => OBJMovContables.MCO_MontoTotal)</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td><b>Saldo Final</b></td>
+                <td></td>
+                <td class="money"><b>@Html.DisplayFor(model => model.Cierre.CIC_SaldoFin)</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+</div>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>

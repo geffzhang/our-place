@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_ResidentesHome.cshtml";
+    ViewBag.Title = "Home";
+}
+<br>
+<div style="width: 100%;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label class="control-label">Informacion Residencia</label>
+        </div>
+        <div id="RefreshDataSoli" class="panel-body">
+            <div style="width: 100%;">
+                <fieldset>
+                    <input type="hidden" value="@ViewBag.Direccion_ID" id="Direccion_ID" name="Direccion_ID"/>
+                </fieldset>
+                <div id="mostar">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">Dirección</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" value="@ViewBag.DIR_Descripcion" class="form-control" , readonly="true">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Periodo</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("CierresCta", null, new { @class = "form-control ", @id = "CierresCta", @onchange = "CargarCierreInfo()" })
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">Saldo Actual</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" name="SaldoActual" value="@ViewBag.SaldoActual" class="form-control" , readonly="true">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Referencia</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" value="@ViewBag.Referencia" class="form-control" , readonly="true">
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <label class="control-label">Informacion del Periodo</label>
+                    </div>
+                    <div id="LoadingCierre"></div>
+                    <div id="CierreInfo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        function setTexbox() {
+            $divCierreInfo = "CierreInfo";
+            LoadingCierre = "LoadingCierre";
+        }
+
+        $(document).ready(function () {
+            setTexbox();
+            CargarCierreInfo();
+        });
+
+        function CargarCierreInfo() {
+            var elemCierreInfo = document.getElementById($divCierreInfo);
+            elemCierreInfo.innerHTML = "";
+            var Direccion_ID = document.getElementById('Direccion_ID').value;
+            var Cierre_ID = document.getElementById("CierresCta").options[document.getElementById("CierresCta").selectedIndex].value;
+
+            AdicionarLoading('LoadingCierre');
+            $.ajax({
+                url: '../ResidentesHome/GetCierreInfo',
+                cache: false,
+                dataType: "html",
+                data: {
+                    "Direccion_ID": Direccion_ID,
+                    "Cierre_ID": Cierre_ID
+                },
+                begin: {},
+                success: function (response) {
+                    elemCierreInfo.innerHTML = response;
+                },
+                complete: function (response) {
+                    var Limpiar = document.getElementById("LoadingCierre");
+                    Limpiar.innerHTML = "";
+                }
+            });
+        }
+
+
+</script>

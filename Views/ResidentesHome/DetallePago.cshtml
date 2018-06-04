@@ -1,0 +1,55 @@
+﻿@model ADESCOMBUSINESS.AccesoResidentes.RegistroPagos.Models.VwING_PagosRealizados
+@{
+    ViewBag.Title = "Registrar Pago";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.RES_Nombre, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.RES_Nombre, new { @class = "form-control ", @id = "PRE_Monto", @readonly = "true" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.PRE_Monto, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.PRE_Monto, new { @class = "form-control ", @id = "PRE_Monto", @readonly = "true" })
+        </div>
+    </div><br />
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.PRE_Referencia, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.PRE_Referencia, new { @class = "form-control ", @id = "PRE_Referencia", @readonly = "true" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.PRE_FechaPago, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.PRE_FechaPago, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "PRE_FechaPago", @readonly = "true" })
+        </div>
+    </div><br />
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.PRE_Estatus, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.PRE_Estatus, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "PRE_FechaPago", @readonly = "true" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.PRE_Comprobante, new { @class = "control-label" })
+        </div>
+        <div class="col-md-2">
+            @Ajax.ActionLink(" ", "VerComprobante", new { Comprobante = Model.PRE_Comprobante }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Ver Comprobante')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-zoom-in", @title = "Ver" })
+        </div>
+    </div><br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>

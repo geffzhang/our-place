@@ -1,0 +1,76 @@
+﻿@model ADESCOMBUSINESS.DataAccess.Models.LoginRQ
+@{
+    Layout = null;
+}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<title>OurPlace&reg; :: Login</title>
+<script src="~/Content/Datatable/js/jquery-1.11.3.min.js"></script>
+
+<link href="~/Content/Resources/assets/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Resources/assets/css/style-responsive.css" rel="stylesheet" />
+<link href="~/Content/Resources/css/jquery-te-1.4.0.css" rel="stylesheet" />
+<link href="~/Content/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+@Styles.Render("~/bundles/Login/css")
+
+@Styles.Render("~/bundles/themes/base/css")
+@Scripts.Render("~/bundles/modernizr")
+@Styles.Render("~/bundles/Login/css")
+
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <div class="container">
+        @Html.HiddenFor(a => a.IP)
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                @*<h1 class="text-center login-title">Ingrese sus credenciales</h1>
+                    <hr />*@
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="account-wall">
+                    <!--<img class="profile-img" src="http://www.gig.mx/img_grande/logo%20real%20del%20lago.png" alt="">-->
+                    <img class="profile-img" src="/Content/Img/logo.png" alt="">
+                    <form class="form-signin">
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.UsrUsuario, new { @class = "form-control", @placeholder = "Email", autofocus = "" })
+                            @Html.ValidationMessageFor(m => m.UsrUsuario, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group text-center">
+                            <div class="radio-inline">
+                                @Html.RadioButtonFor(m => m.TipoIngreso, "Administrador", new { @checked = "checked"}) Administrador
+                            </div>
+                            <div class="radio-inline" style="padding-left:70px">
+                                @Html.RadioButtonFor(m => m.TipoIngreso, "Residente") Residente
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-danger">@ViewBag.MessageError</label>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-md btn-primary btn-block" type="submit">Iniciar Sesión</button>
+                        </div>
+                        <div class="form-group">
+                            @Html.ActionLink("Olvidé mi password", "ForgotPassword")
+                        </div>
+                    </form>
+                </div>
+                <!--<a href="#" class="text-center new-account">Registrarme</a>-->
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $.get("http://ipinfo.io", function (response) {
+        document.getElementById('IP').value = response.ip;
+    }, "jsonp");
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

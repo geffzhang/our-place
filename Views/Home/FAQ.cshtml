@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewBag.Title = "Home";
+}
+
+<div style="padding-left:40px;" >
+    <h3>Preguntas frecuentes para la aplicación móvil de OurPlace</h3>
+</div>
+<br />
+<div id="accordion" style="padding-left:40px; padding-right:40px;">
+    <h3 style="padding-left:25px; padding-top:10px">¿Cómo descargo la aplicación?</h3>
+    <div>
+        <p>Si tu dispositivo es Android, abre la aplicación de Google Play. Si tu aplicación es iPhone, abre la aplicación de AppStore. En cualquiera de los dos casos, entra a la sección de búsqueda y escribe OurPlace, identificarás la aplicación por el logo.</p>
+    </div>
+    <h3 style="padding-left:25px; padding-top:10px">¿Cómo me registro en la aplicación?</h3>
+    <div>
+        <p>Abre la aplicación, en la pantalla de inicio de sesión, verás la palabra "Registrarme" en la parte inferior derecha del botón "Iniciar Sesión". Haz <i>tap</i> en ella. Una vez que hagas esto, la aplicación te solicitará un código de activación. Si no lo conoces, solicitalo al administrador de tu comunidad. Después de ingresar el código de activación, la aplicación te solicitará algunos datos personales como tu correo electrónico, tu nombre y opcionalmente tu número telefónico. Es importante que utilices un correo electrónico válido, ya que de lo contrario no podrás recibir las notificaciones de OurPlace.</p>
+    </div>
+    <h3 style="padding-left:25px; padding-top:10px">Olvidé mi password ¿Qué hago?</h3>
+    <div>
+        <p>Abre la aplicación, en la pantalla de inicio de sesión, verás la frase "Olvidé mi password" en la parte inferior izquierda del botón "Iniciar Sesión". Haz <i>tap</i> en ella. Una vez que hagas esto, la aplicación te solicitará que ingreses tu correo electrónco registrado. Una vez que lo envíes, recibiras un correo electrónico con las instrucciones para entrar a la aplicación nuevamente.</p>
+    </div>
+    <h3 style="padding-left:25px; padding-top:10px">¿Cómo registro mi pago?</h3>
+    <div>
+        <p>Entra a la aplicación con tu correo electrónico y tu contraseña. Una vez adentro, abre el menú lateral izquierdo y selecciona la opción "Pago de Cuotas". Toma una fotografía o selecciona una de tu colección de imágenes del recibo de pago emitido por el banco. Ingresa el monto pagado y haz <i>tap</i> en el botón de "Enviar".</p>
+    </div>
+    <h3 style="padding-left:25px; padding-top:10px">¿Puedo hacer un pago parcial o un pago mayor?</h3>
+    <div>
+        <p>Sí. Tu residencia tiene un saldo, que se afecta positivamente con los cargos de tu comunidad y negativamente con los pagos que realices, tu puedes hacer un pago parcial para abonar al saldo, e incluso puedes hacer un pago mayor para adelantar mensualidades, y mes con mes se ajustará automáticamente a tu saldo</p>
+    </div>
+    <h3 style="padding-left:25px; padding-top:10px">¿Cómo esta formado mi estado de cuenta?</h3>
+    <div>
+        <p>Tu estado de cuenta lo puedes comparar con un estado de cuenta de luz, teléfono, gas, etc. Al seleccionar el mes a consultar, verás todos los movimientos de ese mes, los cargos generados y los pagos que hayas realizado a través de la aplicación.</p>
+    </div>
+</div>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="~/Content/Datatable/js/jquery-1.11.3.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Content/Datatable/js/jquery.dataTables.min.js"></script>
+
+<script>
+  $( function() {
+    $( "#accordion" ).accordion({
+      collapsible: true,
+      active: 'none',
+      heightStyle: "auto"
+    });
+  });
+</script>

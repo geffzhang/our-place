@@ -1,0 +1,450 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewBag.Title = "Home";
+}
+
+<div class="row">
+    <div class="form-group pull-right" style="padding-right:20px;">
+        <div style="display: inline-block;">
+            <label class="control-label" style="padding-right:10px;">Mostrar precios para: </label>
+        </div>
+        <div style="display: inline-block;">
+            <select class="form-control" selected="1" id="pais_selected" onchange="changePrices()">
+                <option value="1">Mexico</option>
+                <option value="2">Colombia</option>
+                <option value="3">Chile</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="col-md-5" style="padding-left:40px">
+        <br />
+        <div class="row">
+            <label style="font-weight:bolder; font-size:20px;">Pago Inicial: </label>
+            <label style="font-weight:lighter; font-size:20px; text-decoration:line-through" id="lblPagoInicial_ant">$5,999</label>
+            <label class="text-info" style="font-weight:lighter; font-size:30px;" id="lblPagoInicial_nue">$3,999</label>
+            <label class="pull-right text-info">Renta mensual</label>
+        </div>
+        <div class="row" style="font-size:6px; color:white"><p></p></div>
+        <div class="row pull-right">Cantidad de Residencias</div>
+        <br />
+        <div class="row" style="font-size:6px; color:white"><p>test</p></div>
+        <div class="row pull-right">Cantidad de Administradores</div>
+        <br />
+        <div class="row pull-right">Cantidad de Residentes</div>
+        <br />
+        <div class="row" style="padding-bottom:5px; padding-top:5px; font-weight:bolder; font-size:18px; text-decoration:underline">Comunicación Contínua</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Noticias</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Calendario de Eventos</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Votaciones y Encuestas</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Directorio Telefónico (Ambulancias, Policía, etc)</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Anuncios Clasificados</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Botón de Pánico</div>
+        <br />
+        <div class="row" style="padding-bottom:5px; padding-top:5px; font-weight:bolder; font-size:18px; text-decoration:underline">Panel de Administración</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Directorio de Residencias y Residentes</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Programación de Cargos y cargos extraordinarios</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Programación de Gastos y gastos extraordinarios</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Estado de Cuenta de la colonia y del residente</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Administración de cuentas de la colonia y transferencias</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Administración y renta de Instalaciones (áreas comúnes)</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Notificaciones automáticas via Email y Push Notifications</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Importación y exportación</div>
+        <br />
+        <div class="row" style="padding-bottom:5px; padding-top:5px; font-weight:bolder; font-size:18px; text-decoration:underline">App del Residente</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Calendario de Eventos</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Noticias</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Anuncios Clasificados</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Directorio de Servicios</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Votaciones y Encuestas</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Panel de Comentarios</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Botón de pánico</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Envío de Comprobantes de pago</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">**Pago de cuotas en línea</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Buzón de Notificaciones</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Reservación de Instalaciones</div>
+        <div class="row" style="padding-bottom:5px; padding-top:5px;">Notificaciones via Push</div>
+
+    </div>
+    <div class="col-md-1">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center">
+                <div id="precio_1"><h4>$499</h4></div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="text-align:center">1 - 30</div>
+                <br />
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center">
+                <div id="precio_2"><h4>$899</h4></div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="text-align:center">31 - 50</div>
+                <br />
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center">
+                <div id="precio_3"><h4>$1,199</h4></div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="text-align:center">51 - 100</div>
+                <br />
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center">
+                <div id="precio_4"><h4>$2,199</h4></div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="text-align:center">101 - 200</div>
+                <br />
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center">
+                <div id="precio_5"><h4>$3,199</h4></div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="text-align:center">201 - 350</div>
+                <br />
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center">
+                <div id="precio_6"><h4>$4,999</h4></div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="text-align:center">351 - 500</div>
+                <br />
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center">
+                <div id="precio_7"><h4>$12.50*</h4></div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="text-align:center">+500</div>
+                <br />
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <div class="row" style="text-align:center">Ilimitado</div>
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <br />
+                <br />
+                <br />
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="row" style="text-align:center; color:forestgreen; padding-bottom:5px; padding-top:5px;; padding-bottom:5px; padding-top:5px;"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel" style="padding-left:40px; font-size:12px">
+        <div class="row"></div>
+        <div class="row">*   Precio por cada residencia que exceda las 500</div>
+        <div class="row">**  Aplican comisiones. Servicio sólo para México, proximamente Colombia y Chile</div>
+        <div class="row">*** Precios sujetos a cambio sin previo aviso</div>
+        <div class="row">*** Precios no incluyen IVA</div>
+    </div>
+    <br />
+    <br />
+
+</div>
+
+
+<script>
+    function changePrices() {
+        var sel = $('#pais_selected').val();
+        if (sel == 1) {
+            $('#lblPagoInicial_ant').text('$5,999'); //5999
+            $('#lblPagoInicial_nue').text('$3,999'); //2999
+            $('#precio_1').html('<h4>$499</h4>'); //399
+            $('#precio_2').html('<h4>$899</h4>'); //699
+            $('#precio_3').html('<h4>$1,199</h4>'); //999
+            $('#precio_4').html('<h4>$2,199</h4>'); //1799
+            $('#precio_5').html('<h4>$3,199</h4>'); //2599
+            $('#precio_6').html('<h4>$4,999</h4>'); //3999
+            $('#precio_7').html('<h4>$12.50*</h4>'); //10
+        }
+        if (sel == 2) {
+            $('#lblPagoInicial_ant').text('$1,150,000'); //1,154,200
+            $('#lblPagoInicial_nue').text('$762,000'); //577,100
+            $('#precio_1').html('<h5>$82,200</h5>'); //65,800
+            $('#precio_2').html('<h5>$144,100</h5>'); //115,300
+            $('#precio_3').html('<h5>$206,000</h5>'); //164,800
+            $('#precio_4').html('<h5>$370,800</h5>'); //296,700
+            $('#precio_5').html('<h5>$535,700</h5>'); //428,600
+            $('#precio_6').html('<h5>$865,600</h5>'); //692,500
+            $('#precio_7').html('<h5>$1,800*</h5>'); //1,500
+        }
+        if (sel == 3) {
+            $('#lblPagoInicial_ant').text('$190,000'); //190000
+            $('#lblPagoInicial_nue').text('$125,000'); //95000
+            $('#precio_1').html('<h4>$16,200</h4>'); //12990
+            $('#precio_2').html('<h4>$27,500</h4>'); //22000
+            $('#precio_3').html('<h4>$40,000</h4>'); //32000
+            $('#precio_4').html('<h4>$75,000</h4>'); //59990
+            $('#precio_5').html('<h4>$103,700</h4>'); //82990
+            $('#precio_6').html('<h4>$157,500</h4>'); //126000
+            $('#precio_7').html('<h4>$375*</h4>'); //300
+        }
+    };
+</script>
