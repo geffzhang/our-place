@@ -1,0 +1,186 @@
+﻿@model ADESCOMBUSINESS.Areas.Noticias.Models.NEW_Noticias
+@{
+    ViewBag.Title = "Crear";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "Noticias", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <input hidden type="text" id="fileName" name="fileName" /> <!--No se usan, pero para que no falle JS-->
+            <input hidden type="text" id="fileSize" name="fileSize" />
+            <input hidden type="text" id="fileType" name="fileType" />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.NEW_Titulo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.NEW_Titulo, new { @class = "form-control ", @id = "NEW_Titulo" })
+                    @Html.ValidationMessageFor(model => model.NEW_Titulo)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.NEW_Detalles, new { @class = "control-label" })
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.NEW_Detalles, new { @rows = "3", @class = "form-control ", @id = "NEW_Detalles", @style = "min-width: 100%;" })
+                    @Html.ValidationMessageFor(model => model.NEW_Detalles)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.BS_Activo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.CheckBoxFor(model => model.BS_Activo, new { @class = "form-control ", @id = "BS_Activo" })
+                </div>
+            </div> <br />
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Imagenes</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                        </div>
+                        <!--Image1-->
+                        <input hidden type="text" value="@ViewBag.Imagen1" id="SavedImage1" name="SavedImage1" />
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <a href="#" class="" onclick="ImpoExpo(1)"><img src="@ViewBag.Imagen1" id="image1" name="image1" class="img-responsive" style="height: 150px;width:100%;" alt=""></a>
+                        </div>
+                        <!--Image2-->
+                        <input hidden type="text" value="@ViewBag.Imagen2" id="SavedImage2" name="SavedImage2" />
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <a href="#" class="" onclick="ImpoExpo(2)"><img src="@ViewBag.Imagen2" id="image2" name="image2" class="img-responsive" style="height: 150px;width:100%;" alt=""></a>
+                        </div>
+                        <!--Image3-->
+                        <input hidden type="text" value="@ViewBag.Imagen3" id="SavedImage3" name="SavedImage3" />
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <a href="#" class="" onclick="ImpoExpo(3)"><img src="@ViewBag.Imagen3" id="image3" name="image3" class="img-responsive" style="height: 150px;width:100%;" alt=""></a>
+                        </div>
+                        <!--Image4-->
+                        <input hidden type="text" value="@ViewBag.Imagen4" id="SavedImage4" name="SavedImage4" />
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <a href="#" class="" onclick="ImpoExpo(4)"><img src="@ViewBag.Imagen4" id="image4" name="image4" class="img-responsive" style="height: 150px;width:100%;" alt=""></a>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <!--Image5-->
+                        <input hidden type="text" value="@ViewBag.Imagen5" id="SavedImage5" name="SavedImage5" />
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <a href="#" class="" onclick="ImpoExpo(5)"><img src="@ViewBag.Imagen5" id="image5" name="image5" class="img-responsive" style="height: 150px;width:100%;" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+    function setTextBox() {
+        $TxtFileID = "SavedImage";
+        $TxtFileName = "fileName";
+        $TxtFileSize = "fileSize";
+        $TxtFileType = "fileType";
+    }
+
+    function ImpoExpo(numContenedor) {
+        if (numContenedor == 1) {
+            $TxtFileID = "SavedImage1";
+            $ImgImage = "image1"
+        }
+        if (numContenedor == 2) {
+            $TxtFileID = "SavedImage2";
+            $ImgImage = "image2"
+        }
+
+        if (numContenedor == 3) {
+            $TxtFileID = "SavedImage3";
+            $ImgImage = "image3"
+        }
+
+        if (numContenedor == 4) {
+            $TxtFileID = "SavedImage4";
+            $ImgImage = "image4"
+        }
+
+        if (numContenedor == 5) {
+            $TxtFileID = "SavedImage5";
+            $ImgImage = "image5"
+        }
+
+        MostarVistaParcial2('Subir archivo');
+        $.ajax({
+            url: '../ImpoExpo/Archivos/Import',
+            cache: false,
+            dataType: "html",
+            data: {
+                "Contenedor_Archivos": "noticias",
+                "SoloImagenes": "true"
+            },
+            begin: function () {
+            },
+            success: function (response) {
+                document.getElementById("Modal2").innerHTML = response;
+            },
+            error: function (result) {
+                MostrarErrorModal2(result);
+            }
+        });
+    }
+
+    function Procesar() {
+        var elmFileName = document.getElementById($TxtFileName);
+        var dataString;
+        var action = $("#frmArchivo").attr("action")
+        if ($("#frmArchivo").attr("enctype") == "multipart/form-data") {
+            dataString = new FormData($("#frmArchivo").get(0));
+        }
+
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: dataString,
+            dataType: "html",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#Mensaje").html(data);
+            }
+        });
+    }
+
+    setTextBox();
+</script>

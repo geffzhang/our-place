@@ -1,0 +1,70 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Eventos.Models.VwEVE_Eventos>
+@{
+    ViewBag.Title = "Reservaciones";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>Fecha Res.</th>
+    <th>Inicio</th>
+    <th>Fin</th>
+    <th>Instalación</th>
+    <th>Residencia</th>
+    <th>Comentarios</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody id="DataContent">
+        @foreach (ADESCOMBUSINESS.Areas.Eventos.Models.VwEVE_Eventos OBJEVE_Eventos in Model)
+        {
+            <tr onclick="SelectRow(@OBJEVE_Eventos.Evento_ID, this)">
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.CiaEvento_ID)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Fecha)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Inicio)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Fin)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.INS_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.DIR_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Detalles)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+	<div class="row">
+		<div class="pull-right" style="padding:0px 10px 0px 0px;">
+			@ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>

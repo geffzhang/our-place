@@ -1,0 +1,28 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Eventos.Models.VwEVE_Eventos>
+@{
+    ViewBag.Title = "Eventos del día";
+    Layout = null;
+}
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>Organizador</th>
+    <th>Residencia</th>
+    <th>Inicio</th>
+    <th>Fin</th>
+    <th>Comentarios</th>
+    </thead>
+    <tbody id="DataContent">
+        @foreach (ADESCOMBUSINESS.Areas.Eventos.Models.VwEVE_Eventos OBJEVE_Eventos in Model)
+        {
+            <tr onclick="SelectRow(@OBJEVE_Eventos.Evento_ID, this)">
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.CiaEvento_ID)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Organizador)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.DIR_Descripcion)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Inicio)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Fin)</td>
+                <td>@Html.DisplayFor(m => OBJEVE_Eventos.EVE_Detalles)</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,91 @@
+﻿@model ADESCOMBUSINESS.Areas.Votaciones.Models.ResResultadoCompuesto
+@{
+    ViewBag.Title = "Resultados de la Votación";
+    Layout = null;
+}
+<div id="LoadingVotacion"></div>
+<div id="DatosVotacion" class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label class="control-label">Resultados de la Votación</label>
+        </div>
+        <div id="RefreshDataVotacion" class="panel-body">
+            <div style="width: 100%;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="control-label">Inició</label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => Model.Votacion.VOT_Inicio, "{0:yyyy-MM-dd}", new { @class = "form-control date", @readonly = "true" })
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Cerró</label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => Model.Votacion.VOT_Fin, "{0:yyyy-MM-dd}", new { @class = "form-control date", @readonly = "true" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="control-label">Padrón</label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => Model.Votacion.VOT_Padron, new { @class = "form-control date", @readonly = "true" })
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Participación</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" value="@ViewBag.Participacion" readonly />
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div id="Preguntas">
+                    @foreach (ADESCOMBUSINESS.Areas.Votaciones.Models.ResPreguntaCompuesta Pregunta in Model.Preguntas)
+                    {
+                        <div class="panel panel-default">
+                            <div id="RefreshData" class="panel-body">
+                                <div>
+                                    <label class="control-label">@Pregunta.Pregunta.PRE_Pregunta</label>
+                                    @Ajax.ActionLink("Detalles", "ResultadoDetalles", new { Votacion_ID = Model.Votacion.Votacion_ID, Pregunta_ID = @Pregunta.Pregunta.Pregunta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Detalles de la Votación')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-primary btn-sm pull-right", @value = "Test", @text = "Other", @title = "Resultados de la Votación" })
+                                </div>
+                                <br />
+                                <table id="ListaRespuestas" class="table table-advance table-hover table-bordered">
+                                    <thead style="background-color: #2e2e37; color: white">
+                                    <th>Respuesta</th>
+                                    <th>Votos</th>
+                                    <th>Porcentaje</th>
+                                    </thead>
+                                    <tbody class="row form-panel">
+                                        @foreach (ADESCOMBUSINESS.Areas.Votaciones.Models.ResRespuestaCompuesta Respuesta in Pregunta.Respuestas)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(m => Respuesta.RES_OpcRespuesta)</td>
+                                                <td>@Html.DisplayFor(m => Respuesta.Votos)</td>
+                                                <td>
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="@Respuesta.Porcentaje"
+                                                             aria-valuemin="0" aria-valuemax="100" style="width:@Respuesta.Porcentaje%">
+                                                            @Html.DisplayFor(m => Respuesta.Porcentaje)%
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

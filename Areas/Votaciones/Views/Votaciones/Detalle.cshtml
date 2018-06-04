@@ -1,0 +1,129 @@
+﻿@model ADESCOMBUSINESS.Areas.Votaciones.Models.VotacionesCompuesto
+@{
+    ViewBag.Title = "Detalles";
+    Layout = null;
+}
+<div class="row">
+    <div id="LoadingVotacion"></div>
+    <div id="DatosVotacion" class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Informacion de la Votación</label>
+            </div>
+            <div id="RefreshDataVotacion" class="panel-body">
+                <div style="width: 100%;">
+                    <div id="mostar">
+                        <fieldset disabled>
+                            @Html.HiddenFor(model => model.Votacion.Votacion_ID, new { @id = "Votacion_ID" })
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Votacion.VOT_Titulo, new { @class = "control-label" })
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.Votacion.VOT_Titulo, new { @class = "form-control ", @id = "VOT_Titulo", @style = "min-width: 100%;" })
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Votacion.VOT_Inicio, new { @class = "control-label" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.Votacion.VOT_Inicio, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "VOT_Inicio" })
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Votacion.VOT_Fin, new { @class = "control-label" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.Votacion.VOT_Fin, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "VOT_Fin" })
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="control-label">Estátus</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" value="@ViewBag.Estatus" readonly />
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Votacion.VOT_SolComentarios, new { @class = "control-label" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(model => model.Votacion.VOT_SolComentarios, new { @class = "form-control", @id = "VOT_SolComentarios" })
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                            <br />
+
+                        </fieldset>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <label class="control-label">Configuración de Preguntas</label>
+                            </div>
+                            <div id="RefreshData1" class="panel-body">
+                                <table id="Lista" class="table table-advance table-hover table-bordered">
+                                    <thead style="background-color:#2e2e37; color:white">
+                                    <th>ID</th>
+                                    <th>Pregunta</th>
+                                    </thead>
+                                    <tbody id="DataContent1">
+                                        @foreach (ADESCOMBUSINESS.Areas.Votaciones.Models.VwVOT_Preguntas OBJVOT_Pregunta in Model.Preguntas)
+                                        {
+                                            <tr onclick="SelectRow(@OBJVOT_Pregunta.Pregunta_ID, this)">
+                                                <td>@Html.DisplayFor(m => OBJVOT_Pregunta.CiaPregunta_ID)</td>
+                                                <td>@Html.DisplayFor(m => OBJVOT_Pregunta.PRE_Pregunta)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" onclick="ReturnIndex()">Salir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>
+<script>
+    function setTexbox() {
+        LoadingCierre = "LoadingVotacion";
+        $divDatosVotacion = "DatosVotacion";
+    }
+
+    function ReturnIndex() {
+        var elemDatosVotacion = document.getElementById($divDatosVotacion);
+        elemDatosVotacion.innerHTML = "";
+        AdicionarLoading('LoadingVotacion');
+        $.ajax({
+            url: '/Votaciones/Votaciones',
+            cache: false,
+            dataType: "html",
+            begin: function () {
+            },
+
+            success: function (response) {
+                $('#ContentOnePage').html(response);
+            },
+            complete: function (response) {
+                var Limpiar = document.getElementById("LoadingVotacion");
+                Limpiar.innerHTML = "";
+            }
+        });
+    }
+
+    setTexbox();
+</script>

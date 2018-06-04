@@ -1,0 +1,97 @@
+﻿@model ADESCOMBUSINESS.Areas.Votaciones.Models.VOT_Votaciones
+@{
+    ViewBag.Title = "Crear";
+    Layout = null;
+}
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Informacion de la Votación</label>
+            </div>
+            <div id="RefreshDataSoli" class="panel-body">
+
+                @using (Ajax.BeginForm("Crear", "Votaciones", new AjaxOptions { OnBegin = "AdicionarLoading('ContentOnePage')", UpdateTargetId = "ContentOnePage" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <div style="width: 100%;">
+                        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                @ViewBag.Error
+                            </div>
+                        }
+                        else
+                        {
+                            if (ViewBag.Error == "OK")
+                            {
+                              /*  <div class="alert alert-success" role="alert">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                    Operacion Completada Con exito!
+                                </div>*/
+                            }
+                        }
+                        <div id="mostar">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.VOT_Titulo, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.VOT_Titulo, new { @class = "form-control ", @id = "VOT_Titulo", @style = "min-width: 100%;" })
+                                        @Html.ValidationMessageFor(model => model.VOT_Titulo)
+                                    </div>
+                                </div>
+                                <br />
+                              @*  <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.VOT_Inicio, new { @class = "control-label" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.VOT_Inicio, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "VOT_Inicio" })
+            @Html.ValidationMessageFor(model => model.VOT_Inicio)
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.VOT_Fin, new { @class = "control-label" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.VOT_Fin, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "VOT_Fin" })
+            @Html.ValidationMessageFor(model => model.VOT_Fin)
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <br />*@
+                            </fieldset>
+                            <br />
+                            <br />
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger glyphicon glyphicon-remove" onclick="ReturnIndex()" />
+                                <button type="submit" class="btn btn-success glyphicon glyphicon-ok" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>
+<script>
+    function ReturnIndex() {
+        $.ajax({
+            url: '/Votaciones/Votaciones',
+            cache: false,
+            dataType: "html",
+            success: function (response) {
+                $('#ContentOnePage').html(response);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,54 @@
+﻿@model ADESCOMBUSINESS.Areas.Votaciones.Models.VOT_Preguntas
+@{
+    ViewBag.Title = "Crear";
+    Layout = null;
+}
+@using (Ajax.BeginForm("CrearPregunta", "Preguntas", new AjaxOptions { OnBegin = "AdicionarLoading('Modal')", UpdateTargetId = "Modal" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <!-- <div class="alert alert-success" role="alert">
+                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                     Operacion Completada Con exito!
+                 </div>-->
+                <!--<script>
+                    RefreshButon1.click();
+                </script>-->
+            }
+        }
+        <div id="mostar">
+            <input type="hidden" id="Votacion_ID" name="Votacion_ID" value="@ViewBag.Votacion_ID" />
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.PRE_Pregunta, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.PRE_Pregunta, new { @class = "form-control ", @id = "PRE_Pregunta" })
+                        @Html.ValidationMessageFor(model => model.PRE_Pregunta)
+                    </div>
+                </div>
+                <br />
+            </fieldset>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+                <button type="submit" class="btn btn-success glyphicon glyphicon-ok" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>

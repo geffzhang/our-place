@@ -1,0 +1,132 @@
+﻿@model ADESCOMBUSINESS.Areas.Eventos.Models.VwEVE_Eventos
+@{
+    ViewBag.Title = "Editar";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Editar", "Reservaciones", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            @Html.HiddenFor(model => model.Evento_ID)
+            @Html.HiddenFor(model => model.Instalacion_ID)
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.DIR_Descripcion, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.DIR_Descripcion, null, new { @class = "form-control ", @id = "DIR_Descripcion", @readonly = "true" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Instalacion_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.INS_Descripcion, null, new { @class = "form-control ", @id = "Instalacion_ID", @readonly = "true" })
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Organizador, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => Model.EVE_Organizador, new { @class = "form-control ", @id = "EVE_Organizador", @readonly = "true" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Fecha, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => Model.EVE_Fecha, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "EVE_Fecha", @readonly = "true" })
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Inicio, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => Model.EVE_Inicio, new { @class = "form-control ", @id = "EVE_Inicio", @readonly = "true" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EVE_Fin, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => Model.EVE_Fin, new { @class = "form-control ", @id = "EVE_Fin", @readonly = "true" })
+                </div>
+            </div> <br />
+        </fieldset>
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Eventos del día @ViewBag.Fecha (@ViewBag.Instalacion)</label>
+            </div>
+            <div id="LoadingEventosDelDia"></div>
+            <div id="EventosDelDia"></div>
+        </div>
+        <br />
+        <div class="modal-footer">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-success">Autorizar</button>
+                @Ajax.ActionLink("Rechazar", "Rechazar", new { Evento_ID = Model.Evento_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Rechazar reservación')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-danger", @value = "Rechazar", @title = "Rechazar" })
+                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Salir</button>
+            </div>
+        </div> 
+    </div>
+}
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+
+    function setTexbox() {
+        $divEventosDelDia = "EventosDelDia";
+        LoadingEventosDelDia = "LoadingEventosDelDia";
+    }
+
+    function CargarEventos() {
+        AdicionarLoading('LoadingEventosDelDia');
+        var elemEventos = document.getElementById($divEventosDelDia);
+        var DataFecha = document.getElementById('EVE_Fecha').value;
+        var DataInstalacion = document.getElementById('Instalacion_ID').value;
+        var DataEvento_ID = document.getElementById('Evento_ID').value;
+        $.ajax({
+            url: '../Reservaciones/Reservaciones/GetEventosDelDia',
+            cache: false,
+            dataType: "html",
+            data: {
+                "Fecha": DataFecha,
+                "Instalacion_ID": DataInstalacion,
+                "Evento_ID": DataEvento_ID
+            },
+            begin: {},
+            success: function (response) {
+                elemEventos.innerHTML = response;
+            },
+            complete: function (response) {
+                var Limpiar = document.getElementById("LoadingEventosDelDia");
+                Limpiar.innerHTML = "";
+            }
+        });
+    }
+
+    setTexbox();
+    CargarEventos();
+</script>

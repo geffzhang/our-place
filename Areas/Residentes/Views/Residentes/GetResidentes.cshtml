@@ -1,0 +1,33 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Residentes.Models.VwRES_Residentes>
+@{
+    ViewBag.Title = "Residentes";
+    Layout = null;
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label class="control-label">Residentes de @ViewBag.Direccion</label>
+    </div>
+    <div class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color: #2e2e37; color: white">
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Relación Dueño</th>
+            </thead>
+            <tbody class="row form-panel">
+                @foreach (ADESCOMBUSINESS.Areas.Residentes.Models.VwRES_Residentes OBJRES_Residentes in Model)
+            {
+                    <tr>
+                        <td>@Html.DisplayFor(m => OBJRES_Residentes.CiaResidente_ID)</td>
+                        <td>@Html.DisplayFor(m => OBJRES_Residentes.RES_Nombre)</td>
+                        <td>@Html.DisplayFor(m => OBJRES_Residentes.RES_Email)</td>
+                        <td>@Html.DisplayFor(m => OBJRES_Residentes.RES_Telefono)</td>
+                        <td>@Html.DisplayFor(m => OBJRES_Residentes.RES_RelDuenio)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

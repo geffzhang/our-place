@@ -1,0 +1,29 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Votaciones.Models.DetallesResultados>
+@{
+    ViewBag.Title = "Detalles del Resultado";
+    Layout = null;
+}
+<div class="panel panel-default">
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color:#2e2e37; color:white">
+            <th>Residente</th>
+            <th>Respuesta</th>
+            <th>Comentarios</th>
+            </thead>
+            <tbody id="DataContent">
+                @foreach (ADESCOMBUSINESS.Areas.Votaciones.Models.DetallesResultados OBJDetallesResultados in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => OBJDetallesResultados.RES_Nombre) (@Html.DisplayFor(m => OBJDetallesResultados.DIR_Descripcion))</td>
+                        <td>@Html.DisplayFor(m => OBJDetallesResultados.RES_OpcRespuesta)</td>
+                        <td>@Html.DisplayFor(m => OBJDetallesResultados.RES_Comentarios)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+        </div>
+    </div>
+</div>

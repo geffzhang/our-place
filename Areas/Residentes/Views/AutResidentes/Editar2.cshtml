@@ -1,0 +1,169 @@
+﻿@model ADESCOMBUSINESS.Areas.Residentes.Models.RES_ResidentesNoAut
+@{
+    ViewBag.Title = "Aprobación de Residentes";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Editar", "AutResidentes", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>@Html.HiddenFor(model => model.ResidenteNoAut_ID)</fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RNA_Email, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RNA_Email, new { @class = "form-control ", @id = "RNA_Email", @readonly = true })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RNA_RelDuenio, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RNA_RelDuenio, new { @class = "form-control ", @id = "RNA_RelDuenio", @readonly = true })
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RNA_Nombre, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RNA_Nombre, new { @class = "form-control ", @id = "RNA_Nombre", @readonly = true })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RNA_Direccion, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RNA_Direccion, new { @class = "form-control ", @id = "RNA_Direccion", @readonly = true })
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RNA_Telefono, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RNA_Telefono, new { @class = "form-control ", id = "RNA_Telefono", @readonly = true })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RNA_Movil, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RNA_Movil, new { @class = "form-control ", @id = "RNA_Movil", @readonly = true })
+                </div>
+            </div> <br />
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Asignar Dirección</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">@ViewBag.DescLlave1</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Llave1_ID", null, new { @class = "form-control ", @id = "Llave1_ID", @onChange = "GetLlave2()" })
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">@ViewBag.DescLlave2</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Llave2_ID", null, new { @class = "form-control ", id = "Llave2_ID" })
+                        </div>
+                    </div><br />
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-primary" onclick="QuienMas()">¿Quien más vive aquí?</button>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-success">Autorizar</button>
+                @Ajax.ActionLink("Rechazar", "Rechazar", new { ResidenteNoAut_ID = Model.ResidenteNoAut_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Autorizar Residente')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-danger", @value = "Rechazar", @title = "Rechazar" })
+                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+
+    function QuienMas() {
+        var DataLlave1_ID = document.getElementById("Llave1_ID").value;
+        var DataLlave2_ID = document.getElementById("Llave2_ID").value;
+
+        if (DataLlave1_ID == null || DataLlave1_ID == 0)
+            return;
+        if (DataLlave2_ID == null || DataLlave2_ID == 0)
+            return;
+
+        MostarVistaParcial2('¿Quien más vive aquí?');
+        $.ajax({
+            url: '/Residentes/Residentes/GetResidentes',
+            cache: false,
+            dataType: "html",
+            data: {
+                "Llave1_ID": DataLlave1_ID,
+                "Llave2_ID": DataLlave2_ID,
+                "Llave3_ID": 0,
+            },
+            begin: function () {
+            },
+            success: function (response) {
+                document.getElementById("Modal2").innerHTML = response;
+            },
+            error: function (result) {
+                MostrarErrorModal(result);
+            }
+        });
+    }
+
+    function GetLlave2() {
+        $("#Llave2_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave2Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave2_ID").append('<option value="0">Elija Una Opcion</option>');
+                }
+                else {
+                    $("#Llave2_ID").append('<option value="0">Elija Una Opcion</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave2_ID").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+            }
+        });
+
+    }
+
+    GetLlave2();
+</script>

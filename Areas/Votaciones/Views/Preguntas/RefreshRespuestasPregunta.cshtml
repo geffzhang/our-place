@@ -1,0 +1,29 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Votaciones.Models.VwVOT_OpcRespuestas>
+@{
+    ViewBag.Title = "Editar";
+    Layout = null;
+}
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>Respuesta</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody id="DataContent2">
+        @foreach (ADESCOMBUSINESS.Areas.Votaciones.Models.VwVOT_OpcRespuestas OBJVOT_OpcRespuestas in Model)
+        {
+            <tr onclick="SelectRow(@OBJVOT_OpcRespuestas.Respuesta_ID, this)">
+                <td>@Html.DisplayFor(m => OBJVOT_OpcRespuestas.CiaRespuesta_ID)</td>
+                <td>@Html.DisplayFor(m => OBJVOT_OpcRespuestas.RES_OpcRespuesta)</td>
+                <td>
+                    @Ajax.ActionLink(" ", "EditarRespuesta", "OpcRespuestas", new { Respuesta_ID = @OBJVOT_OpcRespuestas.Respuesta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Editar Respuesta')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil" })
+                    @Ajax.ActionLink(" ", "EliminarRespuesta", "OpcRespuestas", new { Respuesta_ID = @OBJVOT_OpcRespuestas.Respuesta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Eliminar Respuesta')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+    @Ajax.ActionLink(" ", "CrearRespuesta", "OpcRespuestas", new { Votacion_ID = @ViewBag.Votacion_ID, Pregunta_ID = @ViewBag.Pregunta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Agregar Respuesta')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+    @Ajax.ActionLink(" ", "RefreshRespuestasPregunta", new { Votacion_ID = @ViewBag.Votacion_ID, Pregunta_ID = @ViewBag.Pregunta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "RefreshData2();", OnFailure = "MostrarErrorModal2", UpdateTargetId = "RefreshData2" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-refresh", @id = "RefreshButton2", @title = "Refrescar" })
+</div>

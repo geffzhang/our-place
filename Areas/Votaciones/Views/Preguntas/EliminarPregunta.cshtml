@@ -1,0 +1,42 @@
+﻿@model ADESCOMBUSINESS.Areas.Votaciones.Models.VOT_Preguntas
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <button class="close" aria-label="Close" data-dismiss="alert" type="button"></button>
+        ¿Seguro que desea eliminar la pregunta?
+        @Html.HiddenFor(model => model.Pregunta_ID)
+    </div>
+    @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+    {
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            @ViewBag.Error
+        </div>
+    }
+    else
+    {
+        if (ViewBag.Error == "OK")
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Operacion Completada Con exito!
+            </div>
+            <script>
+                OcultarModal();
+                RefreshButon1.click();
+            </script>
+        }
+    }
+    @using (Ajax.BeginForm("EliminarPregunta", "Preguntas", new { Pregunta_ID = @Model.Pregunta_ID }, new AjaxOptions { OnBegin = "AdicionarLoading('Modal')", UpdateTargetId = "Modal" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    }
+</div>
+

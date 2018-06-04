@@ -1,0 +1,49 @@
+﻿@model ADESCOMBUSINESS.Areas.Noticias.Models.NoticiaCompuesta
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <fieldset disabled>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Noticia.NEW_Titulo, new { @class = "control-label" })
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Noticia.NEW_Titulo, new { @class = "form-control ", @id = "NEW_Titulo" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Noticia.NEW_Detalles, new { @class = "control-label" })
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Noticia.NEW_Detalles, new { @rows = "3", @class = "form-control ", @id = "NEW_Detalles", @style = "min-width: 100%;" })
+            </div>
+        </div>
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Imagenes</label>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                    </div>
+                    @foreach (ADESCOMBUSINESS.Areas.Noticias.Models.NEW_Imagenes OBJNEW_Imagenes in Model.Imagenes)
+                    {
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <img class="img-responsive" src="@OBJNEW_Imagenes.IMG_URL" style="height: 150px;width:100%;" alt="">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <br />
+    </fieldset>
+    <br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>

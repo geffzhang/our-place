@@ -1,0 +1,172 @@
+﻿@model ADESCOMBUSINESS.Areas.Votaciones.Models.VotacionesCompuesto
+@{
+    ViewBag.Title = "Editar";
+    Layout = null;
+}
+<div class="row">
+    <div id="LoadingVotacion"></div>
+    <div id="DatosVotacion" class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Informacion de la Votación</label>
+            </div>
+            <div class="panel-body">
+
+                @using (Ajax.BeginForm("Editar", "Votaciones", new AjaxOptions { OnBegin = "AdicionarLoading('ContentOnePage')", UpdateTargetId = "ContentOnePage" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <div style="width: 100%;">
+                        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                @ViewBag.Error
+                            </div>
+                        }
+                        else
+                        {
+                            if (ViewBag.Error == "OK")
+                            {
+                                <script>
+                                    MostarModalSuccess();
+                                </script>
+                            }
+                        }
+                        <div id="mostar">
+                            <fieldset>
+                                <input type="hidden" id="tipo_operacion" name="tipo_operacion" />
+                                @Html.HiddenFor(model => model.Votacion.Votacion_ID, new { @id = "Votacion_ID", @name = "Votacion_ID" })
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.Votacion.VOT_Titulo, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.Votacion.VOT_Titulo, new { @class = "form-control ", @id = "VOT_Titulo", @style = "min-width: 100%;" })
+                                        @Html.ValidationMessageFor(model => model.Votacion.VOT_Titulo)
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.Votacion.VOT_Fin, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(model => model.Votacion.VOT_Fin, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "VOT_Fin" })
+                                        @Html.ValidationMessageFor(model => model.Votacion.VOT_Fin)
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.Votacion.VOT_SolComentarios, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.CheckBoxFor(model => model.Votacion.VOT_SolComentarios, new { @class = "form-control", @id = "VOT_SolComentarios" })
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <br />
+                            </fieldset>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <label class="control-label">Configuración de Preguntas</label>
+                                </div>
+                                <div id="RefreshData1" class="panel-body">
+                                    <table id="Lista" class="table table-advance table-hover table-bordered">
+                                        <thead style="background-color:#2e2e37; color:white">
+                                        <th>ID</th>
+                                        <th>Pregunta</th>
+                                        <th>Acciones</th>
+                                        </thead>
+                                        <tbody id="DataContent1">
+                                            @foreach (ADESCOMBUSINESS.Areas.Votaciones.Models.VwVOT_Preguntas OBJVOT_Pregunta in Model.Preguntas)
+                                            {
+                                                <tr onclick="SelectRow(@OBJVOT_Pregunta.Pregunta_ID, this)">
+                                                    <td>@Html.DisplayFor(m => OBJVOT_Pregunta.CiaPregunta_ID)</td>
+                                                    <td>@Html.DisplayFor(m => OBJVOT_Pregunta.PRE_Pregunta)</td>
+                                                    <td>
+                                                        @Ajax.ActionLink(" ", "EditarPregunta", "Preguntas", new { Pregunta_ID = @OBJVOT_Pregunta.Pregunta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Editar Pregunta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil" })
+                                                        @Ajax.ActionLink(" ", "EliminarPregunta", "Preguntas", new { Pregunta_ID = @OBJVOT_Pregunta.Pregunta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Eliminar Pregunta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+                                        @Ajax.ActionLink(" ", "CrearPregunta", "Preguntas", new { Votacion_ID = Model.Votacion.Votacion_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Agregar Pregunta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+                                        @Ajax.ActionLink(" ", "RefreshPreguntasVotacion", new { Votacion_ID = Model.Votacion.Votacion_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "RefreshData1();", OnFailure = "MostrarErrorModal1", UpdateTargetId = "RefreshData1" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-refresh", @id = "RefreshButon1", @title = "Refrescar" })                   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-sm-12 text-center">
+                                    <button type="submit" class="btn btn-success" onclick="setType(true)">Guardar Cambios e Iniciar Votación</button>
+                                    <button type="submit" class="btn btn-primary" onclick="setType(false)">Sólo Guardar Cambios</button>
+                                    @Ajax.ActionLink("Cancelar Votación", "Cancelar", new { Votacion_ID = Model.Votacion.Votacion_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Cancelar Votación')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-danger", @value = "Cancelar", @title = "Cancelar" })
+                                    <button type="button" class="btn btn-danger pull-right" onclick="ReturnIndex()">Salir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>
+<script>
+    function setType(type) {
+        document.getElementById("tipo_operacion").value = type;
+    }
+
+    function setTexbox() {
+        LoadingCierre = "LoadingVotacion";
+        $divDatosVotacion = "DatosVotacion";
+    }
+
+    function ReturnIndex() {
+        var elemDatosVotacion = document.getElementById($divDatosVotacion);
+        elemDatosVotacion.innerHTML = "";
+        AdicionarLoading('LoadingVotacion');
+        $.ajax({
+            url: '/Votaciones/Votaciones',
+            cache: false,
+            dataType: "html",
+            begin: function () {
+            },
+
+            success: function (response) {
+                $('#ContentOnePage').html(response);
+            },
+            complete: function (response) {
+            var Limpiar = document.getElementById("LoadingVotacion");
+                Limpiar.innerHTML = "";
+            }
+        });
+    }
+
+    setTexbox();
+</script>
+
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon'); ReturnIndex();">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

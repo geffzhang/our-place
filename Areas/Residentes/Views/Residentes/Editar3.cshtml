@@ -1,0 +1,170 @@
+﻿@model ADESCOMBUSINESS.Areas.Residentes.Models.RES_Residentes
+@{
+    ViewBag.Title = "Editar Residente";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Editar", "Residentes", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>@Html.HiddenFor(model => model.Residente_ID)</fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CiaResidente_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.CiaResidente_ID, new { @class = "form-control ", @id = "CiaResidente_ID", @readonly = "true"})
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RES_RelDuenio, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RES_RelDuenio, new { @class = "form-control ", @id = "RES_RelDuenio" })
+                    @Html.ValidationMessageFor(model => model.RES_RelDuenio)
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RES_Email, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RES_Email, new { @class = "form-control ", @id = "RES_Email" })
+                    @Html.ValidationMessageFor(model => model.RES_Email)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RES_Nombre, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RES_Nombre, new { @class = "form-control ", @id = "RES_Nombre" })
+                    @Html.ValidationMessageFor(model => model.RES_Nombre)
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RES_Telefono, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RES_Telefono, new { @class = "form-control ", id = "RES_Telefono" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.RES_Movil, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RES_Movil, new { @class = "form-control ", @id = "RES_Movil" })
+                </div>
+            </div> <br />
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label">@ViewBag.DescLlave1</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Llave1_ID", null, new { @class = "form-control ", @id = "Llave1_ID", @onChange = "GetLlave2()" })
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">@ViewBag.DescLlave2</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Llave2_ID", null, new { @class = "form-control ", id = "Llave2_ID", @onChange = "GetLlave3()" })
+                </div>
+            </div><br />
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label">@ViewBag.DescLlave3</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Llave3_ID", null, new { @class = "form-control ", id = "Llave3_ID" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.BS_Activo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.CheckBoxFor(model => model.BS_Activo, new {  @id = "BS_Activo" })
+                </div>
+            </div><br />
+
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+
+    function GetLlave2() {
+        $("#Llave2_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave2Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave2_ID").append('<option value="0">Elija Una Opcion</option>');
+                }
+                else {
+                    $("#Llave2_ID").append('<option value="0">Elija Una Opcion</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave2_ID").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+                GetLlave3();
+            }
+        });
+
+    }
+
+    function GetLlave3() {
+        $("#Llave3_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetLlave3Items")',
+            dataType: 'json',
+            data: {
+                Llave1_ID: $("#Llave1_ID").val(),
+                Llave2_ID: $("#Llave2_ID").val()
+            },
+            success: function (Numeros) {
+                if (Numeros.length == 0) {
+                    $("#Llave3_ID").append('<option value="0">Elija Una Opcion</option>');
+                }
+                else {
+                    $("#Llave3_ID").append('<option value="0">Elija Una Opcion</option>');
+                    $.each(Numeros, function (i, Numero) {
+                        $("#Llave3_ID").append('<option value="' + Numero.Value + '">' +
+                            Numero.Text + '</option>');
+                    });
+                }
+            }
+        });
+    }
+
+</script>

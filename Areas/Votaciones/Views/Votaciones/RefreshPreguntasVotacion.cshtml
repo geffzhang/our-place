@@ -1,0 +1,29 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Votaciones.Models.VwVOT_Preguntas>
+@{
+    ViewBag.Title = "Editar";
+    Layout = null;
+}
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>Pregunta</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody id="DataContent1">
+        @foreach (ADESCOMBUSINESS.Areas.Votaciones.Models.VwVOT_Preguntas OBJVOT_Pregunta in Model)
+        {
+            <tr onclick="SelectRow(@OBJVOT_Pregunta.Pregunta_ID, this)">
+                <td>@Html.DisplayFor(m => OBJVOT_Pregunta.CiaPregunta_ID)</td>
+                <td>@Html.DisplayFor(m => OBJVOT_Pregunta.PRE_Pregunta)</td>
+                <td>
+                    @Ajax.ActionLink(" ", "EditarPregunta", "Preguntas", new { Pregunta_ID = @OBJVOT_Pregunta.Pregunta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Editar Pregunta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil" })
+                    @Ajax.ActionLink(" ", "EliminarPregunta", "Preguntas", new { Pregunta_ID = @OBJVOT_Pregunta.Pregunta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Eliminar Pregunta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-danger btn-xs glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+    @Ajax.ActionLink(" ", "CrearPregunta", "Preguntas", new { Votacion_ID = @ViewBag.Votacion_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Agregar Pregunta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+    @Ajax.ActionLink(" ", "RefreshPreguntasVotacion", new { Votacion_ID = @ViewBag.Votacion_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "RefreshData1();", OnFailure = "MostrarErrorModal1", UpdateTargetId = "RefreshData1" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-refresh", @id = "RefreshButon1", @title = "Refrescar" })
+</div>
