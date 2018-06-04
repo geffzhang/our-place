@@ -1,0 +1,78 @@
+@model ADESCOMBUSINESS.Areas.Contabilidad.Models.CON_ConceptosContables
+@{
+    ViewBag.Title = "Editar";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Editar", "CON_ConceptosContables", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>@Html.HiddenFor(model => model.ConceptoContable_ID)</fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CCO_Descripcion, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.CCO_Descripcion, new { @class = "form-control ", id = "CCO_Descripcion" })
+                    @Html.ValidationMessageFor(model => model.CCO_Descripcion)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CCO_TipoMovimiento, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownList("CCO_TipoMovimiento", null, new { @class = "form-control ", id = "CCO_TipoMovimiento" })
+                    @Html.ValidationMessageFor(model => model.CCO_TipoMovimiento)
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CCO_StsAnulable, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.CCO_StsAnulable, new { @class = "form-control ", id = "CCO_StsAnulable" })
+                    @Html.ValidationMessageFor(model => model.CCO_StsAnulable)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.BS_Activo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.BS_Activo, new { @class = "form-control ", id = "BS_Activo" })
+                    @Html.ValidationMessageFor(model => model.BS_Activo)
+                </div>
+                <div class="col-md-1"></div>
+
+            </div> <br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-default glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+

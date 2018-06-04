@@ -1,0 +1,212 @@
+﻿@model ADESCOMBUSINESS.Areas.Contabilidad.Models.MovContableCompuesto
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <fieldset>@Html.HiddenFor(model => model.MovContable.MovContable_ID)</fieldset>
+    <fieldset disabled>
+        <fieldset>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Detalles del Movimiento</label>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.CiaMovContable_ID, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.CiaMovContable_ID, new { @class = "form-control ", id = "CiaMovContable_ID", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.MovContable.CiaMovContable_ID)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_Fecha, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_Fecha, null, new { @class = "form-control ", id = "MCO_Fecha" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_Fecha)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.CCO_Descripcion, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.CCO_Descripcion, null, new { @class = "form-control ", id = "CCO_Descripcion" })
+                        @Html.ValidationMessageFor(model => model.MovContable.CCO_Descripcion)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_Mensaje, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_Mensaje, new { @class = "form-control ", id = "MCO_Mensaje" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_Mensaje)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_Monto, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_Monto, new { @class = "form-control ", id = "MCO_Monto" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_Monto)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_MontoIVA, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_MontoIVA, new { @class = "form-control ", id = "MCO_MontoIVA" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_MontoIVA)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_MontoTotal, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_MontoTotal, new { @class = "form-control ", id = "MCO_MontoTotal" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_MontoTotal)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_Referencia, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_Referencia, new { @class = "form-control ", id = "MCO_Referencia" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_Referencia)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.UsuarioCreo, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.UsuarioCreo, new { @class = "form-control ", id = "UsuarioCreo" })
+                        @Html.ValidationMessageFor(model => model.MovContable.UsuarioCreo)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.CCO_TipoMovimiento, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.CCO_TipoMovimiento, new { @class = "form-control ", id = "CCO_TipoMovimiento" })
+                        @Html.ValidationMessageFor(model => model.MovContable.CCO_TipoMovimiento)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.BS_Activo, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.CheckBoxFor(model => model.MovContable.BS_Activo, new { @class = "form-control ", id = "BS_Activo" })
+                        @Html.ValidationMessageFor(model => model.MovContable.BS_Activo)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MovCerrado, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.CheckBoxFor(model => model.MovContable.MovCerrado, new { @class = "form-control ", id = "MovCerrado" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MovCerrado)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Cuenta Afectada</label>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CiaCuenta_ID, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CiaCuenta_ID, new { @class = "form-control ", id = "CiaCuenta_ID", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.Cuenta.CiaCuenta_ID)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CTA_Alias, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_Alias, null, new { @class = "form-control ", id = "CTA_Alias" })
+                        @Html.ValidationMessageFor(model => model.Cuenta.CTA_Alias)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CTA_Banco, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_Banco, new { @class = "form-control ", id = "CTA_Banco" })
+                        @Html.ValidationMessageFor(model => model.Cuenta.CTA_Banco)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CTA_NumCuenta, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_NumCuenta, new { @class = "form-control ", id = "CTA_NumCuenta" })
+                        @Html.ValidationMessageFor(model => model.Cuenta.CTA_NumCuenta)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CTA_Saldo, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_Saldo, new { @class = "form-control ", id = "CTA_Saldo" })
+                        @Html.ValidationMessageFor(model => model.Cuenta.CTA_Saldo)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Movimientos Ligados</label>
+                </div>
+                <table id="Statuses" class="table table-advance table-hover table-bordered  ">
+                    <thead style="background-color: #2e2e37; color: white">
+                    <th>Fecha</th>
+                    <th>Cuenta</th>
+                    <th>Usuario</th>
+                    <th>Concepto</th>
+                    <th>Observaciones</th>
+                    <th>Monto</th>
+                    </thead>
+                    <tbody class="row form-panel">
+                        @foreach (ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_MovContables OBJVwCON_MovContables in ViewBag.MovLigados)
+                        {
+                            <tr onclick="SelectRow(@OBJVwCON_MovContables.MovContable_ID , this)">
+                                <td>@Html.DisplayFor(m => OBJVwCON_MovContables.MCO_Fecha)</td>
+                                <td>@Html.DisplayFor(m => OBJVwCON_MovContables.CTA_Alias)</td>
+                                <td>@Html.DisplayFor(m => OBJVwCON_MovContables.UsuarioCreo)</td>
+                                <td>@Html.DisplayFor(m => OBJVwCON_MovContables.CCO_Descripcion)</td>
+                                <td>@Html.DisplayFor(m => OBJVwCON_MovContables.MCO_Mensaje)</td>
+                                <td>@Html.DisplayFor(m => OBJVwCON_MovContables.MCO_Monto)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+</fieldset>
+    </fieldset>
+    <div class="modal-footer">
+        @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("<span class='glyphicon glyphicon-trash'/>Cancelar Movimiento", "CancelarMovimiento", "Cargos_Creditos", new { MovContable_ID = @Model.MovContable.MovContable_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Cancelar Movimeinto')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-TSI btn-sm", @title = "Cancelar Movimeinto" }).ToString())
+        <button type="button" class="btn btn-TSI btn-sm" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Salir</button>
+    </div>
+</div>
+
+

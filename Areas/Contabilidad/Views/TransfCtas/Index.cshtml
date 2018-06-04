@@ -1,0 +1,200 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_TransfCtas>
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<div class="text-right">
+    <h2>Transferencias entre Cuentas</h2>
+</div>
+<div class="panel panel-default" style="width: 100%">
+    <div class="panel-body">
+        @using (Ajax.BeginForm("RefreshDataSearchList", "TransfCtas", new AjaxOptions { OnBegin = "AdicionarLoading('DataContent')", UpdateTargetId = "RefreshData" }))
+            {
+            <div class="row ">
+                <input name="FindCuentaOri_ID" id="FindCuentaOri_ID" type="hidden" />
+                <input name="BAN_Nombre" id="BAN_Nombre" type="hidden" />
+                <input name="CTA_NumCuenta" id="CTA_NumCuenta" type="hidden" />
+                <input name="CTA_Saldo" id="CTA_Saldo" type="hidden" />
+                <div class="col-md-1">
+                    <label class="control-label">Cuenta Origen</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" name="FindCuentaOri_Alias" id="FindCuentaOri_Alias" type="text" readonly="readonly" />
+                </div>
+                <div class="col-md-2">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Ajax.ActionLink(" ", "SearchList", "Cuentas", new { CtasCliente = false, CtasEmpresa = true, CtasCreditos = false }, new AjaxOptions { HttpMethod = "get", OnBegin = "setTexbox2(); MostarVistaParcial2('Cuentas'); ", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-primary glyphicon glyphicon-search", @title = "Cuentas" })
+                                    <button type="button" class="btn btn-danger glyphicon glyphicon-remove" onclick="LimpiarCtaOrigen()"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <input name="FindCuentaDest_ID" id="FindCuentaDest_ID" type="hidden" />
+                <div class="col-md-1">
+                    <label class="control-label">Cuenta Destino</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" name="FindCuentaDest_Alias" id="FindCuentaDest_Alias" type="text" readonly="readonly" />
+                </div>
+                <div class="col-md-2">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Ajax.ActionLink(" ", "SearchList", "Cuentas", new { CtasCliente = false, CtasEmpresa = true, CtasCreditos = false }, new AjaxOptions { HttpMethod = "get", OnBegin = "setTexbox3(); MostarVistaParcial2('Cuentas'); ", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-primary glyphicon glyphicon-search", @title = "Cuentas" })
+                                    <button type="button" class="btn btn-danger glyphicon glyphicon-remove" onclick="LimpiarCtaDestino()"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="control-label">Fecha desde</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control date" name="FindFechaDesde" type="text" />
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label">Fecha hasta</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control date" name="FindFechaHasta" type="text" />
+                </div>
+                <div class="col-md-4" />
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" /> Filtrar</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />
+
+<div class="panel panel-default">
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered  ">
+            <thead style="background-color: #2e2e37; color: white">
+            <th>Fecha</th>
+            <th>Usuario</th>
+            <th>Cuenta Origen</th>
+            <th>Cuenta Destino</th>
+            <th>Monto</th>
+            <th>Acc</th>
+            </thead>
+            <tbody id="DataContent" class="row form-panel">
+                @foreach (ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_TransfCtas OBJVwCON_TransfCtas in Model)
+                {
+                    <tr onclick="SelectRow(@OBJVwCON_TransfCtas.Transferencia_ID , this)">
+                        <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.TRF_FechaIng)</td>
+                        <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.UsuarioCreo)</td>
+                        <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.CTAOrigen_Alias)</td>
+                        <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.CTADestino_Alias)</td>
+                        <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.TRF_Monto)</td>
+                        <td>
+                            @Ajax.ActionLink(" ", "Detalle", new { Transferencia_ID = @OBJVwCON_TransfCtas.Transferencia_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Detalle Transferencia')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-search", @title = "Detalle" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+            <div class="row">
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+                </div>
+                <div class="pull-right" style="padding:0px 10px 0px 0px;">
+                    @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    function setTexbox2() {
+        $TxtCuenta_ID = "FindCuentaOri_ID";
+        $TxtCTA_Alias = "FindCuentaOri_Alias";
+        $TxtCTA_Banco = "BAN_Nombre";
+        $TxtCTA_NumCuenta = "CTA_NumCuenta";
+        $TxtCTA_Saldo = "CTA_Saldo";
+    }
+
+    function setTexbox3() {
+        $TxtCuenta_ID = "FindCuentaDest_ID";
+        $TxtCTA_Alias = "FindCuentaDest_Alias";
+        $TxtCTA_Banco = "BAN_Nombre";
+        $TxtCTA_NumCuenta = "CTA_NumCuenta";
+        $TxtCTA_Saldo = "CTA_Saldo";
+    }
+    function LimpiarCtaOrigen() {
+        var cta_ID = document.getElementById("FindCuentaOri_ID");
+        cta_ID.value = "";
+        var cta_Alias = document.getElementById("FindCuentaOri_Alias");
+        cta_Alias.value = "";
+    }
+
+    function LimpiarCtaDestino() {
+        var cta_ID = document.getElementById("FindCuentaDest_ID");
+        cta_ID.value = "";
+        var cta_Alias = document.getElementById("FindCuentaDest_Alias");
+        cta_Alias.value = "";
+    }
+
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "order": [[0, "desc"]],
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay datos disponibles en la tabla",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

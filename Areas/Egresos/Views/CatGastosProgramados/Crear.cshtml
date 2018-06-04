@@ -1,0 +1,107 @@
+﻿@model ADESCOMBUSINESS.Areas.Egresos.Models.EGR_GastosProgramados
+@{
+    ViewBag.Title = "Crear";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "CatCargosProgramados", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TipoGasto_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("TipoGasto_ID", null, new { @class = "form-control ", @id = "TipoGasto_ID" })
+                    @Html.ValidationMessageFor(model => model.TipoGasto_ID)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GPR_Descripcion, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GPR_Descripcion, new { @class = "form-control ", @id = "GPR_Descripcion" })
+                    @Html.ValidationMessageFor(model => model.GPR_Descripcion)
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GPR_Monto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GPR_Monto, new { @class = "form-control ", @id = "GPR_Monto" })
+                    @Html.ValidationMessageFor(model => model.GPR_Monto)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Cuenta_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Cuenta_ID", null, new { @class = "form-control ", @id = "Cuenta_ID" })
+                    @Html.ValidationMessageFor(model => model.Cuenta_ID)
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GPR_Recurrente, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.CheckBoxFor(model => model.GPR_Recurrente, new { @class = "form-control ", @id = "GPR_Recurrente", @onclick = "CambiarRecurrente()" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GPR_FechaAplicacion, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GPR_FechaAplicacion, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "GPR_FechaAplicacion" })
+                    @Html.ValidationMessageFor(model => model.GPR_FechaAplicacion)
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.BS_Activo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.CheckBoxFor(model => model.BS_Activo, new { @class = "form-control ", @id = "BS_Activo" })
+                </div>
+            </div> <br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd", minDate: '1' }).val();
+
+    function CambiarRecurrente() {
+        if ($("#GPR_Recurrente").is(':checked')) {
+            $("#GPR_FechaAplicacion").prop("readonly", true);
+        } else {
+            $("#GPR_FechaAplicacion").prop("readonly", false);
+        }
+
+    }
+    CambiarRecurrente();
+</script>

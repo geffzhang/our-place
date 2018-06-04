@@ -1,0 +1,94 @@
+﻿@model ADESCOMBUSINESS.Areas.Contabilidad.Models.CON_Cuentas
+@{
+    ViewBag.Title = "Estado de Cuenta del Residente";
+    Layout = null;
+}
+<br>
+<div style="width: 100%;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label class="control-label">Informacion Cuenta</label>
+        </div>
+        <div id="RefreshDataSoli" class="panel-body">
+            <div style="width: 100%;">
+                <fieldset>
+                    @Html.HiddenFor(model => model.Cuenta_ID, new { @id = "Cuenta_ID" })
+                </fieldset>
+                <div id="mostar">
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.CTA_Alias, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.CTA_Alias, new { @class = "form-control ", @id = "DIR_Descripcion", @readonly = "true" })
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <label class="control-label">Periodo</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownList("CierresCta", null, new { @class = "form-control ", @id = "CierresCta", @onchange = "CargarCierreInfo()" })
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.CTA_Saldo, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.CTA_Saldo, new { @class = "form-control ", @id = "CTA_Saldo", @readonly = "true" })
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <br />
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <label class="control-label">Informacion del Periodo</label>
+                    </div>
+                    <div id="LoadingCierre"></div>
+                    <div id="CierreInfo"></div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        function setTexbox() {
+            $divCierreInfo = "CierreInfo";
+            LoadingCierre = "LoadingCierre";
+        }
+
+        function CargarCierreInfo() {
+            var elemCierreInfo = document.getElementById($divCierreInfo);
+            elemCierreInfo.innerHTML = "";
+            var Cuenta_ID = document.getElementById('Cuenta_ID').value;
+            var Cierre_ID = document.getElementById("CierresCta").options[document.getElementById("CierresCta").selectedIndex].value;
+
+            AdicionarLoading('LoadingCierre');
+            $.ajax({
+                url: '/Egresos/EdoCtaEmpresa/GetCierreInfo',
+                cache: false,
+                dataType: "html",
+                data: {
+                    "Cuenta_ID": Cuenta_ID,
+                    "Cierre_ID": Cierre_ID
+                },
+                begin: {},
+                success: function (response) {
+                    elemCierreInfo.innerHTML = response;
+                },
+                complete: function (response) {
+                    var Limpiar = document.getElementById("LoadingCierre");
+                    Limpiar.innerHTML = "";
+                }
+            });
+        }
+
+        setTexbox();
+        CargarCierreInfo();
+</script>

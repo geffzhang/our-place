@@ -1,0 +1,74 @@
+@model List<ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_ConceptosContables>
+@{
+    ViewBag.Title = "Lista CON_ConceptosContables ";
+    Layout = null;
+}
+<div class="panel panel-default ">
+    <div id="RefreshData" class="panel-body">
+        <br />
+        <div class="row">
+            <div class="col-md-1">
+                Filtrar:
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" id="searchTerm" type="text" onkeyup="doSearch()" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row form-panel">
+            <table id="SearchData" class="table table-advance table-hover table-bordered  ">
+                <thead style="background-color: #2e2e37; color: white">
+                    <th>CiaConceptoContable_ID</th>
+                    <th>CCO_Descripcion</th>
+                    <th>Activo</th>
+                </thead>
+                <tbody id="DataContent" class="row form-panel">
+                @foreach (ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_ConceptosContables   OBJCON_ConceptosContables in Model)
+                    {
+                        <tr onclick="SelectRow(@OBJCON_ConceptosContables.ConceptoContable_ID , this)">
+                            <td>@Html.DisplayFor(m => OBJCON_ConceptosContables.CiaConceptoContable_ID)</td>
+                            <td>@Html.DisplayFor(m => OBJCON_ConceptosContables.CCO_Descripcion)</td>
+                            <td>@Html.DisplayFor(m => OBJCON_ConceptosContables.BS_Activo)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default glyphicon glyphicon-ok" data-dismiss="modal"></button>
+    </div>
+</div>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+        var elem = document.getElementById($TexboxReturnId);
+        elem.value = id;
+    }
+</script>
+<script language="javascript">
+    function doSearch() {
+        var tableReg = document.getElementById('SearchData');
+        var searchText = document.getElementById('searchTerm').value.toLowerCase();
+        var cellsOfRow = "";
+        var found = false;
+        var compareWith = "";
+        for (var i = 1; i < tableReg.rows.length; i++) {
+            cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++) {
+                compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1)) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tableReg.rows[i].style.display = '';
+            } else {
+                tableReg.rows[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+

@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<!--<link href="~/Content/Resources/css/jquery.circliful.css" rel="stylesheet" />
+<script src="~/Content/Resources/js/jquery.circliful.js"></script>
+<script src="~/Content/Resources/js/jquery.circliful.min.js"></script>-->
+@Styles.Render("~/bundles/Dashboard/css")
+@Scripts.Render("~/bundles/Dashboard/js")
+
+<div class="text-right">
+    <h2>Dashboard</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="BMS-DashboarSummary-Graph">
+            <span class="glyphicon glyphicon-home BMS-DashboarSummary-Icon pull-right"></span>
+            <div>
+                <label class="BMS-DashboarSummary-Count">@ViewBag.Residencias</label>
+            </div>
+            <div>
+                <label class="BMS-DashboarSummary-Description">Residencias</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="BMS-DashboarSummary-Graph">
+            <span class="glyphicon glyphicon-user BMS-DashboarSummary-Icon pull-right"></span>
+            <div>
+                <label class="BMS-DashboarSummary-Count">@ViewBag.Residentes</label>
+            </div>
+            <div>
+                <label class="BMS-DashboarSummary-Description">Residentes</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="BMS-DashboarSummary-Graph">
+            <span class="glyphicon glyphicon-piggy-bank BMS-DashboarSummary-Icon pull-right"></span>
+            <div>
+                <label class="BMS-DashboarSummary-Count">@ViewBag.SaldoCuentas</label>
+            </div>
+            <div>
+                <label class="BMS-DashboarSummary-Description">Saldo en Cuentas</label>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <div class="BMS-DashboarSummary">
+            <label class="BMS-DashboarSummary-Titulo">Recaudación del Periodo Actual</label>
+            <div id="myDonut" data-text="Recaudado" data-width="30" data-fontsize="38" data-percent="@ViewBag.Recaudado" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd"></div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="BMS-DashboarSummary">
+            <label class="BMS-DashboarSummary-Titulo">Ingresos vs Egresos</label>
+            <div id="myChart" style="height: 250px;">
+                <div id="LoadingGrafica"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#myDonut").circliful();
+
+  /*  $(document).ready(function () {*/
+
+        function ActualizarGrafica() {
+            AdicionarLoading('LoadingGrafica');
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetIngresosVsEgresos")',
+                dataType: 'json',
+                data: {},
+                success: function (MesesIngresos) {
+                    Morris.Bar({
+                        element: 'myChart',
+                        data: [
+                          { fecha: MesesIngresos.Mes1, ingresos: MesesIngresos.IMes1, egresos: MesesIngresos.EMes1 },
+                          { fecha: MesesIngresos.Mes2, ingresos: MesesIngresos.IMes2, egresos: MesesIngresos.EMes2 },
+                          { fecha: MesesIngresos.Mes3, ingresos: MesesIngresos.IMes3, egresos: MesesIngresos.EMes3 },
+                          { fecha: MesesIngresos.Mes4, ingresos: MesesIngresos.IMes4, egresos: MesesIngresos.EMes4 },
+                          { fecha: MesesIngresos.Mes5, ingresos: MesesIngresos.IMes5, egresos: MesesIngresos.EMes5 },
+                          { fecha: MesesIngresos.Mes6, ingresos: MesesIngresos.IMes6, egresos: MesesIngresos.EMes6 },
+                        ],
+                        xkey: 'fecha',
+                        ykeys: ['ingresos', 'egresos'],
+                        labels: ['Ingresos', 'Egresos']
+                    });
+                },
+                complete: function (response) {
+                    var Limpiar = document.getElementById("LoadingGrafica");
+                    Limpiar.innerHTML = "";
+                }
+            });
+        }
+
+        ActualizarGrafica();
+
+  /*  });//DocumentReady*/
+
+</script>

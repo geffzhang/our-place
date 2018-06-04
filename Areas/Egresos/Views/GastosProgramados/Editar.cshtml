@@ -1,0 +1,161 @@
+﻿@model ADESCOMBUSINESS.Areas.Egresos.Models.EGR_GastosRealizados
+@{
+    ViewBag.Title = "Registrar Gasto";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Editar", "GastosProgramados", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <input type="hidden" name="aplicar", id="aplicar">
+            @Html.HiddenFor(model => model.GastoRealizado_ID)
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label">Tipo de Gasto</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("TipoGasto_ID", null, new { @class = "form-control ", @id = "TipoGasto_ID" })
+                    @Html.ValidationMessageFor(model => model.TipoGasto_ID)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GRE_Concepto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GRE_Concepto, new { @class = "form-control ", @id = "GRE_Concepto" })
+                    @Html.ValidationMessageFor(model => model.GRE_Concepto)
+                </div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GRE_Referencia, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GRE_Referencia, new { @class = "form-control ", @id = "GRE_Referencia" })
+                    @Html.ValidationMessageFor(model => model.GRE_Referencia)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GRE_Monto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GRE_Monto, new { @class = "form-control ", @id = "GRE_Monto" })
+                    @Html.ValidationMessageFor(model => model.GRE_Monto)
+                </div>
+
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Cuenta_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Cuenta_ID", null, new { @class = "form-control ", @id = "Cuenta_ID" })
+                    @Html.ValidationMessageFor(model => model.Cuenta_ID)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GRE_FechaPago, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GRE_FechaPago, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "GRE_FechaPago" })
+                    @Html.ValidationMessageFor(model => model.GRE_FechaPago)
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.GRE_Comprobante, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" value="@ViewBag.ComprobanteName" id="fileName" name="fileName" readonly />
+                    <input hidden type="text" value="@ViewBag.ComprobanteFile" id="SavedFile" name="SavedFile" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-info" onclick="ImpoExpo()">Subir</button>
+                </div>
+            </div><br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-success" onclick="setType(true)">Autorizar</button>
+                <button type="submit" class="btn btn-danger" onclick="setType(false)">Rechazar</button>
+                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function setType(type) {
+        document.getElementById("aplicar").value = type;
+    }
+
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    function setTexbox() {
+        $TxtFileName = "fileName";
+        $TxtFileID = "SavedFile";
+    }
+
+    function ImpoExpo() {
+        MostarVistaParcial2('Subir archivo');
+        $.ajax({
+            url: '../ImpoExpo/Archivos/Import',
+            cache: false,
+            dataType: "html",
+            data: {
+                "Contenedor_Archivos": "comprobantesgasto",
+                "SoloImagenes": "true"
+            },
+            begin: function () {
+            },
+            success: function (response) {
+                document.getElementById("Modal2").innerHTML = response;
+            },
+            error: function (result) {
+                MostrarErrorModal2(result);
+            }
+        });
+    }
+
+    function Procesar() {
+        var elmFileName = document.getElementById($TxtFileName);
+        var dataString;
+        var action = $("#frmArchivo").attr("action")
+        if ($("#frmArchivo").attr("enctype") == "multipart/form-data") {
+            dataString = new FormData($("#frmArchivo").get(0));
+        }
+
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: dataString,
+            dataType: "html",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#Mensaje").html(data);
+            }
+        });
+    }
+
+    setTexbox();
+</script>

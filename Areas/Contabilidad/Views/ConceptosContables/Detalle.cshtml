@@ -1,0 +1,51 @@
+@model ADESCOMBUSINESS.Areas.Contabilidad.Models.CON_ConceptosContables
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <fieldset disabled>
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CCO_Descripcion, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.CCO_Descripcion, new { @class = "form-control ", id = "CCO_Descripcion" })
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CCO_TipoMovimiento, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownList("CCO_TipoMovimiento", null, new { @class = "form-control ", id = "CCO_TipoMovimiento" })
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CCO_StsAnulable, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.CCO_StsAnulable, new { @class = "form-control ", id = "CCO_StsAnulable" })
+                    @Html.ValidationMessageFor(model => model.CCO_StsAnulable)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.BS_Activo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.BS_Activo, new { @class = "form-control ", id = "BS_Activo" })
+                </div>
+                <div class="col-md-1"></div>
+
+            </div> <br />
+        </fieldset>
+    </fieldset>
+    <br />
+    <br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>
+

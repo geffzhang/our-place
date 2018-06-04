@@ -1,0 +1,92 @@
+@model List<ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_Cuentas>
+@{
+    ViewBag.Title = "Lista Cuentas";
+    Layout = null;
+}
+<div class="panel panel-default ">
+    <div id="RefreshData" class="panel-body">
+        <br />
+        <div class="row">
+            <div class="col-md-1">
+                Filtrar:
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" id="searchTerm" type="text" onkeyup="doSearch()" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row form-panel">
+            <table id="SearchData" class="table table-advance table-hover table-bordered  ">
+                <thead style="background-color: #2e2e37; color: white">
+                    <th>Sel</th>
+                    <th>ID</th>
+                    <th>Alias</th>
+                    <th>Banco</th>
+                    <th>Número Cuenta</th>
+                    <th>Saldo</th>
+                </thead>
+                <tbody id="DataContent" class="row form-panel">
+                @foreach (ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_Cuentas OBJCON_Cuentas in Model)
+                    {
+                        <tr onclick="SelectRow(@OBJCON_Cuentas.Cuenta_ID, '@OBJCON_Cuentas.CTA_Alias', '@OBJCON_Cuentas.CTA_Banco', '@OBJCON_Cuentas.CTA_NumCuenta', @OBJCON_Cuentas.CTA_Saldo, this)">
+                            <td>
+                                <button type="button" class="btn btn-success glyphicon glyphicon-ok" data-dismiss="modal"></button>
+                            </td>
+                            <td>@Html.DisplayFor(m => OBJCON_Cuentas.CiaCuenta_ID)</td>
+                            <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_Alias)</td>
+                            <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_Banco)</td>
+                            <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_NumCuenta)</td>
+                            <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_Saldo)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function SelectRow(id, alias, banco, numCuenta, saldo, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+        var elemID = document.getElementById($TxtCuenta_ID);
+        elemID.value = id;
+
+        var elemCTA_Alias = document.getElementById($TxtCTA_Alias);
+        elemCTA_Alias.value = alias;
+
+        var elemCTA_Banco = document.getElementById($TxtCTA_Banco);
+        elemCTA_Banco.value = banco;
+
+        var elemCTA_NumCuenta = document.getElementById($TxtCTA_NumCuenta);
+        elemCTA_NumCuenta.value = numCuenta;
+
+        var elemCTA_Saldo = document.getElementById($TxtCTA_Saldo);
+        elemCTA_Saldo.value = saldo;
+
+    }
+</script>
+<script language="javascript">
+    function doSearch() {
+        var tableReg = document.getElementById('SearchData');
+        var searchText = document.getElementById('searchTerm').value.toLowerCase();
+        var cellsOfRow = "";
+        var found = false;
+        var compareWith = "";
+        for (var i = 1; i < tableReg.rows.length; i++) {
+            cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++) {
+                compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1)) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tableReg.rows[i].style.display = '';
+            } else {
+                tableReg.rows[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+

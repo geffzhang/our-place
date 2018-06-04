@@ -1,0 +1,158 @@
+﻿@model ADESCOMBUSINESS.Areas.Contabilidad.Models.MovContableCompuesto
+@{
+    ViewBag.Title = "Crear";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "Cargos_Creditos", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }))
+{
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Detalles del Movimiento</label>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.CCO_Descripcion, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(model => model.MovContable.ConceptoContable_ID, (SelectList)ViewBag.ConceptoContable_ID, new { @class = "form-control ", @id = "ConceptoContable_ID", @onchange = "GetConceptoDetails()" })
+                        @Html.ValidationMessageFor(model => model.MovContable.ConceptoContable_ID)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.CCO_TipoMovimiento, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.CCO_TipoMovimiento, new { @class = "form-control ", id = "CCO_TipoMovimiento", @readonly = "true" })
+                        @Html.ValidationMessageFor(model => model.MovContable.CCO_TipoMovimiento)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_Mensaje, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_Mensaje, new { @class = "form-control ", id = "MCO_Mensaje" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_Mensaje)
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_Referencia, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_Referencia, new { @class = "form-control ", id = "MCO_Referencia" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_Referencia)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.MovContable.MCO_Monto, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.MovContable.MCO_Monto, new { @class = "form-control ", id = "MCO_Monto" })
+                        @Html.ValidationMessageFor(model => model.MovContable.MCO_Monto)
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label class="control-label">Cuenta a afectar</label>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-md-2">
+                        <label class="control-label">Cuenta</label>
+                        @Html.HiddenFor(model => Model.Cuenta.Cuenta_ID, new { @id = "Cuenta_ID", @name = "Cuenta_ID" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_Alias, new { @class = "form-control ", id = "CTA_Alias", @readonly = "true" })
+                        @Html.ValidationMessageFor(model => model.Cuenta.Cuenta_ID)
+                    </div>
+                    <div class="col-md-1">
+                        @Ajax.ActionLink(" ", "SearchList", "Cuentas", new { CtasCliente = false, CtasEmpresa = true, CtasCreditos = true }, new AjaxOptions { HttpMethod = "get", OnBegin = "setTexbox2(); MostarVistaParcial2('Cuentas'); ", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn  btn-TSI btn-xs glyphicon glyphicon-search", @title = "Cuentas" })
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CTA_Banco, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_Banco, new { @class = "form-control ", id = "CTA_Banco", @readonly = "true" })
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CTA_NumCuenta, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_NumCuenta, new { @class = "form-control ", id = "CTA_NumCuenta", @readonly = "true" })
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Cuenta.CTA_Saldo, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.Cuenta.CTA_Saldo, new { @class = "form-control ", id = "CTA_Saldo", @readonly = "true" })
+                    </div>
+                    <div class="col-md-1"></div>
+                </div> <br />
+            </div>
+        </fieldset>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}
+<script>
+    function setTexbox2() {
+        $TxtCuenta_ID = "Cuenta_ID";
+        $TxtCTA_Alias = "CTA_Alias";
+        $TxtCTA_Banco = "CTA_Banco";
+        $TxtCTA_NumCuenta = "CTA_NumCuenta";
+        $TxtCTA_Saldo = "CTA_Saldo";
+    }
+
+    function GetConceptoDetails() {
+        var DataConceptoContable_ID = document.getElementById("ConceptoContable_ID").options[document.getElementById("ConceptoContable_ID").selectedIndex].value;
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetConceptoDetails")',
+            dataType: 'json',
+            data: { ConceptoContable_ID: DataConceptoContable_ID },
+            success: function (ConceptoContableInfo) {
+                $("#CCO_TipoMovimiento").val(ConceptoContableInfo.CCO_TipoMovimiento);
+            }
+        });
+    }
+
+    GetConceptoDetails();
+</script>

@@ -1,0 +1,80 @@
+﻿@model ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_TransfCtas
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <fieldset>@Html.HiddenFor(model => model.Transferencia_ID)</fieldset>
+    <fieldset disabled>
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CTAOrigen_Alias, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.CTAOrigen_Alias, new { @class = "form-control ", id = "CTAOrigen_Alias", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.CTAOrigen_Alias)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CTADestino_Alias, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.CTADestino_Alias, new { @class = "form-control ", id = "CTADestino_Alias", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.CTADestino_Alias)
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TRF_FechaIng, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.TRF_FechaIng, new { @class = "form-control ", id = "TRF_FechaIng", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.TRF_FechaIng)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TRF_Mensaje, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.TRF_Mensaje, null, new { @class = "form-control ", id = "TRF_Mensaje" })
+                    @Html.ValidationMessageFor(model => model.TRF_Mensaje)
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TRF_Referencia, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.TRF_Referencia, null, new { @class = "form-control ", id = "TRF_Referencia" })
+                    @Html.ValidationMessageFor(model => model.TRF_Referencia)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.UsuarioCreo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.UsuarioCreo, new { @class = "form-control ", id = "MCO_Mensaje" })
+                    @Html.ValidationMessageFor(model => model.UsuarioCreo)
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TRF_Monto, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.TRF_Monto, new { @class = "form-control ", id = "MCO_Monto" })
+                    @Html.ValidationMessageFor(model => model.TRF_Monto)
+                </div>
+                <div class="col-md-1"></div>
+            </div><br />
+        </fieldset>
+    </fieldset>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>

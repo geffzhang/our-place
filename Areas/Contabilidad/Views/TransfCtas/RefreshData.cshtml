@@ -1,0 +1,90 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_TransfCtas>
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<table id="SearchData" class="table table-advance table-hover table-bordered  ">
+    <thead style="background-color: #2e2e37; color: white">
+    <th>Fecha</th>
+    <th>Usuario</th>
+    <th>Cuenta Origen</th>
+    <th>Cuenta Destino</th>
+    <th>Monto</th>
+    <th>Acc</th>
+    </thead>
+    <tbody id="DataContent" class="row form-panel">
+        @foreach (ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_TransfCtas OBJVwCON_TransfCtas in Model)
+        {
+            <tr onclick="SelectRow(@OBJVwCON_TransfCtas.Transferencia_ID , this)">
+                <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.TRF_FechaIng)</td>
+                <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.UsuarioCreo)</td>
+                <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.CTAOrigen_Alias)</td>
+                <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.CTADestino_Alias)</td>
+                <td>@Html.DisplayFor(m => OBJVwCON_TransfCtas.TRF_Monto)</td>
+                <td>
+                    @Ajax.ActionLink(" ", "Detalle", new { Transferencia_ID = @OBJVwCON_TransfCtas.Transferencia_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Detalle Transferencia')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-search", @title = "Detalle" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+	<div class="row">
+		<div class="pull-left" style="padding:0px 0px 0px 10px;">
+			@Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+		</div>
+		<div class="pull-right" style="padding:0px 10px 0px 0px;">
+			@ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#SearchData').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+		</div>
+	</div>
+</div>
+
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    function setTexbox2() {
+        $TxtCuenta_ID = "FindCuentaOri_ID";
+        $TxtCTA_Alias = "FindCuentaOri_Alias";
+        $TxtCTA_Banco = "BAN_Nombre";
+        $TxtCTA_NumCuenta = "CTA_NumCuenta";
+        $TxtCTA_Saldo = "CTA_Saldo";
+    }
+    
+    function setTexbox3() {
+        $TxtCuenta_ID = "FindCuentaDest_ID";
+        $TxtCTA_Alias = "FindCuentaDest_Alias";
+        $TxtCTA_Banco = "BAN_Nombre";
+        $TxtCTA_NumCuenta = "CTA_NumCuenta";
+        $TxtCTA_Saldo = "CTA_Saldo";
+    }
+    
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+
+    $(document).ready(function () {
+        $('#SearchData').dataTable(
+    {
+        "order": [[ 0, "desc" ]],
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay datos disponibles en la tabla",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>

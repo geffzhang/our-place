@@ -1,0 +1,49 @@
+@model List<ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_Cuentas>
+@{
+    ViewBag.Title = "Lista Cuentas";
+    Layout = null;
+}
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>Banco</th>
+    <th>Alias</th>
+    <th>Num. Cuenta</th>
+    <th>Saldo</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody id="DataContent">
+        @foreach (ADESCOMBUSINESS.Areas.Contabilidad.Models.VwCON_Cuentas OBJCON_Cuentas in Model)
+        {
+            <tr onclick="SelectRow(@OBJCON_Cuentas.Cuenta_ID, this)">
+                <td>@Html.DisplayFor(m => OBJCON_Cuentas.CiaCuenta_ID)</td>
+                <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_Banco)</td>
+                <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_Alias)</td>
+                <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_NumCuenta)</td>
+                <td>@Html.DisplayFor(m => OBJCON_Cuentas.CTA_Saldo)</td>
+                <td>
+                    @Ajax.ActionLink(" ", "Detalle", new { Cuenta_ID = @OBJCON_Cuentas.Cuenta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Detalle  Cuenta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-search", @title = "Detalle" })
+                    @Ajax.ActionLink(" ", "Editar", new { Cuenta_ID = @OBJCON_Cuentas.Cuenta_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Editar Cuenta')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-pencil", @title = "Editar" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+	<div class="row">
+		<div class="pull-left" style="padding:0px 0px 0px 10px;">
+			@Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+			@Ajax.ActionLink(" ", "RefreshData", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable();var info = table.page.info();  localStorage['pageLength'] = info.length;  RefreshData();", OnFailure = "MostrarError", UpdateTargetId = "RefreshData" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-refresh", @id = "RefreshButon", @title = "Refrescar" })
+		</div>
+		<div class="pull-right" style="padding:0px 10px 0px 0px;">
+			@ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+		</div>
+	</div>
+</div>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+
+

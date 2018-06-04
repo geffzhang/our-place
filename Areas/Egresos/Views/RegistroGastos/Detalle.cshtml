@@ -1,0 +1,74 @@
+﻿@model ADESCOMBUSINESS.Areas.Egresos.Models.VwEGR_GastosRealizados
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <fieldset>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.TGA_Descripcion, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.TGA_Descripcion, new { @class = "form-control ", @id = "TGA_Descripcion", @readonly = "true" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.GRE_Concepto, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.GRE_Concepto, new { @class = "form-control ", @id = "GRE_Concepto", @readonly = "true" })
+            </div>
+        </div> <br />
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.GRE_Referencia, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.GRE_Referencia, new { @class = "form-control ", @id = "GRE_Referencia", @readonly = "true" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.GRE_Monto, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.GRE_Monto, new { @class = "form-control ", @id = "GRE_Monto", @readonly = "true" })
+            </div>
+
+        </div><br />
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CTA_Alias, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.CTA_Alias, new { @class = "form-control ", @id = "CTA_Alias", @readonly = "true" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.GRE_FechaPago, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.GRE_FechaPago, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "GRE_FechaPago", @readonly = "true" })
+            </div>
+        </div><br />
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.GRE_Comprobante, new { @class = "control-label" })
+            </div>
+            <div class="col-md-2">
+                @Ajax.ActionLink(" ", "VerComprobante", new { Comprobante = Model.GRE_Comprobante }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial2('Ver Comprobante')", OnFailure = "MostrarErrorModal2", UpdateTargetId = "Modal2" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-zoom-in", @title = "Ver" })
+            </div>
+            <div class="col-md-2" />
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.GRE_Estatus, new { @class = "control-label" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.GRE_Estatus, new { @class = "form-control ", @id = "GRE_Estatus", @readonly = "true" })
+            </div>
+        </div><br />
+    </fieldset>
+    <br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>
