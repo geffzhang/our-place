@@ -1,0 +1,878 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A3A69A51-B650-4DD1-9A8E-B7C64E9BF3B6}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ADESCOM</RootNamespace>
+    <AssemblyName>ADESCOM</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <DontImportPostSharp>True</DontImportPostSharp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.RedisSessionStateProvider, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.RedisSessionStateProvider.2.2.2\lib\net40\Microsoft.Web.RedisSessionStateProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.1.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PostSharp, Version=4.2.20.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.4.2.20\lib\net35-client\PostSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StackExchange.Redis.StrongName, Version=1.0.316.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.StrongName.1.0.488\lib\net45\StackExchange.Redis.StrongName.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Spatial, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Anuncios\AnunciosAreaRegistration.cs" />
+    <Compile Include="Areas\Anuncios\Controllers\AnunciosController.cs" />
+    <Compile Include="Areas\Anuncios\Controllers\AutAnunciosController.cs" />
+    <Compile Include="Areas\Calendario\CalendarioAreaRegistration.cs" />
+    <Compile Include="Areas\Calendario\Controllers\CalendarioController.cs" />
+    <Compile Include="Areas\Configuracion\ConfiguracionAreaRegistration.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatInstalacionesController.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatLlaves1Controller.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatLlaves3Controller.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatLlaves2Controller.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatResidenciasController.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatTipoCargosController.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatTipoDirectorioController.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\CatTipoGastosController.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\ConfiguracionController.cs" />
+    <Compile Include="Areas\Configuracion\Controllers\UsuariosController.cs" />
+    <Compile Include="Areas\Contabilidad\ContabilidadAreaRegistration.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\Cargos_CreditosController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\ConceptosContablesController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\CuentasController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\TransfCtasController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Directorio\Controllers\DirectorioController.cs" />
+    <Compile Include="Areas\Directorio\DirectorioAreaRegistration.cs" />
+    <Compile Include="Areas\Egresos\Controllers\CatGastosProgramadosController.cs" />
+    <Compile Include="Areas\Egresos\Controllers\EdoCtaEmpresaController.cs" />
+    <Compile Include="Areas\Egresos\Controllers\GastosProgramadosController.cs" />
+    <Compile Include="Areas\Egresos\Controllers\RegistroGastosController.cs" />
+    <Compile Include="Areas\Egresos\EgresosAreaRegistration.cs" />
+    <Compile Include="Areas\Email\Controllers\EmailController.cs" />
+    <Compile Include="Areas\Email\EmailAreaRegistration.cs" />
+    <Compile Include="Areas\Eventos\Controllers\EventosController.cs" />
+    <Compile Include="Areas\Eventos\EventosAreaRegistration.cs" />
+    <Compile Include="Areas\ImpoExpo\Controllers\ArchivosController.cs" />
+    <Compile Include="Areas\ImpoExpo\ImpoExpoAreaRegistration.cs" />
+    <Compile Include="Areas\Ingresos\Controllers\AutPagosRealizadosController.cs" />
+    <Compile Include="Areas\Ingresos\Controllers\CatCargosProgramadosController.cs" />
+    <Compile Include="Areas\Ingresos\Controllers\CondonacionesController.cs" />
+    <Compile Include="Areas\Ingresos\Controllers\EdoCtaResidentesController.cs" />
+    <Compile Include="Areas\Ingresos\Controllers\RegistroCargosController.cs" />
+    <Compile Include="Areas\Ingresos\Controllers\RegistroPagosController.cs" />
+    <Compile Include="Areas\Ingresos\IngresosAreaRegistration.cs" />
+    <Compile Include="Areas\Noticias\Controllers\NoticiasController.cs" />
+    <Compile Include="Areas\Noticias\NoticiasAreaRegistration.cs" />
+    <Compile Include="Areas\Reservaciones\Controllers\EventosResidentesController.cs" />
+    <Compile Include="Areas\Reservaciones\Controllers\ReservacionesController.cs" />
+    <Compile Include="Areas\Reservaciones\ReservacionesAreaRegistration.cs" />
+    <Compile Include="Areas\Residentes\Controllers\AutResidentesController.cs" />
+    <Compile Include="Areas\Residentes\Controllers\ResidentesController.cs" />
+    <Compile Include="Areas\Residentes\ResidentesAreaRegistration.cs" />
+    <Compile Include="Areas\Votaciones\Controllers\OpcRespuestasController.cs" />
+    <Compile Include="Areas\Votaciones\Controllers\PreguntasController.cs" />
+    <Compile Include="Areas\Votaciones\Controllers\VotacionesController.cs" />
+    <Compile Include="Areas\Votaciones\VotacionesAreaRegistration.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InicioController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ResidentesHomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\AjaxExtensions.cs" />
+    <Compile Include="Helpers\IconoHelper.cs" />
+    <Compile Include="Models\FixedOption.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Bootstrap\css\dataTables.bootstrap.css" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Bootstrap\js\bootstrap-modal.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Bootstrap\js\dataTables.bootstrap.js" />
+    <Content Include="Content\Bootstrap\js\jquery.dataTables.min.js" />
+    <Content Include="Content\Bootstrap\js\npm.js" />
+    <Content Include="Content\Datatable\css\buttons.dataTables.min.css" />
+    <Content Include="Content\Datatable\css\jquery.dataTables.min.css" />
+    <Content Include="Content\Datatable\js\buttons.html5.min.js" />
+    <Content Include="Content\Datatable\js\dataTables.buttons.min.js" />
+    <Content Include="Content\Datatable\js\jquery-1.11.3.min.js" />
+    <Content Include="Content\Datatable\js\jquery.dataTables.min.js" />
+    <Content Include="Content\Datatable\js\jszip.min.js" />
+    <Content Include="Content\Datatable\js\pdfmake.min.js" />
+    <Content Include="Content\Datatable\js\vfs_fonts.js" />
+    <Content Include="Content\Home.css" />
+    <Content Include="Content\img\Android.png" />
+    <Content Include="Content\img\anuncios.png" />
+    <Content Include="Content\img\calls.png" />
+    <Content Include="Content\img\compu.png" />
+    <Content Include="Content\img\construccion.png" />
+    <Content Include="Content\img\dashboard.PNG" />
+    <Content Include="Content\img\edo_cta.png" />
+    <Content Include="Content\img\fondo.png" />
+    <Content Include="Content\img\fondo_difuminado.png" />
+    <Content Include="Content\img\imge.png" />
+    <Content Include="Content\img\iPhone.png" />
+    <Content Include="Content\img\loading2.GIF" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\logo_blanco.png" />
+    <Content Include="Content\img\logo_negro.png" />
+    <Content Include="Content\img\navegadores.png" />
+    <Content Include="Content\img\noticias.png" />
+    <Content Include="Content\img\notificaciones.png" />
+    <Content Include="Content\img\otra.png" />
+    <Content Include="Content\img\pagos.png" />
+    <Content Include="Content\img\panico.png" />
+    <Content Include="Content\img\pdf.png" />
+    <Content Include="Content\img\plays.png" />
+    <Content Include="Content\img\reservaciones.png" />
+    <Content Include="Content\img\solucion.png" />
+    <Content Include="Content\img\votaciones.png" />
+    <Content Include="Content\Resources\assets\css\bootstrap.css" />
+    <Content Include="Content\Resources\assets\css\dataTables.tableTools.css" />
+    <Content Include="Content\Resources\assets\css\style-responsive.css" />
+    <Content Include="Content\Resources\assets\css\style.css" />
+    <Content Include="Content\Resources\assets\css\table-responsive.css" />
+    <Content Include="Content\Resources\assets\css\to-do.css" />
+    <Content Include="Content\Resources\assets\css\zabuto_calendar.css" />
+    <Content Include="Content\Resources\assets\img\blog-bg.jpg" />
+    <Content Include="Content\Resources\assets\img\checkbox-gray.png" />
+    <Content Include="Content\Resources\assets\img\friends\fr-01.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-02.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-03.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-04.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-05.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-06.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-07.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-08.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-09.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-10.jpg" />
+    <Content Include="Content\Resources\assets\img\friends\fr-11.jpg" />
+    <Content Include="Content\Resources\assets\img\instagram.jpg" />
+    <Content Include="Content\Resources\assets\img\login-bg.jpg" />
+    <Content Include="Content\Resources\assets\img\lorde.jpg" />
+    <Content Include="Content\Resources\assets\img\mask.png" />
+    <Content Include="Content\Resources\assets\img\ny.jpg" />
+    <Content Include="Content\Resources\assets\img\portfolio\port01.jpg" />
+    <Content Include="Content\Resources\assets\img\portfolio\port02.jpg" />
+    <Content Include="Content\Resources\assets\img\portfolio\port03.jpg" />
+    <Content Include="Content\Resources\assets\img\portfolio\port04.jpg" />
+    <Content Include="Content\Resources\assets\img\portfolio\port05.jpg" />
+    <Content Include="Content\Resources\assets\img\portfolio\port06.jpg" />
+    <Content Include="Content\Resources\assets\img\product.jpg" />
+    <Content Include="Content\Resources\assets\img\product.png" />
+    <Content Include="Content\Resources\assets\img\profile-01.jpg" />
+    <Content Include="Content\Resources\assets\img\profile-02.jpg" />
+    <Content Include="Content\Resources\assets\img\radio-gray.png" />
+    <Content Include="Content\Resources\assets\img\ui-danro.jpg" />
+    <Content Include="Content\Resources\assets\img\ui-divya.jpg" />
+    <Content Include="Content\Resources\assets\img\ui-sam.jpg" />
+    <Content Include="Content\Resources\assets\img\ui-sherman.jpg" />
+    <Content Include="Content\Resources\assets\img\ui-zac.jpg" />
+    <Content Include="Content\Resources\assets\img\weather.jpg" />
+    <Content Include="Content\Resources\assets\img\zoom.png" />
+    <Content Include="Content\Resources\assets\js\bootstrap-inputmask\bootstrap-inputmask.min.js" />
+    <Content Include="Content\Resources\assets\js\bootstrap-switch.js" />
+    <Content Include="Content\Resources\assets\js\bootstrap.min.js" />
+    <Content Include="Content\Resources\assets\js\calendar-conf-events.js" />
+    <Content Include="Content\Resources\assets\js\chart-master\Chart.js" />
+    <Content Include="Content\Resources\assets\js\chartjs-conf.js" />
+    <Content Include="Content\Resources\assets\js\common-scripts.js" />
+    <Content Include="Content\Resources\assets\js\easy-pie-chart.js" />
+    <Content Include="Content\Resources\assets\js\fancybox\jquery.fancybox.css" />
+    <Content Include="Content\Resources\assets\js\fancybox\jquery.fancybox.js" />
+    <Content Include="Content\Resources\assets\js\form-component.js" />
+    <Content Include="Content\Resources\assets\js\fullcalendar\bootstrap-fullcalendar.css" />
+    <Content Include="Content\Resources\assets\js\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\Resources\assets\js\gritter-conf.js" />
+    <Content Include="Content\Resources\assets\js\gritter\css\jquery.gritter.css" />
+    <Content Include="Content\Resources\assets\js\gritter\css\jquery.gritter0.css" />
+    <Content Include="Content\Resources\assets\js\gritter\images\gritter-light.png" />
+    <Content Include="Content\Resources\assets\js\gritter\images\gritter-long.png" />
+    <Content Include="Content\Resources\assets\js\gritter\images\gritter.png" />
+    <Content Include="Content\Resources\assets\js\gritter\images\ie-spacer.gif" />
+    <Content Include="Content\Resources\assets\js\gritter\js\jquery.gritter.js" />
+    <Content Include="Content\Resources\assets\js\jquery-1.8.3.min.js" />
+    <Content Include="Content\Resources\assets\js\jquery-easy-pie-chart\jquery.easy-pie-chart.css" />
+    <Content Include="Content\Resources\assets\js\jquery-easy-pie-chart\jquery.easy-pie-chart.js" />
+    <Content Include="Content\Resources\assets\js\jquery-ui-1.9.2.custom.min.js" />
+    <Content Include="Content\Resources\assets\js\jquery.backstretch.min.js" />
+    <Content Include="Content\Resources\assets\js\jquery.dcjqaccordion.2.7.js" />
+    <Content Include="Content\Resources\assets\js\jquery.js" />
+    <Content Include="Content\Resources\assets\js\jquery.nicescroll.js" />
+    <Content Include="Content\Resources\assets\js\jquery.scrollTo.min.js" />
+    <Content Include="Content\Resources\assets\js\jquery.sparkline.js" />
+    <Content Include="Content\Resources\assets\js\jquery.tagsinput.js" />
+    <Content Include="Content\Resources\assets\js\jquery.ui.touch-punch.min.js" />
+    <Content Include="Content\Resources\assets\js\morris-conf.js" />
+    <Content Include="Content\Resources\assets\js\sparkline-chart.js" />
+    <Content Include="Content\Resources\assets\js\tasks.js" />
+    <Content Include="Content\Resources\assets\js\zabuto_calendar.js" />
+    <Content Include="Content\Resources\assets\lineicons\fonts\linecons.svg" />
+    <Content Include="Content\Resources\assets\lineicons\index.html" />
+    <Content Include="Content\Resources\assets\lineicons\lte-ie7.js" />
+    <Content Include="Content\Resources\assets\lineicons\style.css" />
+    <Content Include="Content\Resources\css\jquery-te-1.4.0.css" />
+    <Content Include="Content\Resources\css\jquery.circliful.css" />
+    <Content Include="Content\Resources\css\Login.css" />
+    <Content Include="Content\Resources\css\Menu.css" />
+    <Content Include="Content\Resources\css\tigris.css" />
+    <Content Include="Content\Resources\css\UserMenu.css" />
+    <Content Include="Content\Resources\Images\1.png" />
+    <Content Include="Content\Resources\Images\2.png" />
+    <Content Include="Content\Resources\Images\3.png" />
+    <Content Include="Content\Resources\Images\4.png" />
+    <Content Include="Content\Resources\Images\404.png" />
+    <Content Include="Content\Resources\Images\5.png" />
+    <Content Include="Content\Resources\Images\arrow.png" />
+    <Content Include="Content\Resources\Images\arrowhover.png" />
+    <Content Include="Content\Resources\Images\construccion.png" />
+    <Content Include="Content\Resources\Images\entrar.png" />
+    <Content Include="Content\Resources\Images\estadodecuenta.png" />
+    <Content Include="Content\Resources\Images\factura.png" />
+    <Content Include="Content\Resources\Images\finalizar.png" />
+    <Content Include="Content\Resources\Images\fondo.jpg" />
+    <Content Include="Content\Resources\Images\fondo1.jpg" />
+    <Content Include="Content\Resources\Images\fondo3.jpg" />
+    <Content Include="Content\Resources\Images\fondo4.jpg" />
+    <Content Include="Content\Resources\Images\IconsMenu\1.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\2.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\3.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\4.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\5.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\6.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\7.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\8.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\9.svg" />
+    <Content Include="Content\Resources\Images\IconsMenu\demo-files\demo.css" />
+    <Content Include="Content\Resources\Images\IconsMenu\demo-files\demo.js" />
+    <Content Include="Content\Resources\Images\IconsMenu\demo-files\style.css" />
+    <Content Include="Content\Resources\Images\IconsMenu\fonts\icomoon.svg" />
+    <Content Include="Content\Resources\Images\jquery-te.png" />
+    <Content Include="Content\Resources\Images\logo.png" />
+    <Content Include="Content\Resources\Images\menu.png" />
+    <Content Include="Content\Resources\Images\pagos-recibidos.png" />
+    <Content Include="Content\Resources\Images\pagos.png" />
+    <Content Include="Content\Resources\Images\registrar.png" />
+    <Content Include="Content\Resources\Images\reportes.png" />
+    <Content Include="Content\Resources\Images\soliciar-pago.png" />
+    <Content Include="Content\Resources\Images\user.png" />
+    <Content Include="Content\Resources\Images\ventanilla.png" />
+    <Content Include="Content\Resources\js\accounting.js" />
+    <Content Include="Content\Resources\js\dataTables.tableTools.js" />
+    <Content Include="Content\Resources\js\drag-drop.js" />
+    <Content Include="Content\Resources\js\html2canvas.js" />
+    <Content Include="Content\Resources\js\jquery-te-1.4.0.min.js" />
+    <Content Include="Content\Resources\js\jquery.base64.js" />
+    <Content Include="Content\Resources\js\jquery.circliful.js" />
+    <Content Include="Content\Resources\js\jquery.circliful.min.js" />
+    <Content Include="Content\Resources\js\jspdf\jspdf.js" />
+    <Content Include="Content\Resources\js\jspdf\libs\base64.js" />
+    <Content Include="Content\Resources\js\jspdf\libs\sprintf.js" />
+    <Content Include="Content\Resources\js\table2excel.js" />
+    <Content Include="Content\Resources\js\tableExport.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Content\Bootstrap\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\Bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\Bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\Resources\assets\lineicons\fonts\linecons.eot" />
+    <Content Include="Content\Resources\assets\lineicons\fonts\linecons.ttf" />
+    <Content Include="Content\Resources\assets\lineicons\fonts\linecons.woff" />
+    <Content Include="Content\Resources\Images\IconsMenu\fonts\icomoon.eot" />
+    <Content Include="Content\Resources\Images\IconsMenu\fonts\icomoon.ttf" />
+    <Content Include="Content\Resources\Images\IconsMenu\fonts\icomoon.woff" />
+    <Content Include="Areas\Anuncios\Views\web.config" />
+    <Content Include="Areas\Anuncios\Views\AutAnuncios\Editar.cshtml" />
+    <Content Include="Areas\Anuncios\Views\AutAnuncios\Index.cshtml" />
+    <Content Include="Areas\Anuncios\Views\AutAnuncios\Rechazar.cshtml" />
+    <Content Include="Areas\Anuncios\Views\AutAnuncios\RefreshData.cshtml" />
+    <Content Include="icon.ico" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Areas\Calendario\Views\web.config" />
+    <Content Include="Areas\Configuracion\Views\web.config" />
+    <Content Include="Areas\Calendario\Views\Calendario\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatInstalaciones\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatInstalaciones\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatInstalaciones\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatInstalaciones\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves1\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves1\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves1\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves1\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves2\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves2\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves2\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves2\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Crear2.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Editar2.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Index2.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\RefreshData2.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoCargos\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoCargos\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoCargos\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoCargos\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoDirectorio\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoDirectorio\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoDirectorio\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoDirectorio\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoGastos\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoGastos\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoGastos\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatTipoGastos\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Usuarios\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Usuarios\Detalle.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Usuarios\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Usuarios\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Usuarios\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Usuarios\SearchList.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cargos_Creditos\CancelarMovimiento.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cargos_Creditos\Crear.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cargos_Creditos\Detalle.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cargos_Creditos\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cargos_Creditos\RefreshData.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ConceptosContables\Crear.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ConceptosContables\Detalle.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ConceptosContables\Editar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ConceptosContables\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ConceptosContables\RefreshData.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ConceptosContables\SearchList.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cuentas\Crear.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cuentas\Detalle.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cuentas\Editar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cuentas\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cuentas\RefreshData.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\Cuentas\SearchList.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\TransfCtas\Crear.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\TransfCtas\Detalle.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\TransfCtas\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\TransfCtas\RefreshData.cshtml" />
+    <Content Include="Areas\Directorio\Views\web.config" />
+    <Content Include="Areas\Egresos\Views\web.config" />
+    <Content Include="Areas\Eventos\Views\web.config" />
+    <Content Include="Areas\ImpoExpo\Views\web.config" />
+    <Content Include="Areas\Ingresos\Views\web.config" />
+    <Content Include="Areas\Noticias\Views\web.config" />
+    <Content Include="Areas\Reservaciones\Views\web.config" />
+    <Content Include="Areas\Residentes\Views\web.config" />
+    <Content Include="Areas\Votaciones\Views\web.config" />
+    <Content Include="Areas\Directorio\Views\Directorio\Crear.cshtml" />
+    <Content Include="Areas\Directorio\Views\Directorio\Editar.cshtml" />
+    <Content Include="Areas\Directorio\Views\Directorio\Index.cshtml" />
+    <Content Include="Areas\Directorio\Views\Directorio\RefreshData.cshtml" />
+    <Content Include="Areas\Egresos\Views\CatGastosProgramados\Crear.cshtml" />
+    <Content Include="Areas\Egresos\Views\CatGastosProgramados\Detalle.cshtml" />
+    <Content Include="Areas\Egresos\Views\CatGastosProgramados\Editar.cshtml" />
+    <Content Include="Areas\Egresos\Views\CatGastosProgramados\Index.cshtml" />
+    <Content Include="Areas\Egresos\Views\CatGastosProgramados\RefreshData.cshtml" />
+    <Content Include="Areas\Egresos\Views\EdoCtaEmpresa\EdoCtaColonia.cshtml" />
+    <Content Include="Areas\Egresos\Views\EdoCtaEmpresa\GetCierreInfo.cshtml" />
+    <Content Include="Areas\Egresos\Views\EdoCtaEmpresa\Index.cshtml" />
+    <Content Include="Areas\Egresos\Views\GastosProgramados\Editar.cshtml" />
+    <Content Include="Areas\Egresos\Views\GastosProgramados\Index.cshtml" />
+    <Content Include="Areas\Egresos\Views\GastosProgramados\RefreshData.cshtml" />
+    <Content Include="Areas\Egresos\Views\RegistroGastos\CancelarGasto.cshtml" />
+    <Content Include="Areas\Egresos\Views\RegistroGastos\Crear.cshtml" />
+    <Content Include="Areas\Egresos\Views\RegistroGastos\Detalle.cshtml" />
+    <Content Include="Areas\Egresos\Views\RegistroGastos\Index.cshtml" />
+    <Content Include="Areas\Egresos\Views\RegistroGastos\RefreshData.cshtml" />
+    <Content Include="Areas\Egresos\Views\RegistroGastos\VerComprobante.cshtml" />
+    <Content Include="Areas\Eventos\Views\Eventos\Crear.cshtml" />
+    <Content Include="Areas\Eventos\Views\Eventos\Editar.cshtml" />
+    <Content Include="Areas\Eventos\Views\Eventos\Eliminar.cshtml" />
+    <Content Include="Areas\Eventos\Views\Eventos\Index.cshtml" />
+    <Content Include="Areas\Eventos\Views\Eventos\RefreshData.cshtml" />
+    <Content Include="Areas\ImpoExpo\Views\Archivos\Import.cshtml" />
+    <Content Include="Areas\ImpoExpo\Views\Archivos\ProcesarArchivo.cshtml" />
+    <Content Include="Areas\Ingresos\Views\AutPagosRealizados\Autorizar.cshtml" />
+    <Content Include="Areas\Ingresos\Views\AutPagosRealizados\Index.cshtml" />
+    <Content Include="Areas\Ingresos\Views\AutPagosRealizados\Rechazar.cshtml" />
+    <Content Include="Areas\Ingresos\Views\AutPagosRealizados\RefreshData.cshtml" />
+    <Content Include="Areas\Ingresos\Views\AutPagosRealizados\VerComprobante.cshtml" />
+    <Content Include="Areas\Ingresos\Views\CatCargosProgramados\Crear.cshtml" />
+    <Content Include="Areas\Ingresos\Views\CatCargosProgramados\Detalle.cshtml" />
+    <Content Include="Areas\Ingresos\Views\CatCargosProgramados\Editar.cshtml" />
+    <Content Include="Areas\Ingresos\Views\CatCargosProgramados\Index.cshtml" />
+    <Content Include="Areas\Ingresos\Views\CatCargosProgramados\RefreshData.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\EdoCtaCasa.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\GetCierreInfo.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\Index2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\CancelarPago.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\Crear2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\Detalle.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\Index2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\RefreshData2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\VerComprobante.cshtml" />
+    <Content Include="Areas\Noticias\Views\Noticias\Crear.cshtml" />
+    <Content Include="Areas\Noticias\Views\Noticias\Detalle.cshtml" />
+    <Content Include="Areas\Noticias\Views\Noticias\Editar.cshtml" />
+    <Content Include="Areas\Noticias\Views\Noticias\Index.cshtml" />
+    <Content Include="Areas\Noticias\Views\Noticias\RefreshData.cshtml" />
+    <Content Include="Areas\Reservaciones\Views\Reservaciones\Editar.cshtml" />
+    <Content Include="Areas\Reservaciones\Views\Reservaciones\GetEventosDelDia.cshtml" />
+    <Content Include="Areas\Reservaciones\Views\Reservaciones\Index.cshtml" />
+    <Content Include="Areas\Reservaciones\Views\Reservaciones\Rechazar.cshtml" />
+    <Content Include="Areas\Reservaciones\Views\Reservaciones\RefreshData.cshtml" />
+    <Content Include="Areas\Residentes\Views\AutResidentes\Editar2.cshtml" />
+    <Content Include="Areas\Residentes\Views\AutResidentes\Index.cshtml" />
+    <Content Include="Areas\Residentes\Views\AutResidentes\Rechazar.cshtml" />
+    <Content Include="Areas\Residentes\Views\AutResidentes\RefreshData.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Crear2.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Editar2.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\GetResidentes.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Index2.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\Crear.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\Detalle.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\Editar.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\Index.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\NoResults.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\RefreshData.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\Cancelar.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\RefreshPreguntasVotacion.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Preguntas\CrearPregunta.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Preguntas\EditarPregunta.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Preguntas\EliminarPregunta.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Preguntas\RefreshRespuestasPregunta.cshtml" />
+    <Content Include="Areas\Votaciones\Views\OpcRespuestas\CrearRespuesta.cshtml" />
+    <Content Include="Areas\Votaciones\Views\OpcRespuestas\EditarRespuesta.cshtml" />
+    <Content Include="Areas\Votaciones\Views\OpcRespuestas\EliminarRespuesta.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\GetViewCampos.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\GetViewCatalogos.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\GetViewNotificaciones.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\SetNotifLayoutEmail.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\SetNotifLayoutPushNotif.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\GetParams.cshtml" />
+    <Content Include="Areas\Configuracion\Views\Configuracion\SetNotifLayoutBuzonApp.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\Resultados.cshtml" />
+    <Content Include="Areas\Votaciones\Views\Votaciones\ResultadoDetalles.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\Editar.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\Index2.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\Finalizar.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\RefreshData2.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\Detalle.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\RefreshData2.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\RefreshData2.cshtml" />
+    <Content Include="Areas\Reservaciones\Views\EventosResidentes\Index.cshtml" />
+    <Content Include="Areas\Reservaciones\Views\EventosResidentes\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Index1.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\RefreshData1.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Index3.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\RefreshData3.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves3\Crear.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves3\Editar.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves3\Index.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatLlaves3\RefreshData.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Crear1.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Editar1.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Crear3.cshtml" />
+    <Content Include="Areas\Configuracion\Views\CatResidencias\Editar3.cshtml" />
+    <Content Include="Areas\Residentes\Views\AutResidentes\Editar1.cshtml" />
+    <Content Include="Areas\Residentes\Views\AutResidentes\Editar3.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Index1.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\RefreshData1.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Index3.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\RefreshData3.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Editar1.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Editar3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\Index1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\RefreshData1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\Index3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\EdoCtaResidentes\RefreshData3.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\Index1.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\Index3.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\RefreshData1.cshtml" />
+    <Content Include="Areas\Anuncios\Views\Anuncios\RefreshData3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\Index1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\RefreshData1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\Index3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\RefreshData3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\Crear1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroPagos\Crear3.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Crear1.cshtml" />
+    <Content Include="Areas\Residentes\Views\Residentes\Crear3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\Condonaciones\Index1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\Condonaciones\Index2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\Condonaciones\Index3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\Condonaciones\RefreshData1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\Condonaciones\RefreshData2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\Condonaciones\RefreshData3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\Crear2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\Index1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\Index2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\Index3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\RefreshData1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\RefreshData2.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\RefreshData3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\Crear1.cshtml" />
+    <Content Include="Areas\Ingresos\Views\RegistroCargos\Crear3.cshtml" />
+    <Content Include="Areas\Ingresos\Views\Condonaciones\CondonarCargos.cshtml" />
+    <Content Include="Areas\Email\Views\web.config" />
+    <Content Include="Areas\Email\Views\Email\Index1.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Index2.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Index3.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Crear1.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Crear2.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Crear3.cshtml" />
+    <Content Include="Areas\Email\Views\Email\RefreshData1.cshtml" />
+    <Content Include="Areas\Email\Views\Email\RefreshData2.cshtml" />
+    <Content Include="Areas\Email\Views\Email\RefreshData3.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Detalle1.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Detalle2.cshtml" />
+    <Content Include="Areas\Email\Views\Email\Detalle3.cshtml" />
+    <None Include="Properties\PublishProfiles\ADESCOM - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\ADESCOM - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ADESCOM - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\ADESCOM - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\ADESCOM - Web Deploy.pubxml" />
+    <Content Include="Properties\webjobs-list.json" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Views\Home\Precios.cshtml" />
+    <Content Include="Views\Home\Contacto.cshtml" />
+    <Content Include="Views\Home\Caracteristicas.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Home\PartialContacto.cshtml" />
+    <Content Include="Views\Home\AvisoPrivacidad.cshtml" />
+    <Content Include="Views\ResidentesHome\Index.cshtml" />
+    <Content Include="Views\ResidentesHome\GetCierreInfo.cshtml" />
+    <Content Include="Views\ResidentesHome\EdoCtaResidente.cshtml" />
+    <Content Include="Views\ResidentesHome\RegistroPagos.cshtml" />
+    <Content Include="Views\ResidentesHome\RegistrarPago.cshtml" />
+    <Content Include="Views\ResidentesHome\VerComprobante.cshtml" />
+    <Content Include="Views\ResidentesHome\RefreshPagos.cshtml" />
+    <Content Include="Views\ResidentesHome\DetallePago.cshtml" />
+    <None Include="Views\Shared\_HomeLayout.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Inicio\Error.cshtml" />
+    <Content Include="Views\Inicio\Error400.cshtml" />
+    <Content Include="Views\Inicio\Error401.cshtml" />
+    <Content Include="Views\Inicio\Error403.cshtml" />
+    <Content Include="Views\Inicio\Error404.cshtml" />
+    <Content Include="Views\Inicio\Error500.cshtml" />
+    <Content Include="Views\Inicio\Error503.cshtml" />
+    <Content Include="Views\Inicio\Index.cshtml" />
+    <Content Include="Views\Inicio\SesionExpired.cshtml" />
+    <Content Include="Views\Inicio\Success.cshtml" />
+    <Content Include="Views\Inicio\UnderConstruction.cshtml" />
+    <Content Include="Views\Shared\_UserAccountPartial.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\Login\ForgotPasswordSuccess.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_ResidentesHome.cshtml" />
+    <Content Include="Views\Shared\_ResidentesAccountPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ADESCOMBUSINESS\ADESCOMBUSINESS.csproj">
+      <Project>{cdf0e802-b69e-4593-b769-49780a713b37}</Project>
+      <Name>ADESCOMBUSINESS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADESCOMUTILS\ADESCOMUTILS.csproj">
+      <Project>{1b7a47ed-c0ff-425b-a646-b91c746aa2e0}</Project>
+      <Name>ADESCOMUTILS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Email\Models\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55490</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55490/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <Import Project="..\packages\PostSharp.4.2.20\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.2.20\tools\PostSharp.targets')" />
+  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
+    <Error Condition="!Exists('..\packages\PostSharp.4.2.20\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\packages\PostSharp.4.2.20\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+  </Target>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.9\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.9\tools\webjobs.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
