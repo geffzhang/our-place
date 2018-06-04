@@ -1,0 +1,164 @@
+﻿@model ADESCOMBUSINESS.Areas.Anuncios.Models.AnuncioCompuesto
+@{
+    ViewBag.Title = "Editar Anuncio";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <fieldset disabled>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Información del Anuncio</label>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="control-label">Residencia</label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBox("txtTitle", (string)ViewBag.Direccion, new { @class = "form-control ", @readonly = "true" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Categoria, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("Categoria", null, new { @class = "form-control ", @id = "Categoria" })
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Tipo, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("TipoTrans", null, new { @class = "form-control ", @id = "TipoTrans" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Estatus, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_Estatus, new { @class = "form-control ", @id = "ANU_Estatus", @readonly = "true" })
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Precio, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">$</div>
+                            @Html.TextBoxFor(model => model.Anuncio.ANU_Precio, new { @class = "form-control money", @id = "ANU_Precio", @readonly = "true" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Visitas, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_Visitas, new { @class = "form-control ", @id = "ANU_Visitas", @readonly = "true" })
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_FechaInicio, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_FechaInicio, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "ANU_FechaInicio" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_FechaFin, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_FechaFin, "{0:yyyy-MM-dd}", new { @class = "form-control date", @id = "ANU_FechaFin" })
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Descripcion, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_Descripcion, new { @class = "form-control", style = "max-width: 100%;", @id = "ANU_Descripcion" })
+                        @Html.ValidationMessageFor(model => model.Anuncio.ANU_Descripcion)
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Detalles, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_Detalles, new { @class = "form-control", style = "max-width: 100%;", @id = "ANU_Detalles" })
+                        @Html.ValidationMessageFor(model => model.Anuncio.ANU_Detalles)
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_Condiciones, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_Condiciones, new { @class = "form-control", style = "max-width: 100%;", @id = "ANU_Condiciones" })
+                        @Html.ValidationMessageFor(model => model.Anuncio.ANU_Condiciones)
+                    </div>
+                </div> <br />
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Imagenes</label>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                    </div>
+                    @foreach (ADESCOMBUSINESS.Areas.Anuncios.Models.VwANU_Imagenes OBJANU_Imagenes in Model.Imagenes)
+                    {
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <img class="img-responsive" src="@OBJANU_Imagenes.IMG_URL" style="height: 150px;width:100%;" alt="">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Datos de Contacto</label>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_ContNombre, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_ContNombre, new { @class = "form-control", @id = "ANU_ContNombre" })
+                        @Html.ValidationMessageFor(model => model.Anuncio.ANU_ContNombre)
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_ContTelefono, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_ContTelefono, new { @class = "form-control", @id = "ANU_ContTelefono" })
+                    </div>
+                </div> <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_ContCelular, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_ContCelular, new { @class = "form-control", @id = "ANU_ContCelular" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Anuncio.ANU_ContEmail, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Anuncio.ANU_ContEmail, new { @class = "form-control", @id = "ANU_ContEmail" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>
+
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+
+    FormatMoneyAllClassmoney();
+</script>

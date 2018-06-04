@@ -1,0 +1,84 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Configuracion.Models.ConfiguracionSistemaCatalogoCompania>
+@{
+    Layout = null;
+}
+
+@{
+    <div id="AcordionCatalogos">
+        @foreach (ADESCOMBUSINESS.Areas.Configuracion.Models.ConfiguracionSistemaCatalogoCompania Catalogo in Model)
+        {
+            <h3>@Catalogo.TCP_Descripcion</h3>
+            <div>
+                <div id="Notificacion_@Catalogo.TipoConfigParam_ID">
+                    
+                </div>
+
+                <table id="@Catalogo.TipoConfigParam_ID" class="table table-advance table-hover table-bordered  ">
+                    <thead style="background-color: #2e2e37; color: white">
+                    <th>Incluir</th>
+                    <th>Decripcion</th>
+                    </thead>
+                    <tbody class="row form-panel">
+                        @foreach (ADESCOMBUSINESS.Areas.Configuracion.Models.ConfiguracionSistemaCatalogoRowsCompania Registro in Catalogo.Registros)
+                        {
+                            <tr id="@Registro.Clave" onclick="SelectRow(@Registro.Clave,this)">
+                                <td>
+                                    @if (Registro.Incluir)
+                                    {
+                                        <input type="checkbox" name="@Catalogo.TCP_Nombre" value="@Registro.Clave" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                    <input type="checkbox" name="@Catalogo.TCP_Nombre" value="@Registro.Clave"/>
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(r => Registro.Deescripcion)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button  class="btn btn-default glyphicon glyphicon-ok" onclick="Save(@Catalogo.TipoConfigParam_ID ,'@Catalogo.TCP_Nombre')"></button>
+                </div>
+            </div>
+        }
+    </div>
+
+}
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+
+    $(function () {
+        $("#AcordionCatalogos").accordion();
+    });
+
+    function Save(CatalogoId, Catalogo)
+    {
+        var checkboxValues = new Array();
+        $('input[name="' + Catalogo + '"]:checked').each(function () {
+            checkboxValues.push($(this).val());
+        });
+        //aqui debe ir el llamado ajax para actualizar el valor
+        $.ajax({
+            type: "POST",
+            url: '/Configuracion/Configuracion/SetViewCatalogos',
+            cache: false,
+            dataType: "json",
+            data: {
+                "GrupoEdicion": CatalogoId,
+                "ValoresSeleccionados": checkboxValues.toString()
+            },
+            success: function (response) {                
+                if (response == "Ok") {
+                    $("#Notificacion_" + CatalogoId).html('<div class="alert alert-success " role="alert"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Operacion Completada Con exito!</div>');
+                }
+                else
+                {
+                    $("#Notificacion_" + CatalogoId).html('<div class="alert alert-danger " role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> ' + response + '</div>');
+                }
+            }
+        });
+    }    
+</script>

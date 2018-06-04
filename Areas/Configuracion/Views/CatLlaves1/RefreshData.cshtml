@@ -1,0 +1,66 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Configuracion.Models.VwTVI_Llave1>
+@{
+    ViewBag.Title = "Catálogo de " + ViewBag.Llave1_Descripcion;
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<table id="Lista" class="table table-advance table-hover table-bordered">
+    <thead style="background-color:#2e2e37; color:white">
+    <th>ID</th>
+    <th>@ViewBag.Llave1_Etiqueta</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody id="DataContent">
+        @foreach (ADESCOMBUSINESS.Areas.Configuracion.Models.VwTVI_Llave1 OBJTVI_Llave1 in Model)
+        {
+            <tr onclick="SelectRow(@OBJTVI_Llave1.Llave1_ID, this)">
+                <td>@Html.DisplayFor(m => OBJTVI_Llave1.CiaLlave1_ID)</td>
+                <td>@Html.DisplayFor(m => OBJTVI_Llave1.LL1_Descripcion)</td>
+                <td>
+                    @Ajax.ActionLink(" ", "Editar", new { Llave1_ID = @OBJTVI_Llave1.Llave1_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Editar')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Editar" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+	<div class="row">
+		<div class="pull-left" style="padding:0px 0px 0px 10px;">
+			@Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+		</div>
+		<div class="pull-right" style="padding:0px 10px 0px 0px;">
+			@ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>

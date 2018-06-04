@@ -1,0 +1,22 @@
+﻿@model  List<ADESCOMBUSINESS.Areas.Utilerias.Models.Parametros_TipoOrigenDatos>
+@{
+    ViewBag.Title = "Parametros";
+    Layout = null;
+}
+<table class="table table-advance table-hover table-bordered  ">
+    <thead style="background-color: #2e2e37; color: white">
+        <tr>
+            <td>Parametro</td>
+            <td>Descripcion</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ADESCOMBUSINESS.Areas.Utilerias.Models.Parametros_TipoOrigenDatos OBJParametros_TipoOrigenDatos in Model)
+        {
+            <tr>
+                <td>@OBJParametros_TipoOrigenDatos.ODP_Parametro</td>
+                <td>@OBJParametros_TipoOrigenDatos.ODP_Descripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>

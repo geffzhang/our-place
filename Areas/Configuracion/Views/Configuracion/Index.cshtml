@@ -1,0 +1,57 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Configuracion.Models.ConfiguracionSistemaModulo>
+@{
+    ViewBag.Title = "Configuracion";
+    Layout = null;
+    int Columna = 1;
+}
+<h2>Configuración del Sistema</h2>
+
+@{
+    foreach (ADESCOMBUSINESS.Areas.Configuracion.Models.ConfiguracionSistemaModulo Grupo in Model)
+    {
+
+        if (Columna == 1)
+        {
+            @Html.Raw("<div class='row'>");
+
+        }
+
+        <div class="col-md-2">
+            @if (Grupo.Tipo == ADESCOMBUSINESS.Areas.Configuracion.Models.TipoConfiguracionSistema.Campos)
+            {
+                @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("<span class='" + @Grupo.IconClass + " Icon-BMS-Large' /><br />" + @Grupo.Descripcion, "GetViewCampos", "Configuracion", new { GrupoEdicion = @Grupo.GrupoEdicion }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('" + @Grupo.Descripcion + "')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-BMS btn-lg btn-BMSPanelControl", @title = @Grupo.Descripcion }).ToString())
+            }
+            @if (Grupo.Tipo == ADESCOMBUSINESS.Areas.Configuracion.Models.TipoConfiguracionSistema.Catalogo)
+            {
+                @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("<span class='" + @Grupo.IconClass + " Icon-BMS-Large' /><br />" + @Grupo.Descripcion, "GetViewCatalogos", "Configuracion", new { GrupoEdicion = @Grupo.GrupoEdicion }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('" + @Grupo.Descripcion + "')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-BMS btn-lg btn-BMSPanelControl", @title = @Grupo.Descripcion }).ToString())
+            }
+        </div>
+
+        if (Columna == 6)
+        {
+            @Html.Raw("</div> <br /><br />");
+            Columna = 0;
+        }
+        Columna++;
+    }
+}
+
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

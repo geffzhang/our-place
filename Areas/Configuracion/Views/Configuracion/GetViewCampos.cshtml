@@ -1,0 +1,176 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Configuracion.Models.ConfiguracionSistemaParamCompania>
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("SetViewCampos", "Configuracion", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }))
+{
+    <input id="GrupoEdicion" name="GrupoEdicion" type="hidden" value="@ViewBag.GrupoEdicion" />
+    if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+    {
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            @ViewBag.Error
+        </div>
+    }
+    else
+    {
+        if (ViewBag.Error == "OK")
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Operacion Completada Con exito!
+            </div>
+            <script>
+                OcultarModal();
+                MostarModalSuccess();
+            </script>
+        }
+    }
+
+    int columna = 1;
+    foreach (ADESCOMBUSINESS.Areas.Configuracion.Models.ConfiguracionSistemaParamCompania Parametro in Model)
+    {
+        if ((columna % 2) != 0)
+        {
+            @Html.Raw("<div class='row'>");
+        }
+        <div class="col-md-2">
+            <label class="control-label" for="@Parametro.TCP_Nombre">@Parametro.TCP_Descripcion</label>
+        </div>
+        <div class="col-md-4">
+            @{switch (@Parametro.TipoDato_ID)
+                {
+                    case ADESCOMBUSINESS.Configurations.TipoDatosSistema.Fecha:
+                        if (Parametro.CPA_Valor.ToString() != "")
+                        {
+                            if (Parametro.CPA_UsuarioModif == false)
+                            {
+                                <input class="form-control date" id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@string.Format("{0:yyyy-MM-dd}", Convert.ToDateTime(Parametro.CPA_Valor))" type="text" readonly disabled>
+                            }
+                            else
+                            {
+                                <input class="form-control date" id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@string.Format("{0:yyyy-MM-dd}", Convert.ToDateTime(Parametro.CPA_Valor))" type="text">
+                            }
+                        }
+                        else
+                        {
+                            if (Parametro.CPA_UsuarioModif == false)
+                            {
+                                <input class="form-control date" id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="" type="text" readonly disabled>
+                            }
+                            else
+                            {
+                                <input class="form-control date" id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="" type="text">
+                            }
+                        }
+                        break;
+                    case ADESCOMBUSINESS.Configurations.TipoDatosSistema.Entero:
+                        if (Parametro.CPA_UsuarioModif == false)
+                        {
+                            <input class="form-control" id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="text" onkeypress="return isNumberKey(event)" readonly>
+                        }
+                        else
+                        {
+                            <input class="form-control" id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="text" onkeypress="return isNumberKey(event)">
+                        }
+                        break;
+
+                    case ADESCOMBUSINESS.Configurations.TipoDatosSistema.SINO:
+                        if (Parametro.CPA_Valor.ToString() == "")
+                        {
+                            Parametro.CPA_Valor = false;
+                        }
+                        if (((@Convert.ToBoolean(Parametro.CPA_Valor))))
+                        {
+                            if (Parametro.CPA_UsuarioModif == false)
+                            {
+                                <input id="@Parametro.TCP_Nombre" class="form-control " type="checkbox" value="true" name="@Parametro.TCP_Nombre" checked ="checked" disabled="disabled">
+                            }
+                            else
+                            {
+                                <input id="@Parametro.TCP_Nombre" class="form-control " type="checkbox" value="true" name="@Parametro.TCP_Nombre" checked ="checked">
+                            }
+                        }
+                        else
+                        {
+                            if (Parametro.CPA_UsuarioModif == false)
+                            {
+                                <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="true" type="checkbox" disabled="disabled">
+                            }
+                            else
+                            {
+                                <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="true" type="checkbox">
+                            }
+                        }
+                        break;
+                    case ADESCOMBUSINESS.Configurations.TipoDatosSistema.Texto:
+                        if (Parametro.CPA_UsuarioModif == false)
+                        {
+                            if (Parametro.CPA_Password == true)
+                            {
+                                <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="password" readonly>
+                            }
+                            else
+                            {
+                                <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="text" readonly>
+                            }
+                        }
+                        else
+                        {
+                            if (Parametro.CPA_Password == true)
+                            {
+                                <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="password">
+                            }
+                            else
+                            {
+                                <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="tel">
+                            }
+                        }
+                        break;
+                    /*default:
+                        if (Parametro.CPA_UsuarioModif == false)
+                        {
+                            <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="text" readonly>
+                        }
+                        else
+                        {
+                            <input class="form-control " id="@Parametro.TCP_Nombre" name="@Parametro.TCP_Nombre" value="@Parametro.CPA_Valor" type="text">
+                        }
+                        break;*/
+                }
+            }
+        </div>
+        if ((columna % 2) == 0 || Model.Count == columna)
+        {
+            @Html.Raw("</div><br /> ");
+                    }
+                    columna++;
+
+                }
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="control-label">Cuenta receptora de pagos</label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("Cuenta_ID", null, new { @class = "form-control ", @id = "Cuenta_ID" })
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Código de Activación Residentes</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-control " id="CodigoActivacion" name="CodigoActivacion" value="@ViewBag.CodigoActivacion" type="text">
+                    </div>
+                </div><br />
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+
+}
+
+<script>
+    $(".date").datepicker({ dateFormat: "yy-mm-dd" }).val();
+</script>

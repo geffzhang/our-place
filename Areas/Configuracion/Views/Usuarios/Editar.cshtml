@@ -1,0 +1,106 @@
+﻿@model ADESCOMBUSINESS.Areas.Configuracion.Models.SEG_Usuarios
+@{
+    ViewBag.Title = "Editar";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Editar", "Usuarios", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            { 
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Operacion Completada Con exito!
+            </div>
+            <script>
+                OcultarModal();
+                MostarModalSuccess();
+            </script>
+            }
+        }
+        <fieldset>
+            @Html.HiddenFor(model => model.Usuario_ID, new { @id = "Usuario_ID" })
+            <input type="hidden" id="Grupo_ID" name="Grupo_ID" />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CiaUsuario_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.CiaUsuario_ID, new { @class = "form-control ", id = "CiaUsuario_ID", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.CiaUsuario_ID)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Usuario, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.USR_Usuario, new { @class = "form-control ", id = "USR_Usuario" })
+                    @Html.ValidationMessageFor(model => model.USR_Usuario)
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Nombre, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.USR_Nombre, new { @class = "form-control ", id = "USR_Nombre" })
+                    @Html.ValidationMessageFor(model => model.USR_Nombre)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Password, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.USR_Password, new { @class = "form-control ", @type = "password", id = "USR_Password" })
+                    @Html.ValidationMessageFor(model => model.USR_Password)
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Notificar, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.USR_Notificar, new { @class = "form-control ", id = "USR_Notificar" })
+                    @Html.ValidationMessageFor(model => model.USR_Notificar)
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_StsActivo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.USR_StsActivo, new { @class = "form-control ", id = "USR_StsActivo" })
+                    @Html.ValidationMessageFor(model => model.USR_StsActivo)
+                </div>
+                <div class="col-md-1"></div>
+               @* <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_CamPass, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.USR_CamPass, new { @class = "form-control ", id = "USR_CamPass" })
+                    @Html.ValidationMessageFor(model => model.USR_CamPass)
+                </div>
+                <div class="col-md-1"></div>*@
+            </div>
+            <br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}

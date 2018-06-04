@@ -1,0 +1,44 @@
+﻿@model ADESCOMBUSINESS.Areas.Anuncios.Models.ANU_Anuncios
+@{
+    ViewBag.Title = "Finalizar";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+         <button class="close" aria-label="Close" data-dismiss="alert" type="button"></button>
+         ¿Seguro que desea finalizar el anuncio de forma anticipada?
+        </div>
+    @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+    {
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            @ViewBag.Error
+        </div>
+    }
+    else
+    {
+        if (ViewBag.Error == "OK")
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Operacion Completada Con exito!
+            </div>
+            <script>
+                OcultarModal2();
+                MostarModalSuccess2();
+                OcultarModal();
+                MostarModalSuccess();
+            </script>
+        }
+    }
+    @using (Ajax.BeginForm("Finalizar", "Anuncios", new AjaxOptions { OnBegin = "AdicionarLoading('Modal2')", UpdateTargetId = "Modal2" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Anuncio_ID)
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    }
+</div>
+

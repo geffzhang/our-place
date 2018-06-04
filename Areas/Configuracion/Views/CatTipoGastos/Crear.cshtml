@@ -1,0 +1,54 @@
+﻿@model ADESCOMBUSINESS.Areas.Configuracion.Models.CAT_TipoGastos
+@{
+    ViewBag.Title = "Crear";
+    Layout = null;
+}
+@using (Ajax.BeginForm("Crear", "CatTipoGastos", new AjaxOptions { OnBegin = "AdicionarLoading()", UpdateTargetId = "Modal" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div style="width: 100%;">
+        @if (ViewBag.Error != "" && ViewBag.Error != null && ViewBag.Error != "OK")
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @ViewBag.Error
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Error == "OK")
+            {
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <script>
+                    OcultarModal();
+                    MostarModalSuccess();
+                </script>
+            }
+        }
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TGA_Descripcion, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TGA_Descripcion, new { @class = "form-control ", @id = "TGA_Descripcion" })
+                    @Html.ValidationMessageFor(model => model.TGA_Descripcion)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.BS_Activo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.CheckBoxFor(model => model.BS_Activo, new { @class = "form-control ", @id = "BS_Activo" })
+                </div>
+            </div> <br />
+        </fieldset>
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger glyphicon glyphicon-remove" data-dismiss="modal"></button>
+            <button type="submit" class="btn btn-success glyphicon glyphicon-ok"></button>
+        </div>
+    </div>
+}

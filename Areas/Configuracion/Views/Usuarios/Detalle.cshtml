@@ -1,0 +1,65 @@
+﻿@model ADESCOMBUSINESS.Areas.Configuracion.Models.SEG_Usuarios
+@{
+    ViewBag.Title = "Detalle";
+    Layout = null;
+}
+<div style="width: 100%;">
+    <fieldset disabled>
+        <fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CiaUsuario_ID, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.CiaUsuario_ID, new { @class = "form-control ", id = "CiaUsuario_ID", @readonly = true })
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Usuario, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.USR_Usuario, new { @class = "form-control ", id = "USR_Usuario" })
+
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Nombre, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.USR_Nombre, new { @class = "form-control ", id = "USR_Nombre" })
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Password, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.USR_Password, new { @class = "form-control ", @type = "password", id = "USR_Password" })
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_Notificar, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.USR_Notificar, new { @class = "form-control ", id = "USR_Notificar" })
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.USR_StsActivo, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.USR_StsActivo, new { @class = "form-control ", id = "USR_StsActivo" })
+                </div>
+                <div class="col-md-1"></div>
+            </div> <br />
+        </fieldset>
+    </fieldset>
+    <br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default glyphicon glyphicon-remove" data-dismiss="modal"></button>
+    </div>
+</div>
+

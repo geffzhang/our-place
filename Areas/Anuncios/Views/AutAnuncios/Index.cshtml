@@ -1,0 +1,100 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Anuncios.Models.VwANU_Anuncios>
+@{
+    ViewBag.Title = "Autorización de Anuncios";
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<div class="text-right">
+    <h2>Aprobación de Anuncios Clasificados</h2>
+</div>
+<div class="panel panel-default">
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color:#2e2e37; color:white">
+            <th>ID</th>
+            <th>Residencia</th>
+            <th>Categoría</th>
+            <th>Tipo</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+            </thead>
+            <tbody id="DataContent">
+                @foreach (ADESCOMBUSINESS.Areas.Anuncios.Models.VwANU_Anuncios OBJANU_Anuncios in Model)
+                {
+                    <tr onclick="SelectRow(@OBJANU_Anuncios.Anuncio_ID, this)">
+                        <td>@Html.DisplayFor(m => OBJANU_Anuncios.CiaAnuncio_ID)</td>
+                        <td>@Html.DisplayFor(m => OBJANU_Anuncios.DIR_Descripcion)</td>
+                        <td>@Html.DisplayFor(m => OBJANU_Anuncios.ANU_Categoria)</td>
+                        <td>@Html.DisplayFor(m => OBJANU_Anuncios.ANU_Tipo)</td>
+                        <td>@Html.DisplayFor(m => OBJANU_Anuncios.ANU_Precio)</td>
+                        <td>
+                            @Ajax.ActionLink(" ", "Editar", new { Anuncio_ID = @OBJANU_Anuncios.Anuncio_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Editar Anuncio')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Editar" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+            <div class="row">
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink(" ", "RefreshData", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable();var info = table.page.info();  localStorage['pageLength'] = info.length;  RefreshData();", OnFailure = "MostrarError", UpdateTargetId = "RefreshData" }, new { @class = "btn btn-primary btn-xs glyphicon glyphicon-refresh", @id = "RefreshButon", @title = "Refrescar" })
+                </div>
+                <div class="pull-right" style="padding:0px 10px 0px 0px;">
+                    @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+                </div>
+            </div>
+        </div>	
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+<div data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

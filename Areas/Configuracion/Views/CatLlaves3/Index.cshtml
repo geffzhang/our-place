@@ -1,0 +1,112 @@
+﻿@model List<ADESCOMBUSINESS.Areas.Configuracion.Models.VwTVI_Llave3>
+@{
+    ViewBag.Title = "Catálogo de " + ViewBag.Llave3_Descripcion;
+    Layout = null;
+}
+<script>localStorage['pageLength'] = 10;</script>
+<div class="text-right">
+    <h2>Catálogo de @ViewBag.Llave3_Descripcion</h2>
+</div>
+<div class="panel panel-default" style="width: 100%">
+    <div class="panel-body">
+        @using (Ajax.BeginForm("RefreshDataSearchList", "CatLlaves3", new AjaxOptions { OnBegin = "AdicionarLoading('DataContent')", UpdateTargetId = "RefreshData" }))
+            {
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="control-label">Estatus</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("FindEstatus", null, new { @class = "form-control ", @id = "FindEstatus" })
+                </div>
+                <div class="col-md-7" />
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" /> Filtrar</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="panel panel-default">
+    <div id="RefreshData" class="panel-body">
+        <table id="Lista" class="table table-advance table-hover table-bordered">
+            <thead style="background-color:#2e2e37; color:white">
+            <th>ID</th>
+            <th>@ViewBag.Llave3_Etiqueta</th>
+            <th>Acciones</th>
+            </thead>
+            <tbody id="DataContent">
+                @foreach (ADESCOMBUSINESS.Areas.Configuracion.Models.VwTVI_Llave3 OBJTVI_Llave3 in Model)
+                {
+                    <tr onclick="SelectRow(@OBJTVI_Llave3.Llave3_ID, this)">
+                        <td>@Html.DisplayFor(m => OBJTVI_Llave3.CiaLlave3_ID)</td>
+                        <td>@Html.DisplayFor(m => OBJTVI_Llave3.LL3_Descripcion)</td>
+                        <td>
+                            @Ajax.ActionLink(" ", "Editar", new { Llave3_ID = @OBJTVI_Llave3.Llave3_ID }, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Editar')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-pencil", @title = "Editar" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer" style="text-align:left; background-color:#f5f5f5 ">
+            <div class="row">
+                <div class="pull-left" style="padding:0px 0px 0px 10px;">
+                    @Ajax.ActionLink(" ", "Crear", null, new AjaxOptions { HttpMethod = "get", OnBegin = "MostarVistaParcial('Crear')", OnFailure = "MostrarErrorModal", UpdateTargetId = "Modal" }, new { @class = "btn btn-success btn-xs glyphicon glyphicon-plus", @title = "Crear" })
+                </div>
+                <div class="pull-right" style="padding:0px 10px 0px 0px;">
+                    @ADESCOM.Helpers.AjaxExtensions.GetHml(Ajax.ActionLink("Exportar a Excel", " ", " ", null, new AjaxOptions { HttpMethod = "get", OnBegin = "var table = $('#Lista').DataTable(); ExportarExcel(table)" }, new { @class = "btn btn-sm btn-success", @title = "Exportar a Excel" }).ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#Lista').dataTable(
+    {
+        "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": localStorage['pageLength'],
+        "language": {
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Filtrar:",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    }
+    );
+    });
+</script>
+<script>
+    function SelectRow(id, element) {
+        $(element).addClass('Select').siblings().removeClass('Select');
+    }
+</script>
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mini">
+        <div class="modal-content">
+            <div id="modal-header-Success" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-Success">Operacion Exitosa</h4>
+            </div>
+            <div id="Modal-Success" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Operacion Completada Con exito!
+                </div>
+                <div style="text-align: center">
+                    <button class="btn btn-default" type="button" onclick="OcultarModalSuccess('RefreshButon')">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
