@@ -18,4 +18,13 @@ OurPlace is a cloud-based property management solution. Using a web-based tool f
 
 # Mobile App for residents #
 
+**Key features**
+
+* News/Events
+* Upload Payments
+* Voting / Surveys
+* Adds
+* Common area reservations
+* Panic button
+
 ![alt text](http://www.blacksmith.com.mx/Img/ourplace-general/iPhone.png)
